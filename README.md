@@ -14,6 +14,7 @@
 - [数据架构](#数据架构)
 - [质量保障](#质量保障)
 - [部署方式](#部署方式)
+- [贡献指南](#贡献指南)
 - [许可证](#许可证)
 
 ---
@@ -365,6 +366,149 @@ npm run build
 ### 方式三：PWA 安装
 
 部署后，在 Chrome/Edge 中访问，地址栏右侧出现安装图标，点击即可安装到桌面。
+
+---
+
+## 贡献指南
+
+### 开发环境准备
+
+```bash
+# 1. 克隆仓库
+git clone git@github.com:WL-jwm/watersource-archive.git
+cd watersource-archive
+
+# 2. 安装依赖
+npm install
+
+# 3. 启动开发服务器
+npm run dev
+```
+
+### 开发工作流
+
+#### 1. 创建分支
+
+```bash
+# 从 master 创建功能分支
+ git checkout -b feat/your-feature-name
+```
+
+分支命名规范：
+
+| 前缀 | 用途 | 示例 |
+|------|------|------|
+| `feat/` | 新功能 | `feat/zone-compare` |
+| `fix/` | Bug 修复 | `fix/map-marker-offset` |
+| `docs/` | 文档更新 | `docs/api-guide` |
+| `refactor/` | 代码重构 | `refactor/store-cleanup` |
+| `test/` | 测试补充 | `test/buffer-engine` |
+
+#### 2. 编写代码
+
+遵循项目既有规范：
+
+- **TypeScript**：所有代码必须通过 `tsc` 编译，禁止 `any`（类型定义文件除外）
+- **ESLint**：提交前自动检查，不允许新增 error
+- **Prettier**：提交前自动格式化，统一缩进 2 空格、单引号、无分号
+- **组件**：函数式组件 + Hooks，避免 class 组件（ErrorBoundary 除外）
+- **状态管理**：新增状态使用 Zustand store，数据持久化按场景选择 IndexedDB 或 localStorage
+- **样式**：使用 Tailwind CSS 类名，暗色模式通过 CSS 变量切换
+- **动态加载**：大型静态数据使用动态 `import()` 按需加载，避免膨胀首屏体积
+
+#### 3. 编写测试
+
+新增功能需配套测试，测试文件放在 `src/__tests__/` 目录：
+
+```bash
+# 运行全部测试
+npm run test
+
+# 运行单个测试文件
+npx vitest run src/__tests__/your-test.test.ts
+
+# 监听模式（开发时实时反馈）
+npx vitest
+```
+
+测试规范：
+
+- 引擎库：纯函数测试，覆盖正常输入 + 边界情况 + 异常输入
+- 组件：使用 `@testing-library/react`，测试渲染 + 交互 + 回调
+- Mock：`setup.ts` 已配置 `matchMedia` / `localStorage` / 浏览器 API mock
+- 命名：`describe('模块名')` → `it('should 行为描述')`
+
+#### 4. 提交代码
+
+```bash
+git add -A
+git commit -m "feat: 简明描述本次变更"
+```
+
+提交信息规范（Conventional Commits）：
+
+| 前缀 | 用途 | 示例 |
+|------|------|------|
+| `feat:` | 新功能 | `feat: 新增保护区对比功能` |
+| `fix:` | Bug 修复 | `fix: 修复地图标记偏移问题` |
+| `docs:` | 文档变更 | `docs: 更新 README 部署说明` |
+| `refactor:` | 重构 | `refactor: 抽离公共计算逻辑` |
+| `test:` | 测试 | `test: 补充缓冲分析边界测试` |
+| `chore:` | 构建/工具 | `chore: 升级 Vite 到 5.4` |
+
+> pre-commit hook 会自动执行 ESLint + Prettier，如果检查不通过提交会被拦截。
+
+#### 5. 提交 Pull Request
+
+推送分支后，在 GitHub 上创建 Pull Request，PR 模板包含以下检查清单：
+
+- [ ] TypeScript 编译通过（`npx tsc --noEmit`）
+- [ ] ESLint 检查通过（`npm run lint`）
+- [ ] Prettier 格式通过（`npm run format:check`）
+- [ ] 全部测试通过（`npm run test`）
+- [ ] 生产构建成功（`npm run build`）
+
+也可使用一键验证：
+
+```bash
+npm run ci    # 本地完整 CI 验证
+```
+
+#### 6. 代码审查与合并
+
+- PR 需通过 CI 全部检查（GitHub Actions 自动运行）
+- 审查通过后合并到 `master` 分支
+- 合并后删除功能分支
+
+### 项目约定
+
+#### 目录约定
+
+| 新增内容 | 放置位置 |
+|---------|---------|
+| 页面 | `src/pages/` |
+| 通用组件 | `src/components/` |
+| 计算引擎/工具库 | `src/lib/` |
+| Zustand Store | `src/stores/` |
+| 类型定义 | `src/types/` |
+| 静态数据 | `src/data/` |
+| 测试文件 | `src/__tests__/` |
+
+#### 命名约定
+
+- **文件**：组件用 PascalCase（`SourceFormModal.tsx`），引擎/工具用 camelCase（`zoneCalcEngine.ts`）
+- **组件**：PascalCase（`WaterSourceManager`）
+- **函数**：camelCase（`calculateZoneRadius`）
+- **类型/接口**：PascalCase（`ZoneResult`、`WaterSourceRecord`）
+- **常量**：UPPER_SNAKE_CASE（`STORAGE_KEY`）
+
+#### 路由约定
+
+使用 HashRouter，新增页面在 `src/App.tsx` 中注册路由。路由路径使用 kebab-case：
+
+```tsx
+<Route path="/your-page" element={<YourPage />} />
+```
 
 ---
 
