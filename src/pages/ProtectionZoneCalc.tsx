@@ -263,6 +263,7 @@ import {
 } from '@/lib/zoneReportGenerator';
 import { generatePdfReport } from '@/lib/reportPdfExporter';
 import ReportConfigModal from '@/components/ReportConfigModal';
+import WellFieldCalc from '@/components/WellFieldCalc';
 
 // ===== 快速计算（仅选水源地+水源类型，用默认参数）=====
 
@@ -2175,6 +2176,11 @@ const ProtectionZoneCalc: React.FC = () => {
           )}
         </div>
       )}
+
+      {/* A2: 多井干扰保护区计算面板 */}
+      <div className="rounded-lg p-4 bg-white border border-cyan-200">
+        <WellFieldCalc />
+      </div>
 
       {/* P4-3: 行政区划裁剪面板 */}
       {zoneResults.length > 0 && (
