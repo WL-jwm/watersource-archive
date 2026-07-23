@@ -9,12 +9,14 @@
  * 5. 重置为静态默认数据
  */
 
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import * as XLSX from 'xlsx';
 import { useWaterSourceStore, WaterSourceRecord } from '@/stores/waterSourceStore';
 import DataImportPanel from '@/components/DataImportPanel';
 import DataSourceManager from '@/components/DataSourceManager';
 import SourceFormModal from '@/components/SourceFormModal';
+import AdvancedSearchPanel, { HighlightedText } from '@/components/AdvancedSearchPanel';
+import { useSearchFilter } from '@/hooks/useSearchFilter';
 import type { ImportResult } from '@/lib/dataImportEngine';
 import type { WaterSourceInfo } from '@/types';
 
@@ -59,10 +61,8 @@ const WaterSourceManager: React.FC = () => {
     getStats,
   } = useWaterSourceStore();
 
-  const [filterCity, setFilterCity] = useState<string>('all');
-  const [filterLevel, setFilterLevel] = useState<string>('all');
-  const [filterType, setFilterType] = useState<string>('all');
-  const [searchText, setSearchText] = useState('');
+  // 高级搜索筛选
+  const searchFilter = useSearchFilter(sources);
   const [editingSource, setEditingSource] = useState<WaterSourceRecord | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,24 +82,14 @@ const WaterSourceManager: React.FC = () => {
   // 统计
   const stats = getStats();
 
-  // 过滤后的数据
-  const filtered = useMemo(() => {
-    let result = sources;
-    if (filterCity !== 'all') result = result.filter((s) => s.cityName === filterCity);
-    if (filterLevel !== 'all') result = result.filter((s) => s.level === filterLevel);
-    if (filterType !== 'all') result = result.filter((s) => s.type === filterType);
-    if (searchText.trim()) {
-      const q = searchText.trim().toLowerCase();
-      result = result.filter(
-        (s) =>
-          s.name.toLowerCase().includes(q) ||
-          s.county.toLowerCase().includes(q) ||
-          s.cityName.toLowerCase().includes(q) ||
-          (s.remark || '').toLowerCase().includes(q),
-      );
-    }
-    return result;
-  }, [sources, filterCity, filterLevel, filterType, searchText]);
+  // 过滤后的数据（来自高级搜索引擎）
+  const filtered = searchFilter.filterResult.records;
+  const matchMap = searchFilter.filterResult.matches;
+
+  // 筛选结果变化时重置分页
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchFilter.filterResult.stats.filtered]);
 
   const totalPages = Math.ceil(filtered.length / pageSize);
   const pageData = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize);
@@ -334,67 +324,12 @@ const WaterSourceManager: React.FC = () => {
         ))}
       </div>
 
-      {/* 工具栏 */}
-      <div className="rounded-lg p-3 bg-white border border-gray-200 space-y-3">
+      {/* 高级搜索筛选面板 */}
+      <AdvancedSearchPanel search={searchFilter} />
+
+      {/* 操作工具栏 */}
+      <div className="rounded-lg p-3 bg-white border border-gray-200">
         <div className="flex flex-wrap items-center gap-2">
-          <input
-            type="text"
-            placeholder="搜索名称/县区/备注..."
-            value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="text-xs border border-gray-200 rounded px-2 py-1.5 flex-1 min-w-40 max-w-xs"
-          />
-
-          <select
-            value={filterCity}
-            onChange={(e) => {
-              setFilterCity(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="text-xs border border-gray-200 rounded px-2 py-1.5"
-          >
-            <option value="all">全部城市</option>
-            {cityOrder.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={filterLevel}
-            onChange={(e) => {
-              setFilterLevel(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="text-xs border border-gray-200 rounded px-2 py-1.5"
-          >
-            <option value="all">全部级别</option>
-            {Object.entries(levelLabels).map(([k, v]) => (
-              <option key={k} value={k}>
-                {v}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={filterType}
-            onChange={(e) => {
-              setFilterType(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="text-xs border border-gray-200 rounded px-2 py-1.5"
-          >
-            <option value="all">全部类型</option>
-            <option value="地表水">地表水</option>
-            <option value="地下水">地下水</option>
-          </select>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2 border-t border-gray-100 pt-2">
           <button
             onClick={handleAdd}
             className="text-xs px-3 py-1.5 rounded bg-blue-600 text-white hover:bg-blue-700"
@@ -477,12 +412,6 @@ const WaterSourceManager: React.FC = () => {
         </div>
       )}
 
-      {/* 结果统计 */}
-      <div className="text-xs text-gray-500">
-        筛选结果：{filtered.length} 条
-        {filtered.length !== sources.length && ` / 共 ${sources.length} 条`}
-      </div>
-
       {/* 数据表格 */}
       <div className="rounded-lg overflow-hidden bg-white border border-gray-200">
         <div className="overflow-x-auto">
@@ -507,7 +436,9 @@ const WaterSourceManager: React.FC = () => {
                     {(currentPage - 1) * pageSize + i + 1}
                   </td>
                   <td className="px-3 py-1.5 font-medium">{s.cityName}</td>
-                  <td className="px-3 py-1.5 font-medium text-blue-800">{s.name}</td>
+                  <td className="px-3 py-1.5 font-medium text-blue-800">
+                    <HighlightedText text={s.name} match={matchMap.get(s.id)?.find((m) => m.field === 'name')} />
+                  </td>
                   <td className="px-3 py-1.5 text-center">
                     <span
                       className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
