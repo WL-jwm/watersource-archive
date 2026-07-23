@@ -4,6 +4,7 @@ import { ZoneResult } from '@/lib/zoneCalcEngine';
 import { batchGenerateCodes, summarizeCodes } from '@/lib/waterSourceCoder';
 import CodeStatsPanel from '@/components/dashboard/CodeStatsPanel';
 import ZoneStatsPanel from '@/components/dashboard/ZoneStatsPanel';
+import DataExchangeModal from '@/components/DataExchangeModal';
 
 const cityOrder = [
   '石家庄市',
@@ -85,11 +86,50 @@ const Dashboard: React.FC = () => {
   const totalPopulation = cityData.reduce((s, d) => s + d.population, 0);
   const maxTotal = Math.max(...cityData.map((d) => d.total));
 
+  const [dataExchangeOpen, setDataExchangeOpen] = React.useState(false);
+
+  const handleImportJSON = (json: string) => {
+    useWaterSourceStore.getState().importJSON(json, 'merge');
+  };
+
+  const handleImportRecords = (records: Partial<import('@/stores/waterSourceStore').WaterSourceRecord>[]) => {
+    // 将导入的记录合并到 store
+    const store = useWaterSourceStore.getState();
+    const existing = new Set(store.sources.map((s) => s.id));
+    const newRecords = records.map((r, i) => ({
+      id: r.id || `import_${Date.now()}_${i}`,
+      cityName: r.cityName || '',
+      level: r.level || 'county',
+      name: r.name || '',
+      type: r.type || '地表水',
+      subType: r.subType || '',
+      county: r.county || '',
+      status: r.status || '在用',
+      population: r.population || 0,
+      river: r.river || '',
+      lng: r.lng || 0,
+      lat: r.lat || 0,
+      dataVersion: 1,
+    }));
+    const toAdd = newRecords.filter((r) => !existing.has(r.id));
+    const toUpdate = newRecords.filter((r) => existing.has(r.id));
+    const merged = [...store.sources.map((s) => toUpdate.find((u) => u.id === s.id) || s), ...toAdd];
+    useWaterSourceStore.setState({ sources: merged });
+  };
+
   return (
     <div className="p-4 md:p-6 space-y-6">
-      <div>
-        <h1 className="text-xl md:text-2xl font-bold">河北省水源地统计仪表盘</h1>
-        <p className="text-sm mt-1 text-gray-500">基于 {totalAll} 个水源地的综合统计分析</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-xl md:text-2xl font-bold">河北省水源地统计仪表盘</h1>
+          <p className="text-sm mt-1 text-gray-500">基于 {totalAll} 个水源地的综合统计分析</p>
+        </div>
+        <button
+          onClick={() => setDataExchangeOpen(true)}
+          className="text-xs px-3 py-2 rounded-lg border border-blue-200 text-blue-700 hover:bg-blue-50"
+        >
+          数据交换
+        </button>
       </div>
 
       {/* 顶部统计卡片 */}
@@ -345,6 +385,13 @@ const Dashboard: React.FC = () => {
           </table>
         </div>
       </div>
+      <DataExchangeModal
+        open={dataExchangeOpen}
+        onClose={() => setDataExchangeOpen(false)}
+        sources={sources}
+        onImportJSON={handleImportJSON}
+        onImportRecords={handleImportRecords}
+      />
     </div>
   );
 };
