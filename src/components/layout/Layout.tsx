@@ -639,11 +639,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </header>
 
         {/* Content area */}
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 overflow-y-auto pb-14 md:pb-0">{children}</main>
       </div>
 
       {/* 全局行政区划选择器浮动按钮 */}
       <DivisionSelector />
+      {/* G2: 移动端底部导航栏 */}
+      <MobileBottomNav />
     </div>
   );
 };
@@ -651,5 +653,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 // 内联DivisionSelector避免循环导入
 import DivisionSelector from '@/components/DivisionSelector';
 import UndoRedoToolbar from '@/components/UndoRedoToolbar';
+import { MobileBottomNav } from '@/lib/mobileEnhanced';
 
 export default Layout;
