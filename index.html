@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="description" content="河北省1002个集中式饮用水水源地保护区档案管理与环评辅助计算平台" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="水源地档案" />
+    <title>水源地保护区档案管理平台</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: 'Noto Sans SC', sans-serif; background: #F8FAFC; color: #1E293B; }
+    </style>
+  </head>
+  <body>
+    <script>
+      // P4-10: 防止暗色模式闪烁（FOUC）
+      (function() {
+        try {
+          var dark = localStorage.getItem('ws-dark-mode');
+          if (dark === 'true' || (dark === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch(e) {}
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

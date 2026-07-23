@@ -1,0 +1,44 @@
+{
+  "name": "河北省水源地保护区档案管理平台",
+  "short_name": "水源地档案",
+  "description": "河北省1002个集中式饮用水水源地保护区档案管理与环评辅助计算平台",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f0f4f8",
+  "theme_color": "#4f46e5",
+  "lang": "zh-CN",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "地图展示",
+      "url": "./#/map",
+      "description": "查看水源地地图分布"
+    },
+    {
+      "name": "保护区计算",
+      "url": "./#/zone-calc",
+      "description": "保护区分级划定计算"
+    },
+    {
+      "name": "仪表盘",
+      "url": "./#/dashboard",
+      "description": "数据统计仪表盘"
+    }
+  ]
+}

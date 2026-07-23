@@ -1,0 +1,504 @@
+{
+  "id": "yangjiapu-2008-001",
+  "reportName": "邯郸市羊角铺饮用水水源地保护区划分技术报告",
+  "reportVersion": "报批版",
+  "reportDate": "2008-06",
+  "approvalDoc": "冀环控函[2007]38号",
+  "approvalDate": "2008-06",
+  "entrustUnit": "邯郸市环境保护局",
+  "compileUnit": "中国煤炭地质总局第一水文地质队",
+  "region": "河北省邯郸市峰峰矿区",
+  "regionCode": "130406",
+  "overview": "羊角铺水源地位于邯郸市峰峰矿区羊角铺村，距邯郸市主城区西南50km，距峰峰新市区西4km，彭城镇西北2km处，东西紧靠羊角铺村，南临滏阳河，是邯郸市的主要饮用水水源。水源地1980年经国家批准建设，1982年11月建成投产，初期共有供水井9眼，供水能力15万m³/d，到1994年已增至17眼供水井，开采量增加到32万m³/d。2007年水源地地下水开采量已减少到9万m³/d。水源地位于黑龙洞泉域岩溶地下水系统内，含水层为奥陶系灰岩，岩溶裂隙极为发育，厚度约66~132m。本次划分依据HJ/T338-2007技术规范，通过溶质运移模拟预测确定保护区范围。",
+  "waterSources": [
+    {
+      "id": "ws-yjp-main",
+      "name": "羊角铺水源地",
+      "code": "CB021304060001G0001",
+      "type": "地下水",
+      "subType": "岩溶裂隙水（承压-无压）",
+      "rechargeType": "岩溶泉域补给型",
+      "location": "河北省邯郸市峰峰矿区羊角铺村，南临滏阳河",
+      "servicePopulation": 800000,
+      "dailyYield": 90000,
+      "annualYield": 32850000,
+      "exploitationStatus": "在采（控制开采）",
+      "wells": [
+        {
+          "id": "well-yjp-1",
+          "wellNumber": "1号供水井",
+          "wellCode": "130406001",
+          "longitude": 114.165,
+          "latitude": 36.43,
+          "wellDepth": 350,
+          "casingMaterial": "钢管",
+          "screenMaterial": "钢管穿孔",
+          "wellDiameter": 425,
+          "screenInterval": "100-350m",
+          "yieldAtDrawdown": "设计15万m³/d（群井）",
+          "staticWaterLevel": 85,
+          "completionDate": "1982-11",
+          "expectedLife": "30-50年",
+          "status": "在用",
+          "remarks": "羊角铺水源地共建有17眼供水井，2007年每天开5~8眼"
+        },
+        {
+          "id": "well-yjp-2",
+          "wellNumber": "2号供水井",
+          "wellCode": "130406002",
+          "longitude": 114.168,
+          "latitude": 36.432,
+          "wellDepth": 320,
+          "casingMaterial": "钢管",
+          "screenMaterial": "钢管穿孔",
+          "wellDiameter": 425,
+          "screenInterval": "80-320m",
+          "yieldAtDrawdown": "设计15万m³/d（群井）",
+          "staticWaterLevel": 88,
+          "completionDate": "1982-11",
+          "expectedLife": "30-50年",
+          "status": "备用",
+          "remarks": ""
+        }
+      ],
+      "hydrogeology": {
+        "aquiferType": "奥陶系中统灰岩岩溶裂隙含水层",
+        "lithology": "奥陶系中统厚层灰岩、角砾状灰岩、花斑灰岩，质纯性脆，岩溶裂隙极为发育",
+        "aquiferThickness": 99,
+        "aquiferDepth": "66~132m（由东南向西北逐渐变厚）",
+        "permeabilityCoeff": "第一含水层Kxx=30~80m/d, Kyy=20~30m/d; 第二含水层Kxx=15~60m/d",
+        "transmissivity": "强富水，导水性能好",
+        "hydraulicGradient": "由南西向北东径流",
+        "rechargeConditions": "大气降雨入渗补给（黑龙洞泉域苑城地堑以南奥陶系灰岩裸露区）、河流侧渗补给。面裂隙率6.5%~8.5%，裂隙宽度1~4cm，最大可达20cm",
+        "runoffConditions": "地下水由南西向北东径流，经黑龙洞泉域汇集于羊角铺水源地。鼓山南北两侧为强径流带，水力联系密切",
+        "dischargeConditions": "人工开采为主要排泄方式（2007年开采量9万m³/d），其次为黑龙洞泉群排泄。枯水期泉水减少甚至断流",
+        "groundwaterFlowDirection": "南西向北东",
+        "aquiferStructure": "奥陶系灰岩为主要含水层，上覆石炭系本溪组铝土质泥岩构成相对稳定隔水顶板，下伏寒武系泥灰岩为隔水底板。含水层呈多层结构，局部地段因水位下降已由承压转为无压",
+        "confiningBed": "上部石炭系本溪组铝土质泥岩，构成相对稳定的隔水顶板；下伏寒武系上统竹叶状灰岩、泥质条带灰岩为隔水底板"
+      },
+      "waterQuality": {
+        "monitoringDate": "2006-2008",
+        "monitoringPoints": [
+          "羊角铺村",
+          "西山村",
+          "马庄村",
+          "杜家村",
+          "青碗河村",
+          "索井村",
+          "北贾壁村",
+          "白土矿",
+          "前西佐村",
+          "柏泗村",
+          "邯峰电厂",
+          "苏一村",
+          "石场新村",
+          "杨花庄",
+          "六合矿村",
+          "牛二庄",
+          "一矿场区",
+          "老三矿"
+        ],
+        "totalItems": 23,
+        "qualifiedItems": 20,
+        "qualifiedRate": 87,
+        "evaluation": "据2006-2008年监测资料分析，羊角铺水源地水质稳定，综合评价为Ⅱ类水，但总硬度、挥发酚、氨氮单项指标偏高，为Ⅲ类。选取pH、总硬度、硫酸盐、氯化物、铁、锰、氨氮、氟化物、挥发酚、亚硝酸盐氮、硝酸盐氮、高锰酸钾指数、总大肠菌群、铜、锌、阴离子表面活性剂、氰化物、砷、汞、硒、镉、铬、铅共23项指标进行综合评价。共设监测井18个。",
+        "items": [
+          {
+            "paramName": "pH",
+            "unit": "-",
+            "standardValue": 0,
+            "monitoringValue": "7.2~7.8",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "总硬度(以CaCO3计)",
+            "unit": "mg/L",
+            "standardValue": 450,
+            "monitoringValue": "380~445",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "III类"
+          },
+          {
+            "paramName": "溶解性总固体",
+            "unit": "mg/L",
+            "standardValue": 1000,
+            "monitoringValue": "520~680",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "II类"
+          },
+          {
+            "paramName": "硫酸盐",
+            "unit": "mg/L",
+            "standardValue": 250,
+            "monitoringValue": "85~165",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "II类"
+          },
+          {
+            "paramName": "氯化物",
+            "unit": "mg/L",
+            "standardValue": 250,
+            "monitoringValue": "45~120",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I-II类"
+          },
+          {
+            "paramName": "铁(Fe)",
+            "unit": "mg/L",
+            "standardValue": 0.3,
+            "monitoringValue": "<0.05",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "锰(Mn)",
+            "unit": "mg/L",
+            "standardValue": 0.1,
+            "monitoringValue": "<0.01",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "氨氮",
+            "unit": "mg/L",
+            "standardValue": 0.2,
+            "monitoringValue": "0.05~0.18",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "III类"
+          },
+          {
+            "paramName": "氟化物",
+            "unit": "mg/L",
+            "standardValue": 1.0,
+            "monitoringValue": "0.3~0.6",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I-II类"
+          },
+          {
+            "paramName": "挥发酚类",
+            "unit": "mg/L",
+            "standardValue": 0.002,
+            "monitoringValue": "0.001~0.002",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "III类"
+          },
+          {
+            "paramName": "亚硝酸盐氮",
+            "unit": "mg/L",
+            "standardValue": 0.02,
+            "monitoringValue": "0.002~0.015",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I-II类"
+          },
+          {
+            "paramName": "硝酸盐氮",
+            "unit": "mg/L",
+            "standardValue": 20,
+            "monitoringValue": "2.5~8.5",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I-II类"
+          },
+          {
+            "paramName": "高锰酸盐指数",
+            "unit": "mg/L",
+            "standardValue": 3.0,
+            "monitoringValue": "0.8~2.2",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I-II类"
+          },
+          {
+            "paramName": "总大肠菌群",
+            "unit": "个/L",
+            "standardValue": 3,
+            "monitoringValue": "未检出",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "铜(Cu)",
+            "unit": "mg/L",
+            "standardValue": 1.0,
+            "monitoringValue": "<0.01",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "锌(Zn)",
+            "unit": "mg/L",
+            "standardValue": 1.0,
+            "monitoringValue": "<0.05",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "氰化物",
+            "unit": "mg/L",
+            "standardValue": 0.05,
+            "monitoringValue": "<0.002",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "砷(As)",
+            "unit": "mg/L",
+            "standardValue": 0.05,
+            "monitoringValue": "<0.005",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I-II类"
+          },
+          {
+            "paramName": "汞(Hg)",
+            "unit": "mg/L",
+            "standardValue": 0.001,
+            "monitoringValue": "<0.0001",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "硒(Se)",
+            "unit": "mg/L",
+            "standardValue": 0.01,
+            "monitoringValue": "<0.005",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "镉(Cd)",
+            "unit": "mg/L",
+            "standardValue": 0.01,
+            "monitoringValue": "<0.001",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "铬(六价)",
+            "unit": "mg/L",
+            "standardValue": 0.05,
+            "monitoringValue": "<0.005",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "铅(Pb)",
+            "unit": "mg/L",
+            "standardValue": 0.05,
+            "monitoringValue": "<0.005",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          },
+          {
+            "paramName": "阴离子表面活性剂",
+            "unit": "mg/L",
+            "standardValue": 0.3,
+            "monitoringValue": "<0.05",
+            "standardIndex": 0,
+            "isQualified": true,
+            "qualifiedClass": "I类"
+          }
+        ]
+      },
+      "protectionZones": [
+        {
+          "id": "zone-yjp-1",
+          "level": "一级保护区",
+          "area": 4.07,
+          "boundaryDescription": "以羊角铺水源地地下水开采井为中心，溶质质点迁移100天的距离为半径所圈定的范围。涉及到羊角铺村、南羊台村、三河底村。原一级保护区面积约0.021km²。采用数值模拟（溶质运移模型）方法确定边界。",
+          "boundaryType": "溶质运移模拟法（100天迁移距离，参照HJ/T338-2007）",
+          "boundaryPoints": [
+            {
+              "pointNumber": 1,
+              "longitude": 114.14882,
+              "latitude": 36.43764,
+              "description": "拐点1"
+            },
+            {
+              "pointNumber": 2,
+              "longitude": 114.15059,
+              "latitude": 36.44485,
+              "description": "拐点2"
+            },
+            {
+              "pointNumber": 3,
+              "longitude": 114.15277,
+              "latitude": 36.44549,
+              "description": "拐点3"
+            },
+            {
+              "pointNumber": 4,
+              "longitude": 114.15634,
+              "latitude": 36.4454,
+              "description": "拐点4"
+            },
+            {
+              "pointNumber": 5,
+              "longitude": 114.15739,
+              "latitude": 36.44156,
+              "description": "拐点5"
+            },
+            {
+              "pointNumber": 6,
+              "longitude": 114.14881,
+              "latitude": 36.44162,
+              "description": "拐点6"
+            }
+          ]
+        },
+        {
+          "id": "zone-yjp-2",
+          "level": "二级保护区",
+          "area": 54.63,
+          "boundaryDescription": "一级保护区以外，溶质质点迁移1000天的距离为半径所圈定的范围。涉及小池塘、黑夜峧、马家峧、马庄、工人村、新村、北羊台、北候村、南候村、岗头、街王庄、宿凤、石家沟、沙果园、炉上、彭城镇、常范村、九龙峧、马家山、双合山、豆付沟、吝家庄、刘起沟、小河沟、郭庄、西山村、黄壁峧、立合村、滏岭庄等37个村庄。原二级保护区面积为99.60km²。",
+          "boundaryType": "溶质运移模拟法（1000天迁移距离，参照HJ/T338-2007）",
+          "boundaryPoints": [
+            {
+              "pointNumber": 1,
+              "longitude": 114.14323,
+              "latitude": 36.44015,
+              "description": "拐点1"
+            },
+            {
+              "pointNumber": 2,
+              "longitude": 114.14613,
+              "latitude": 36.44295,
+              "description": "拐点2"
+            },
+            {
+              "pointNumber": 3,
+              "longitude": 114.15038,
+              "latitude": 36.44565,
+              "description": "拐点3"
+            },
+            {
+              "pointNumber": 4,
+              "longitude": 114.15246,
+              "latitude": 36.44826,
+              "description": "拐点4"
+            },
+            {
+              "pointNumber": 5,
+              "longitude": 114.15512,
+              "latitude": 36.44761,
+              "description": "拐点5"
+            },
+            {
+              "pointNumber": 6,
+              "longitude": 114.15681,
+              "latitude": 36.44588,
+              "description": "拐点6"
+            },
+            {
+              "pointNumber": 7,
+              "longitude": 114.15768,
+              "latitude": 36.44186,
+              "description": "拐点7"
+            },
+            {
+              "pointNumber": 8,
+              "longitude": 114.14859,
+              "latitude": 36.43846,
+              "description": "拐点8"
+            }
+          ]
+        },
+        {
+          "id": "zone-yjp-3",
+          "level": "准保护区",
+          "area": 495.68,
+          "boundaryDescription": "二级保护区外的主要补给区。北部以苑城地堑附近的峰峰矿区铁道线为界，西部以奥陶系和寒武系灰岩界线为界，南部以河北省和河南省行政区域界线为界的黑龙洞泉域奥陶系灰岩裸露区。涉及周庄煤矿生活区、吴家庄、野河乡、磁山镇、八特、西苑城等大量村镇。",
+          "boundaryType": "补给区划定法（参照HJ/T338-2007）",
+          "boundaryPoints": []
+        }
+      ],
+      "pollutionSources": [
+        {
+          "id": "ps-yjp-1",
+          "category": "工业污染源",
+          "description": "一级保护区内有裕泰集团10万吨/年二甲醚项目、5万吨/年粗苯精制项目、甲醇项目、20万吨/年醋酸项目等大型化工企业。这些企业的固体废弃物堆放场区未做防渗处理，含有硫、磷、氟化物、铅、砷、镉等有毒物质，可通过雨水淋溶污染岩溶地下水",
+          "impact": "一级保护区内工业项目对水源地安全构成严重威胁",
+          "riskLevel": "高风险",
+          "mitigationMeasures": "一级保护区内应禁止新建、改建、扩建与供水设施和保护水源无关的建设项目；已建成的排放污染物的建设项目，由县级以上人民政府责令拆除或者关闭"
+        },
+        {
+          "id": "ps-yjp-2",
+          "category": "工业污染源",
+          "description": "二级保护区内有峰峰矿区鑫宝煤焦油精炼厂（15万吨/年煤焦油深加工，投资15083万元）、炉丰铁基件厂（年产6万吨竖炉球团）、白云灰粉厂等工业企业",
+          "impact": "煤焦油精炼、铁基件生产等可能对地下水水质产生一定影响",
+          "riskLevel": "中风险",
+          "mitigationMeasures": "严格控制二级保护区内新建排放污染物的建设项目；已建成的排放污染物的建设项目，由县级以上人民政府责令拆除或者关闭或搬迁"
+        },
+        {
+          "id": "ps-yjp-3",
+          "category": "固体废物堆放",
+          "description": "一级保护区内堆放的煤矸石、炉渣、粉煤灰等工业固体废弃物，部分含有硫、磷、氟化物、铅、砷、镉等有毒物质。一级保护区内有煤矸石堆放场6处、炉渣堆放场1处、粉煤灰场1处",
+          "impact": "固体废弃物淋溶液可能通过岩溶裂隙直接污染地下水",
+          "riskLevel": "高风险",
+          "mitigationMeasures": "清除保护区内所有固体废弃物堆放场，对已污染区域进行生态修复"
+        },
+        {
+          "id": "ps-yjp-4",
+          "category": "矿井排水",
+          "description": "二级保护区内及周边有九龙口矿等煤矿，矿井水排放可能影响地下水系统",
+          "impact": "矿井排水可能改变地下水动力场，间接影响水源地",
+          "riskLevel": "中风险",
+          "mitigationMeasures": "控制矿井排水量和排水方式，避免对地下水系统造成不良影响"
+        },
+        {
+          "id": "ps-yjp-5",
+          "category": "农村生活源",
+          "description": "保护区内分布有大量村庄（涉及60余个村镇），生活污水和垃圾未完全集中处理",
+          "impact": "分散性生活污水和垃圾渗漏可能对地下水水质产生一定影响",
+          "riskLevel": "低风险",
+          "mitigationMeasures": "推进农村环境综合整治，建设污水收集处理设施，设置垃圾集中收集点"
+        },
+        {
+          "id": "ps-yjp-6",
+          "category": "农业面源",
+          "description": "保护区内存在农田种植活动，化肥、农药使用可能随降水入渗对地下水水质产生潜在影响",
+          "impact": "农业面源污染对地下水水质有轻微影响",
+          "riskLevel": "低风险",
+          "mitigationMeasures": "推广科学施肥，减少化肥农药使用量，禁止使用高毒高残留农药"
+        }
+      ],
+      "standardizationRequirements": [
+        "在保护区边界设立明确的地理界标和明显的警示标志",
+        "一、二级保护区和准保护区内禁止破坏水源涵养林和水源保护相关的植被",
+        "禁止利用渗坑、渗井、裂隙、溶洞等排放污水和其他废弃物",
+        "禁止利用透水层孔隙、裂隙、溶洞及废弃矿坑储存石油、天然气、放射性物质、有毒有害化工原料及农药等",
+        "一级保护区内禁止建设与供水设施和保护水源无关的建设项目",
+        "一级保护区内已建成的排放污染物的建设项目应责令拆除或关闭",
+        "建立水源地巡查制度，定期巡查并记录",
+        "共设水质监测井18个，一级保护区1个、二级保护区2个、准保护区6个、强径流区9个",
+        "地下水质一、二级保护区每月监测一次，其余每年监测两次（枯水期6月和丰水期9月）",
+        "监测项目为pH、总硬度、硫酸盐、氯化物、铁、锰、氨氮、氟化物、挥发酚、亚硝酸盐氮、硝酸盐氮、高锰酸钾指数、总大肠菌群、铜、锌、阴离子表面活性剂、氰化物、砷、汞、硒、镉、铬、铅共23项",
+        "编制水源地突发环境事件应急预案",
+        "建立水源地档案管理制度"
+      ]
+    }
+  ],
+  "createdAt": "2024-06-15T08:00:00Z",
+  "updatedAt": "2024-06-15T08:00:00Z"
+}
