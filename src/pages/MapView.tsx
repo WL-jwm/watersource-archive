@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import L from 'leaflet';
 import html2canvas from 'html2canvas';
 import 'leaflet/dist/leaflet.css';
 import { useWaterSourceStore, WaterSourceRecord, ZoneCalcRecord } from '@/stores/waterSourceStore';
 import { CalcResult } from '@/lib/zoneCalcEngine';
+import { MapDrawController, type DrawTool } from '@/lib/mapDrawTools';
+import MapToolbar from '@/components/MapToolbar';
 
 // Leaflet图标修复（webpack/vite默认marker图标路径问题）
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -49,6 +51,13 @@ const MapView: React.FC = () => {
   const [showZones, setShowZones] = useState(false);
   const [legendCollapsed, setLegendCollapsed] = useState(true);
   const [exporting, setExporting] = useState(false);
+
+  // 地图绘制工具
+  const drawControllerRef = useRef<MapDrawController | null>(null);
+  const drawLayerRef = useRef<L.LayerGroup | null>(null);
+  const [activeTool, setActiveTool] = useState<DrawTool>('none');
+  const [featureCount, setFeatureCount] = useState(0);
+  const [isDrawing, setIsDrawing] = useState(false);
 
   const {
     loaded,
@@ -129,9 +138,27 @@ const MapView: React.FC = () => {
     mapInstanceRef.current = map;
     layerGroupRef.current = L.layerGroup().addTo(map);
     zoneLayerRef.current = L.layerGroup().addTo(map);
+    drawLayerRef.current = L.layerGroup().addTo(map);
+
+    // 初始化绘制控制器
+    drawControllerRef.current = new MapDrawController(
+      map,
+      drawLayerRef.current,
+      () => {
+        if (drawControllerRef.current) {
+          setFeatureCount(drawControllerRef.current.getFeatures().length);
+          setIsDrawing(drawControllerRef.current.isDrawing());
+        }
+      },
+    );
+
     setMapReady(true);
 
     return () => {
+      if (drawControllerRef.current) {
+        drawControllerRef.current.destroy();
+        drawControllerRef.current = null;
+      }
       map.remove();
       mapInstanceRef.current = null;
     };
@@ -372,8 +399,38 @@ const MapView: React.FC = () => {
     mapInstanceRef.current.fitBounds(bounds, { padding: [40, 40], maxZoom: 10 });
   }, [selectedCity]);
 
+  // 绘制工具操作
+  const handleToolChange = useCallback((tool: DrawTool) => {
+    if (drawControllerRef.current) {
+      drawControllerRef.current.setTool(tool);
+      setActiveTool(tool);
+    }
+  }, []);
+
+  const handleUndo = useCallback(() => {
+    if (drawControllerRef.current) {
+      drawControllerRef.current.undoLast();
+    }
+  }, []);
+
+  const handleClearDraw = useCallback(() => {
+    if (drawControllerRef.current) {
+      drawControllerRef.current.clearAll();
+    }
+  }, []);
+
   return (
     <div className="flex flex-col h-full">
+      {/* 地图工具栏 */}
+      <MapToolbar
+        activeTool={activeTool}
+        onToolChange={handleToolChange}
+        onUndo={handleUndo}
+        onClear={handleClearDraw}
+        featureCount={featureCount}
+        isDrawing={isDrawing}
+      />
+
       {/* 顶部工具栏 - 移动端横向滚动 */}
       <div className="px-4 py-3 bg-surface border-b border-border flex flex-wrap items-center gap-2 sm:gap-3 shrink-0">
         <h2 className="text-sm font-bold text-text-primary">GIS地图</h2>
