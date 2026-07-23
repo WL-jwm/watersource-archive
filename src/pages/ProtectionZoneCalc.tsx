@@ -264,6 +264,7 @@ import {
 import { generatePdfReport } from '@/lib/reportPdfExporter';
 import ReportConfigModal from '@/components/ReportConfigModal';
 import WellFieldCalc from '@/components/WellFieldCalc';
+import CompliancePanel from '@/components/CompliancePanel';
 
 // ===== 快速计算（仅选水源地+水源类型，用默认参数）=====
 
@@ -2181,6 +2182,13 @@ const ProtectionZoneCalc: React.FC = () => {
       <div className="rounded-lg p-4 bg-white border border-cyan-200">
         <WellFieldCalc />
       </div>
+
+      {/* B3: 合规性检查面板 */}
+      {zoneResults.length > 0 && (
+        <div className="rounded-lg p-4 bg-white border border-teal-200">
+          <CompliancePanel zoneResults={zoneResults} sources={sources} />
+        </div>
+      )}
 
       {/* P4-3: 行政区划裁剪面板 */}
       {zoneResults.length > 0 && (
