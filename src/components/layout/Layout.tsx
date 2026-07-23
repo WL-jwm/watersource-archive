@@ -634,6 +634,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               )}
             </div>
           </div>
+          {/* D2: 撤销/重做工具栏 */}
+          <UndoRedoToolbar />
         </header>
 
         {/* Content area */}
@@ -648,5 +650,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 // 内联DivisionSelector避免循环导入
 import DivisionSelector from '@/components/DivisionSelector';
+import UndoRedoToolbar from '@/components/UndoRedoToolbar';
 
 export default Layout;

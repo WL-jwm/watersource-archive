@@ -13,6 +13,17 @@ import { create } from 'zustand';
 import { dbGetAll, dbPutBatch, dbPut, dbDelete, dbCount, dbClear } from '@/lib/idb';
 import { ensureVersionStores, recordChange, createSnapshot } from '@/lib/dataVersionEngine';
 import { CalcParams, ZoneResult } from '@/lib/zoneCalcEngine';
+import { undoManager } from '@/lib/undoManager';
+import {
+  recordAddSource as invAddSource,
+  recordUpdateSource as invUpdateSource,
+  recordDeleteSource as invDeleteSource,
+  recordImportReplace as invImportReplace,
+  recordImportMerge as invImportMerge,
+  recordSaveZoneResult as invSaveZoneResult,
+  recordDeleteZoneResult as invDeleteZoneResult,
+  recordResetToStatic as invResetToStatic,
+} from '@/lib/inverseOps';
 
 // ===== IDB 中的水源地记录 =====
 export interface WaterSourceRecord {
@@ -293,6 +304,10 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
       });
       return { sources: newSources };
     });
+    // D2: 撤销栈记录
+    if (!undoManager.isExecuting()) {
+      invAddSource(record, (fn) => set(fn as (s: { sources: WaterSourceRecord[] }) => { sources: WaterSourceRecord[] }));
+    }
     return id;
   },
 
@@ -326,6 +341,10 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
       }
       return { sources: newSources };
     });
+    // D2: 撤销栈记录
+    if (!undoManager.isExecuting()) {
+      invUpdateSource(current, updated, (fn) => set(fn as (s: { sources: WaterSourceRecord[] }) => { sources: WaterSourceRecord[] }));
+    }
   },
 
   deleteSource: async (id) => {
@@ -348,6 +367,10 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
       }
       return { sources: newSources };
     });
+    // D2: 撤销栈记录
+    if (current && !undoManager.isExecuting()) {
+      invDeleteSource(current, (fn) => set(fn as (s: { sources: WaterSourceRecord[] }) => { sources: WaterSourceRecord[] }));
+    }
   },
 
   getByCity: (cityName) => get().sources.filter((s) => s.cityName === cityName),
@@ -397,6 +420,7 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
     const data = JSON.parse(json);
     const incoming = (data.sources || []) as WaterSourceRecord[];
     if (mode === 'replace') {
+      const oldSources = get().sources;
       await dbClear('water_sources');
       await dbPutBatch('water_sources', incoming);
       set({ sources: incoming });
@@ -409,6 +433,10 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
           description: `从JSON导入 ${incoming.length} 条记录（替换模式）`,
         },
       );
+      // D2: 撤销栈记录
+      if (!undoManager.isExecuting()) {
+        invImportReplace(oldSources, incoming, (fn) => set(fn as (s: { sources: WaterSourceRecord[] }) => { sources: WaterSourceRecord[] }));
+      }
       return incoming.length;
     }
     const existing = get().sources;
@@ -430,17 +458,31 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
         },
       );
     }
+    // D2: 撤销栈记录（仅记录新增的记录）
+    if (newItems.length > 0 && !undoManager.isExecuting()) {
+      invImportMerge(newItems, (fn) => set(fn as (s: { sources: WaterSourceRecord[] }) => { sources: WaterSourceRecord[] }));
+    }
     return newItems.length;
   },
 
   saveZoneResult: async (record) => {
+    const oldRecord = get().zoneResults.find((z) => z.id === record.id);
     await dbPut('zone_results', record);
     set((s) => ({ zoneResults: [...s.zoneResults.filter((z) => z.id !== record.id), record] }));
+    // D2: 撤销栈记录
+    if (!undoManager.isExecuting()) {
+      invSaveZoneResult(oldRecord, record, (fn) => set(fn as (s: { zoneResults: ZoneCalcRecord[] }) => { zoneResults: ZoneCalcRecord[] }));
+    }
   },
 
   deleteZoneResult: async (id) => {
+    const current = get().zoneResults.find((z) => z.id === id);
     await dbDelete('zone_results', id);
     set((s) => ({ zoneResults: s.zoneResults.filter((z) => z.id !== id) }));
+    // D2: 撤销栈记录
+    if (current && !undoManager.isExecuting()) {
+      invDeleteZoneResult(current, (fn) => set(fn as (s: { zoneResults: ZoneCalcRecord[] }) => { zoneResults: ZoneCalcRecord[] }));
+    }
   },
 
   clearZoneResults: async () => {
@@ -460,11 +502,17 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
   getZoneResultBySourceId: (sourceId) => get().zoneResults.find((z) => z.sourceId === sourceId),
 
   resetToStatic: async () => {
+    const oldSources = get().sources;
     await dbClear('water_sources');
     await dbClear('cities');
     await dbClear('app_meta');
     set({ loaded: false, sources: [], cityMetas: [] });
     await get().initDB();
+    // D2: 撤销栈记录
+    const newSources = get().sources;
+    if (!undoManager.isExecuting() && oldSources.length > 0) {
+      invResetToStatic(oldSources, newSources, (fn) => set(fn as (s: { sources: WaterSourceRecord[] }) => { sources: WaterSourceRecord[] }));
+    }
   },
 
   rollbackToVersion: async (versionId) => {

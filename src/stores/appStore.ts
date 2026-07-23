@@ -1,5 +1,11 @@
 import { create } from 'zustand';
 import type { AppState, WaterSourceReport, TabId } from '@/types';
+import { undoManager } from '@/lib/undoManager';
+import {
+  recordAddReport as invAddReport,
+  recordUpdateReport as invUpdateReport,
+  recordDeleteReport as invDeleteReport,
+} from '@/lib/inverseOps';
 
 const STORAGE_KEY = 'watersource-archive-data';
 
@@ -35,9 +41,14 @@ export const useAppStore = create<AppState>((set, get) => ({
       saveToStorage(reports);
       return { reports };
     });
+    // D2: 撤销栈记录
+    if (!undoManager.isExecuting()) {
+      invAddReport(report, (fn) => set(fn as (s: { reports: WaterSourceReport[] }) => { reports: WaterSourceReport[] }), saveToStorage);
+    }
   },
 
   updateReport: (id: string, updates: Partial<WaterSourceReport>) => {
+    const current = get().reports.find((r) => r.id === id);
     set((state) => {
       const reports = state.reports.map((r) =>
         r.id === id ? { ...r, ...updates, updatedAt: new Date().toISOString() } : r,
@@ -45,9 +56,15 @@ export const useAppStore = create<AppState>((set, get) => ({
       saveToStorage(reports);
       return { reports };
     });
+    // D2: 撤销栈记录
+    if (current && !undoManager.isExecuting()) {
+      const updated = { ...current, ...updates, updatedAt: new Date().toISOString() };
+      invUpdateReport(current, updated, (fn) => set(fn as (s: { reports: WaterSourceReport[] }) => { reports: WaterSourceReport[] }), saveToStorage);
+    }
   },
 
   deleteReport: (id: string) => {
+    const current = get().reports.find((r) => r.id === id);
     set((state) => {
       const reports = state.reports.filter((r) => r.id !== id);
       saveToStorage(reports);
@@ -58,6 +75,10 @@ export const useAppStore = create<AppState>((set, get) => ({
         activeTab: 'basic',
       };
     });
+    // D2: 撤销栈记录
+    if (current && !undoManager.isExecuting()) {
+      invDeleteReport(current, (fn) => set(fn as (s: { reports: WaterSourceReport[] }) => { reports: WaterSourceReport[] }), saveToStorage);
+    }
   },
 
   // 进入报告（不清空 source/tab）
