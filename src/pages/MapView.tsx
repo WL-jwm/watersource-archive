@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import L from 'leaflet';
-import html2canvas from 'html2canvas';
+// F3: html2canvas 改为动态导入，减小首屏体积(201KB)
 import 'leaflet/dist/leaflet.css';
 import { useWaterSourceStore, WaterSourceRecord, ZoneCalcRecord } from '@/stores/waterSourceStore';
 import { CalcResult } from '@/lib/zoneCalcEngine';
@@ -550,6 +550,7 @@ const MapView: React.FC = () => {
                 // 方案1: 直接html2canvas（瓦片已配置crossOrigin=true时有效）
                 let canvas: HTMLCanvasElement;
                 try {
+                  const { default: html2canvas } = await import('html2canvas');
                   canvas = await html2canvas(mapRef.current, {
                     useCORS: true,
                     allowTaint: false,
@@ -563,6 +564,7 @@ const MapView: React.FC = () => {
                 } catch (corsErr) {
                   // 方案2: allowTaint模式（canvas会被污染，无法toDataURL，但可用toBlob导出）
                   console.warn('[截图] CORS模式失败，回退到allowTaint模式');
+                  const { default: html2canvas } = await import('html2canvas');
                   canvas = await html2canvas(mapRef.current, {
                     useCORS: false,
                     allowTaint: true,

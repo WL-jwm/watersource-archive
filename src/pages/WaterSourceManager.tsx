@@ -10,7 +10,7 @@
  */
 
 import React, { useEffect, useState, useCallback } from 'react';
-import * as XLSX from 'xlsx';
+// F3: XLSX 改为动态导入，减小首屏体积(426KB)
 import { useWaterSourceStore, WaterSourceRecord } from '@/stores/waterSourceStore';
 import DataImportPanel from '@/components/DataImportPanel';
 import DataSourceManager from '@/components/DataSourceManager';
@@ -160,7 +160,7 @@ const WaterSourceManager: React.FC = () => {
   };
 
   // 处理导出Excel
-  const handleExportExcel = () => {
+  const handleExportExcel = async () => {
     const data = sources.map((s, i) => ({
       序号: i + 1,
       城市: s.cityName,
@@ -172,6 +172,7 @@ const WaterSourceManager: React.FC = () => {
       备注: s.remark || '',
     }));
 
+    const XLSX = await import('xlsx');
     const wb = XLSX.utils.book_new();
     const ws = XLSX.utils.json_to_sheet(data);
     ws['!cols'] = [
@@ -356,7 +357,7 @@ const WaterSourceManager: React.FC = () => {
                 导出 JSON
               </button>
               <button
-                onClick={handleExportExcel}
+                onClick={() => handleExportExcel()}
                 className="block w-full text-left text-xs px-3 py-2 hover:bg-gray-50"
               >
                 导出 Excel

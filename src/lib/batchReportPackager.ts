@@ -9,7 +9,7 @@
  * 5. 进度回调（双维度：城市进度 + 文件类型进度）
  */
 
-import JSZip from 'jszip';
+// F3: JSZip 改为动态导入
 import { saveAs } from 'file-saver';
 import {
   Packer,
@@ -413,6 +413,7 @@ export async function generateBatchReportsV2(
   }
 
   // ZIP 模式：生成所有文件打包
+  const { default: JSZip } = await import('jszip');
   const zip = new JSZip();
   const dateStr = new Date().toISOString().slice(0, 10);
   const folderName = `水源地保护区报告_${dateStr}`;

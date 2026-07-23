@@ -5,7 +5,7 @@
  * 适用于仅需结果表格、不需要复杂排版的场景
  */
 
-import { jsPDF } from 'jspdf';
+// F3: jsPDF 改为动态导入，减小首屏体积
 import { saveAs } from 'file-saver';
 import type { ZoneCalcRecord, WaterSourceRecord } from '@/stores/waterSourceStore';
 import type { ReportConfig } from './zoneReportGenerator';
@@ -19,7 +19,7 @@ const CONTENT_W = PAGE_W - MARGIN * 2; // 内容宽度
 
 /** 自动换行文本 */
 function addWrappedText(
-  doc: jsPDF,
+  doc: import('jspdf').jsPDF,
   text: string,
   x: number,
   y: number,
@@ -43,7 +43,7 @@ function addWrappedText(
 
 /** 绘制表格 */
 function addTable(
-  doc: jsPDF,
+  doc: import('jspdf').jsPDF,
   headers: string[],
   rows: string[][],
   colWidths: number[],
@@ -124,6 +124,7 @@ export async function generatePdfReport(
   const cityLabel = cityNames.length > 0 ? cityNames.join('、') : '河北省';
   const reportTitle = config.title || `${cityLabel}饮用水水源保护区划分技术报告`;
 
+  const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
 
   // 封面
