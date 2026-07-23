@@ -13,6 +13,7 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import * as XLSX from 'xlsx';
 import { useWaterSourceStore, WaterSourceRecord } from '@/stores/waterSourceStore';
 import DataImportPanel from '@/components/DataImportPanel';
+import DataSourceManager from '@/components/DataSourceManager';
 import SourceFormModal from '@/components/SourceFormModal';
 import type { ImportResult } from '@/lib/dataImportEngine';
 import type { WaterSourceInfo } from '@/types';
@@ -66,6 +67,7 @@ const WaterSourceManager: React.FC = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [showImportPanel, setShowImportPanel] = useState(false);
+  const [showDataSourceMgr, setShowDataSourceMgr] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
   const [editTarget, setEditTarget] = useState<WaterSourceRecord | null>(null);
   const pageSize = 30;
@@ -448,6 +450,13 @@ const WaterSourceManager: React.FC = () => {
           </button>
 
           <button
+            onClick={() => setShowDataSourceMgr(true)}
+            className="text-xs px-3 py-1.5 rounded border border-purple-200 text-purple-600 hover:bg-purple-50"
+          >
+            数据源管理
+          </button>
+
+          <button
             onClick={handleReset}
             className="text-xs px-3 py-1.5 rounded border border-red-200 text-red-600 hover:bg-red-50 ml-auto"
           >
@@ -455,6 +464,11 @@ const WaterSourceManager: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* 数据源管理面板 */}
+      {showDataSourceMgr && (
+        <DataSourceManager onClose={() => setShowDataSourceMgr(false)} />
+      )}
 
       {/* 错误提示 */}
       {error && (
