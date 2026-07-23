@@ -21,8 +21,13 @@ interface RecommendedParams {
   ne?: string;
   riverFlow?: string;
   riverWidth?: string;
+  riverDepth?: string;
+  riverSlope?: string;
   lakeArea?: string;
+  lakeCapacity?: string;
+  maxDepth?: string;
   reservoirSize?: '大型' | '中型' | '小型';
+  intakeType?: '岸边' | '湖心' | '分层取水';
   gwType?: '孔隙水' | '裂隙水' | '岩溶水';
   description: string;
   basis: string;
@@ -79,16 +84,21 @@ const PARAM_RECOMMENDATIONS: Record<string, Record<string, RecommendedParams>> =
     河流型: {
       riverFlow: '10 ~ 100',
       riverWidth: '50 ~ 300',
+      riverDepth: '2 ~ 5',
+      riverSlope: '0.3 ~ 1.5',
       description:
         '河北省主要河流型水源地（滹沱河、滏阳河、漳河等）。流量因季节差异大，枯水期流量可能仅为年均值的1/3~1/5。',
-      basis: 'HJ 338-2018 第7.2节 + 河北省水文年鉴',
+      basis: 'HJ 338-2018 第5.2节 + 河北省水文年鉴',
     },
     湖库型: {
       lakeArea: '5 ~ 50',
+      lakeCapacity: '1 ~ 20',
+      maxDepth: '15 ~ 40',
       reservoirSize: '中型',
+      intakeType: '湖心',
       description:
         '河北省主要湖库型水源地（岗南水库17.04亿m³、黄壁庄水库12.1亿m³、朱庄水库4.36亿m³等）。',
-      basis: 'HJ 338-2018 第7.3节 + 河北省大中型水库统计',
+      basis: 'HJ 338-2018 第5.3节 + 河北省大中型水库统计',
     },
   },
 };
@@ -246,7 +256,13 @@ import { clipBatchZones, loadAdminBoundaries, summarizeClipResults } from '@/lib
 import type { SourceClipResult } from '@/lib/zoneClipEngine';
 import { analyzeSensitivity, toChartData } from '@/lib/sensitivityEngine';
 import type { SensitivityResult } from '@/lib/sensitivityEngine';
-import { generateZoneReport, generateBatchReports } from '@/lib/zoneReportGenerator';
+import {
+  generateZoneReport,
+  generateBatchReports,
+  type ReportConfig,
+} from '@/lib/zoneReportGenerator';
+import { generatePdfReport } from '@/lib/reportPdfExporter';
+import ReportConfigModal from '@/components/ReportConfigModal';
 
 // ===== 快速计算（仅选水源地+水源类型，用默认参数）=====
 
@@ -407,10 +423,21 @@ const PreciseCalcPanel: React.FC<{
   const [I, setI] = useState<string>('');
   const [ne, setNe] = useState<string>('');
 
-  // 地表水参数
+  // 地表水参数（河流型）
   const [riverFlow, setRiverFlow] = useState<string>('');
   const [riverWidth, setRiverWidth] = useState<string>('');
+  const [riverDepth, setRiverDepth] = useState<string>('');
+  const [riverSlope, setRiverSlope] = useState<string>('');
+  const [isTidal, setIsTidal] = useState<boolean>(false);
+  const [tidalUpstreamDistance, setTidalUpstreamDistance] = useState<string>('');
+  const [hasTributary, setHasTributary] = useState<boolean>(false);
+
+  // 地表水参数（湖库型）
   const [lakeArea, setLakeArea] = useState<string>('');
+  const [lakeCapacity, setLakeCapacity] = useState<string>('');
+  const [maxDepth, setMaxDepth] = useState<string>('');
+  const [intakeType, setIntakeType] = useState<'岸边' | '湖心' | '分层取水'>('湖心');
+  const [intakeDepth, setIntakeDepth] = useState<string>('');
 
   // P3-3: 从URL参数恢复
   React.useEffect(() => {
@@ -434,6 +461,11 @@ const PreciseCalcPanel: React.FC<{
         if (cp.riverWidth) setRiverWidth(cp.riverWidth);
         if (cp.lakeArea) setLakeArea(cp.lakeArea);
         if (cp.riverFlow || cp.riverWidth || cp.lakeArea) setSourceType('地表水');
+        // A1: 恢复新增地表水参数
+        if (cp.riverDepth) setRiverDepth(cp.riverDepth);
+        if (cp.riverSlope) setRiverSlope(cp.riverSlope);
+        if (cp.lakeCapacity) setLakeCapacity(cp.lakeCapacity);
+        if (cp.maxDepth) setMaxDepth(cp.maxDepth);
       }
     }
   }, []);
@@ -459,9 +491,20 @@ const PreciseCalcPanel: React.FC<{
       if (swType === '河流型') {
         params.riverFlow = riverFlow ? parseFloat(riverFlow) : undefined;
         params.riverWidth = riverWidth ? parseFloat(riverWidth) : undefined;
+        params.riverDepth = riverDepth ? parseFloat(riverDepth) : undefined;
+        params.riverSlope = riverSlope ? parseFloat(riverSlope) : undefined;
+        params.isTidal = isTidal;
+        params.tidalUpstreamDistance =
+          isTidal && tidalUpstreamDistance ? parseFloat(tidalUpstreamDistance) : undefined;
+        params.hasTributary = hasTributary;
       } else {
         params.reservoirSize = reservoirSize;
         params.lakeArea = lakeArea ? parseFloat(lakeArea) : undefined;
+        params.lakeCapacity = lakeCapacity ? parseFloat(lakeCapacity) : undefined;
+        params.maxDepth = maxDepth ? parseFloat(maxDepth) : undefined;
+        params.intakeType = intakeType;
+        params.intakeDepth =
+          intakeType === '分层取水' && intakeDepth ? parseFloat(intakeDepth) : undefined;
       }
     }
 
@@ -477,6 +520,10 @@ const PreciseCalcPanel: React.FC<{
     if (riverFlow) customParams.riverFlow = riverFlow;
     if (riverWidth) customParams.riverWidth = riverWidth;
     if (lakeArea) customParams.lakeArea = lakeArea;
+    if (riverDepth) customParams.riverDepth = riverDepth;
+    if (riverSlope) customParams.riverSlope = riverSlope;
+    if (lakeCapacity) customParams.lakeCapacity = lakeCapacity;
+    if (maxDepth) customParams.maxDepth = maxDepth;
     onResult(result, customParams);
   };
 
@@ -551,6 +598,31 @@ const PreciseCalcPanel: React.FC<{
           recommendation.lakeArea.split('~')[0]?.trim() ||
           '',
       );
+    if (recommendation.riverDepth)
+      setRiverDepth(
+        recommendation.riverDepth.split('~')[1]?.trim() ||
+          recommendation.riverDepth.split('~')[0]?.trim() ||
+          '',
+      );
+    if (recommendation.riverSlope)
+      setRiverSlope(
+        recommendation.riverSlope.split('~')[1]?.trim() ||
+          recommendation.riverSlope.split('~')[0]?.trim() ||
+          '',
+      );
+    if (recommendation.lakeCapacity)
+      setLakeCapacity(
+        recommendation.lakeCapacity.split('~')[1]?.trim() ||
+          recommendation.lakeCapacity.split('~')[0]?.trim() ||
+          '',
+      );
+    if (recommendation.maxDepth)
+      setMaxDepth(
+        recommendation.maxDepth.split('~')[1]?.trim() ||
+          recommendation.maxDepth.split('~')[0]?.trim() ||
+          '',
+      );
+    if (recommendation.intakeType) setIntakeType(recommendation.intakeType);
     if (recommendation.gwType) setGwType(recommendation.gwType);
     if (recommendation.reservoirSize) setReservoirSize(recommendation.reservoirSize);
     setShowRecommendation(false);
@@ -591,6 +663,23 @@ const PreciseCalcPanel: React.FC<{
       const parts = recommendation.lakeArea.split('~');
       setLakeArea(parts[1]?.trim() || parts[0]?.trim() || '');
     }
+    if (recommendation.riverDepth) {
+      const parts = recommendation.riverDepth.split('~');
+      setRiverDepth(parts[1]?.trim() || parts[0]?.trim() || '');
+    }
+    if (recommendation.riverSlope) {
+      const parts = recommendation.riverSlope.split('~');
+      setRiverSlope(parts[1]?.trim() || parts[0]?.trim() || '');
+    }
+    if (recommendation.lakeCapacity) {
+      const parts = recommendation.lakeCapacity.split('~');
+      setLakeCapacity(parts[1]?.trim() || parts[0]?.trim() || '');
+    }
+    if (recommendation.maxDepth) {
+      const parts = recommendation.maxDepth.split('~');
+      setMaxDepth(parts[1]?.trim() || parts[0]?.trim() || '');
+    }
+    if (recommendation.intakeType) setIntakeType(recommendation.intakeType);
     if (recommendation.gwType) setGwType(recommendation.gwType);
     if (recommendation.reservoirSize) setReservoirSize(recommendation.reservoirSize);
     setShowRecommendation(false);
@@ -737,6 +826,18 @@ const PreciseCalcPanel: React.FC<{
                 set: setRiverWidth,
                 placeholder: '如 100',
               },
+              {
+                label: '平均水深 (m)',
+                value: riverDepth,
+                set: setRiverDepth,
+                placeholder: '如 3',
+              },
+              {
+                label: '河床纵比降 (‰)',
+                value: riverSlope,
+                set: setRiverSlope,
+                placeholder: '如 0.5',
+              },
             ].map((f) => (
               <div key={f.label}>
                 <label className="text-[10px] text-gray-500">{f.label}</label>
@@ -750,6 +851,40 @@ const PreciseCalcPanel: React.FC<{
                 />
               </div>
             ))}
+            {/* A1: 潮汐 + 支流 */}
+            <div className="flex items-center gap-2 pt-1">
+              <label className="flex items-center gap-1 text-[10px] text-gray-600">
+                <input
+                  type="checkbox"
+                  checked={isTidal}
+                  onChange={(e) => setIsTidal(e.target.checked)}
+                  className="w-3 h-3"
+                />
+                潮汐河段
+              </label>
+              <label className="flex items-center gap-1 text-[10px] text-gray-600">
+                <input
+                  type="checkbox"
+                  checked={hasTributary}
+                  onChange={(e) => setHasTributary(e.target.checked)}
+                  className="w-3 h-3"
+                />
+                有支流汇入
+              </label>
+            </div>
+            {isTidal && (
+              <div>
+                <label className="text-[10px] text-gray-500">潮汐上溯距离 (m)</label>
+                <input
+                  type="number"
+                  step="any"
+                  placeholder="如 500"
+                  value={tidalUpstreamDistance}
+                  onChange={(e) => setTidalUpstreamDistance(e.target.value)}
+                  className="w-full text-xs border border-gray-200 rounded px-2 py-1.5"
+                />
+              </div>
+            )}
           </div>
         ) : (
           <div className="space-y-2">
@@ -765,6 +900,54 @@ const PreciseCalcPanel: React.FC<{
                 className="w-full text-xs border border-gray-200 rounded px-2 py-1.5"
               />
             </div>
+            {/* A1: 库容 + 水深 + 取水口类型 */}
+            <div>
+              <label className="text-[10px] text-gray-500">总库容 (亿 m³)</label>
+              <input
+                type="number"
+                step="any"
+                placeholder="如 5.0"
+                value={lakeCapacity}
+                onChange={(e) => setLakeCapacity(e.target.value)}
+                className="w-full text-xs border border-gray-200 rounded px-2 py-1.5"
+              />
+            </div>
+            <div>
+              <label className="text-[10px] text-gray-500">最大水深 (m)</label>
+              <input
+                type="number"
+                step="any"
+                placeholder="如 30"
+                value={maxDepth}
+                onChange={(e) => setMaxDepth(e.target.value)}
+                className="w-full text-xs border border-gray-200 rounded px-2 py-1.5"
+              />
+            </div>
+            <div>
+              <label className="text-[10px] text-gray-500">取水口类型</label>
+              <select
+                value={intakeType}
+                onChange={(e) => setIntakeType(e.target.value as '岸边' | '湖心' | '分层取水')}
+                className="w-full text-xs border border-gray-200 rounded px-2 py-1.5"
+              >
+                <option value="湖心">湖心取水</option>
+                <option value="岸边">岸边取水</option>
+                <option value="分层取水">分层取水</option>
+              </select>
+            </div>
+            {intakeType === '分层取水' && (
+              <div>
+                <label className="text-[10px] text-gray-500">取水层深度 (m)</label>
+                <input
+                  type="number"
+                  step="any"
+                  placeholder="如 20"
+                  value={intakeDepth}
+                  onChange={(e) => setIntakeDepth(e.target.value)}
+                  className="w-full text-xs border border-gray-200 rounded px-2 py-1.5"
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -835,14 +1018,44 @@ const PreciseCalcPanel: React.FC<{
                   <div className="font-medium text-gray-700">{recommendation.riverWidth}</div>
                 </div>
               )}
+              {recommendation.riverDepth && (
+                <div className="bg-white rounded px-2 py-1 border border-emerald-100">
+                  <div className="text-gray-400">水深 (m)</div>
+                  <div className="font-medium text-gray-700">{recommendation.riverDepth}</div>
+                </div>
+              )}
+              {recommendation.riverSlope && (
+                <div className="bg-white rounded px-2 py-1 border border-emerald-100">
+                  <div className="text-gray-400">比降 (‰)</div>
+                  <div className="font-medium text-gray-700">{recommendation.riverSlope}</div>
+                </div>
+              )}
             </div>
           )}
           {sourceType === '地表水' && swType === '湖库型' && recommendation.lakeArea && (
-            <div className="text-[10px]">
-              <div className="bg-white rounded px-2 py-1 border border-emerald-100 inline-block">
-                <span className="text-gray-400">水面面积 (km²): </span>
-                <span className="font-medium text-gray-700">{recommendation.lakeArea}</span>
+            <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+              <div className="bg-white rounded px-2 py-1 border border-emerald-100">
+                <div className="text-gray-400">面积 (km²)</div>
+                <div className="font-medium text-gray-700">{recommendation.lakeArea}</div>
               </div>
+              {recommendation.lakeCapacity && (
+                <div className="bg-white rounded px-2 py-1 border border-emerald-100">
+                  <div className="text-gray-400">库容 (亿m³)</div>
+                  <div className="font-medium text-gray-700">{recommendation.lakeCapacity}</div>
+                </div>
+              )}
+              {recommendation.maxDepth && (
+                <div className="bg-white rounded px-2 py-1 border border-emerald-100">
+                  <div className="text-gray-400">最大水深 (m)</div>
+                  <div className="font-medium text-gray-700">{recommendation.maxDepth}</div>
+                </div>
+              )}
+              {recommendation.intakeType && (
+                <div className="bg-white rounded px-2 py-1 border border-emerald-100">
+                  <div className="text-gray-400">取水口</div>
+                  <div className="font-medium text-gray-700">{recommendation.intakeType}</div>
+                </div>
+              )}
             </div>
           )}
           <div className="text-[9px] text-gray-400 italic">依据：{recommendation.basis}</div>
@@ -1401,6 +1614,19 @@ const ProtectionZoneCalc: React.FC = () => {
   const [clipResults, setClipResults] = useState<SourceClipResult[] | null>(null);
   const [clipLoading, setClipLoading] = useState(false);
   const [sensitivityResult, setSensitivityResult] = useState<SensitivityResult | null>(null);
+  // B1: 报告配置弹窗
+  const [reportConfigOpen, setReportConfigOpen] = useState(false);
+
+  // B1: 报告生成处理
+  const handleGenerateReport = async (config: ReportConfig, format: 'word' | 'pdf' | 'both') => {
+    const opts = { ...config, cityNames: config.cityNames };
+    if (format === 'word' || format === 'both') {
+      await generateZoneReport(zoneResults, sources, opts);
+    }
+    if (format === 'pdf' || format === 'both') {
+      await generatePdfReport(zoneResults, sources, opts);
+    }
+  };
 
   // P3-12: 从URL参数自动切换到精确计算并切换Tab
   React.useEffect(() => {
@@ -1614,12 +1840,10 @@ const ProtectionZoneCalc: React.FC = () => {
                     导出Excel
                   </button>
                   <button
-                    onClick={() =>
-                      generateZoneReport(zoneResults, sources, { includeVertices: true })
-                    }
+                    onClick={() => setReportConfigOpen(true)}
                     className="text-xs px-2 py-1 rounded border border-blue-200 text-blue-700 hover:bg-blue-50"
                   >
-                    导出Word报告
+                    导出报告(Word/PDF)
                   </button>
                   {/* P4-5: GIS导出 */}
                   <div className="relative group inline-block">
@@ -1769,6 +1993,9 @@ const ProtectionZoneCalc: React.FC = () => {
                   <th className="px-3 py-2 text-center font-semibold text-yellow-600">
                     准保护(km²)
                   </th>
+                  <th className="px-3 py-2 text-center font-semibold text-gray-500">上游(m)</th>
+                  <th className="px-3 py-2 text-center font-semibold text-gray-500">下游(m)</th>
+                  <th className="px-3 py-2 text-center font-semibold text-gray-500">岸宽(m)</th>
                   <th className="px-3 py-2 text-center font-semibold text-gray-500">方法</th>
                 </tr>
               </thead>
@@ -1794,6 +2021,15 @@ const ProtectionZoneCalc: React.FC = () => {
                       </td>
                       <td className="px-3 py-1.5 text-center font-medium text-yellow-700">
                         {zq?.area || '-'}
+                      </td>
+                      <td className="px-3 py-1.5 text-center text-gray-500">
+                        {z1?.riverExt?.upstreamLength || '-'}
+                      </td>
+                      <td className="px-3 py-1.5 text-center text-gray-500">
+                        {z1?.riverExt?.downstreamLength || '-'}
+                      </td>
+                      <td className="px-3 py-1.5 text-center text-gray-500">
+                        {z1?.riverExt?.bankWidth || '-'}
                       </td>
                       <td className="px-3 py-1.5 text-center text-gray-500">{z1?.method || '-'}</td>
                     </tr>
@@ -2114,6 +2350,12 @@ const ProtectionZoneCalc: React.FC = () => {
           </p>
         </div>
       </div>
+      {/* B1: 报告配置弹窗 */}
+      <ReportConfigModal
+        open={reportConfigOpen}
+        onClose={() => setReportConfigOpen(false)}
+        onGenerate={handleGenerateReport}
+      />
     </div>
   );
 };

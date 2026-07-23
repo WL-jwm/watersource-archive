@@ -104,65 +104,114 @@ export function generateCircleVertices(
  * 生成河流型矩形保护区拐点
  * @param centerLng 取水口经度
  * @param centerLat 取水口纬度
- * @param lengthM 河流方向长度（米），取水口偏上游
- * @param widthM 两岸宽度（米）
+ * @param upstreamM 上游长度（从取水口起算）
+ * @param downstreamM 下游长度（从取水口起算）
+ * @param bankWidthM 两岸单侧宽度（m）
  * @param riverAzimuth 河流流向方位角（度，默认90°=自西向东）
  */
 export function generateRiverVertices(
   centerLng: number,
   centerLat: number,
-  lengthM: number,
-  widthM: number,
+  upstreamM: number,
+  downstreamM: number,
+  bankWidthM: number,
   riverAzimuth: number = 90,
 ): ZoneVertex[] {
   const latRad = (centerLat * Math.PI) / 180;
   const rad = (riverAzimuth * Math.PI) / 180;
 
   // 河流方向单位向量（方位角：0°=北，90°=东）
-  const dx_river = Math.sin(rad); // 河流方向经度分量
-  const dy_river = Math.cos(rad); // 河流方向纬度分量
-  // 垂直方向单位向量（右手法则，河流右侧90°）
+  const dx_river = Math.sin(rad);
+  const dy_river = Math.cos(rad);
+  // 垂直方向单位向量（右手法则）
   const dx_cross = Math.cos(rad);
   const dy_cross = -Math.sin(rad);
 
-  // 上游距离 = lengthM * 0.83（取水口偏上游），下游距离 = lengthM * 0.17
-  const upstreamM = lengthM * 0.83;
-  const downstreamM = lengthM * 0.17;
-  const halfWidthM = widthM / 2;
+  const halfWidthM = bankWidthM; // bankWidth已是单侧宽度
 
-  // 四个角：上游左、上游右、下游右、下游左
-  const corners: Array<{ dx_m: number; dy_m: number }> = [
-    // 上游左岸（河流上游方向 + 左岸方向）
+  // 8个拐点：上游左岸、上游右岸、下游右岸、下游左岸 + 上游中点、下游中点、左岸中点、右岸中点
+  const points: Array<{ dx_m: number; dy_m: number; label: string }> = [
+    // 1. 上游左岸
     {
       dx_m: -upstreamM * dx_river - halfWidthM * dx_cross,
       dy_m: -upstreamM * dy_river - halfWidthM * dy_cross,
+      label: '上游左岸',
     },
-    // 上游右岸
+    // 2. 上游右岸
     {
       dx_m: -upstreamM * dx_river + halfWidthM * dx_cross,
       dy_m: -upstreamM * dy_river + halfWidthM * dy_cross,
+      label: '上游右岸',
     },
-    // 下游右岸
+    // 3. 下游右岸
     {
       dx_m: downstreamM * dx_river + halfWidthM * dx_cross,
       dy_m: downstreamM * dy_river + halfWidthM * dy_cross,
+      label: '下游右岸',
     },
-    // 下游左岸
+    // 4. 下游左岸
     {
       dx_m: downstreamM * dx_river - halfWidthM * dx_cross,
       dy_m: downstreamM * dy_river - halfWidthM * dy_cross,
+      label: '下游左岸',
     },
+    // 5. 上游中点（河道中心线）
+    { dx_m: -upstreamM * dx_river, dy_m: -upstreamM * dy_river, label: '上游中点' },
+    // 6. 下游中点（河道中心线）
+    { dx_m: downstreamM * dx_river, dy_m: downstreamM * dy_river, label: '下游中点' },
+    // 7. 取水口左岸
+    { dx_m: -halfWidthM * dx_cross, dy_m: -halfWidthM * dy_cross, label: '取水口左岸' },
+    // 8. 取水口右岸
+    { dx_m: halfWidthM * dx_cross, dy_m: halfWidthM * dy_cross, label: '取水口右岸' },
   ];
 
-  return corners.map((c, i) => {
-    const azimuth = (riverAzimuth - 90 + 45 + i * 90 + 360) % 360;
-    return {
-      id: `J${i + 1}`,
-      lng: Math.round((centerLng + metersToLngDelta(c.dx_m, latRad)) * 1e6) / 1e6,
-      lat: Math.round((centerLat + metersToLatDelta(c.dy_m)) * 1e6) / 1e6,
-      azimuth: Math.round(azimuth * 100) / 100,
-    };
-  });
+  return points.map((p, i) => ({
+    id: `J${i + 1}`,
+    lng: Math.round((centerLng + metersToLngDelta(p.dx_m, latRad)) * 1e6) / 1e6,
+    lat: Math.round((centerLat + metersToLatDelta(p.dy_m)) * 1e6) / 1e6,
+    azimuth: Math.round(((i * 45 + 360) % 360) * 100) / 100,
+  }));
+}
+
+/**
+ * 生成湖库型保护区拐点
+ * @param centerLng 取水口经度
+ * @param centerLat 取水口纬度
+ * @param radiusM 保护区半径 m
+ * @param intakeType 取水口类型
+ * @param vertexCount 拐点数量
+ */
+export function generateLakeVertices(
+  centerLng: number,
+  centerLat: number,
+  radiusM: number,
+  intakeType: '岸边' | '湖心' | '分层取水' = '湖心',
+  vertexCount: number = DEFAULT_VERTEX_COUNT,
+): ZoneVertex[] {
+  if (intakeType === '岸边') {
+    // 半圆：角度范围 90°~270°（水域侧，假设水域在取水口南侧/东侧）
+    const latRad = (centerLat * Math.PI) / 180;
+    const halfCount = Math.floor(vertexCount / 2);
+    const interval = 360 / vertexCount;
+    const vertices: ZoneVertex[] = [];
+
+    for (let i = 0; i <= halfCount; i++) {
+      const azimuth = 90 + i * interval; // 90°~270°
+      const rad = (azimuth * Math.PI) / 180;
+      const dlng = metersToLngDelta(radiusM, latRad) * Math.sin(rad);
+      const dlat = metersToLatDelta(radiusM) * Math.cos(rad);
+      vertices.push({
+        id: `J${i + 1}`,
+        lng: Math.round((centerLng + dlng) * 1e6) / 1e6,
+        lat: Math.round((centerLat + dlat) * 1e6) / 1e6,
+        azimuth: Math.round(azimuth * 100) / 100,
+      });
+    }
+    return vertices;
+  }
+
+  // 湖心 / 分层取水 → 全圆
+  return generateCircleVertices(centerLng, centerLat, radiusM, vertexCount);
 }
 
 // ===== 组合接口 =====
@@ -181,12 +230,36 @@ export function generateSourceZoneVertices(
   const zonesWithVertices: ZoneWithVertices[] = zones.map((zone) => {
     let vertices: ZoneVertex[] = [];
 
-    if (zone.radius) {
-      // 圆形保护区（地下水 / 湖库型）
+    if (zone.riverExt) {
+      // 河流型保护区（使用上/下游独立长度）
+      vertices = generateRiverVertices(
+        centerLng,
+        centerLat,
+        zone.riverExt.upstreamLength,
+        zone.riverExt.downstreamLength,
+        zone.riverExt.bankWidth,
+      );
+    } else if (zone.lakeExt) {
+      // 湖库型保护区（根据取水口类型）
+      vertices = generateLakeVertices(
+        centerLng,
+        centerLat,
+        zone.radius || 0,
+        zone.lakeExt.intakeType,
+        vertexCount,
+      );
+    } else if (zone.radius) {
+      // 圆形保护区（地下水）
       vertices = generateCircleVertices(centerLng, centerLat, zone.radius, vertexCount);
     } else if (zone.length && zone.width) {
-      // 河流型矩形保护区
-      vertices = generateRiverVertices(centerLng, centerLat, zone.length, zone.width);
+      // 兼容旧版河流型矩形保护区（无 riverExt 时回退）
+      vertices = generateRiverVertices(
+        centerLng,
+        centerLat,
+        zone.length * 0.83,
+        zone.length * 0.17,
+        zone.width,
+      );
     }
 
     return {

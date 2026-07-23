@@ -57,13 +57,13 @@ describe('generateCircleVertices', () => {
 
 // ===== 河流型矩形拐点（参数: lng, lat, length, width, azimuth）=====
 describe('generateRiverVertices', () => {
-  it('应返回4个拐点', () => {
-    const vertices = generateRiverVertices(115.0, 38.0, 5000, 500, 90);
-    expect(vertices).toHaveLength(4);
+  it('应返回8个拐点', () => {
+    const vertices = generateRiverVertices(115.0, 38.0, 5000, 300, 50, 90);
+    expect(vertices).toHaveLength(8);
   });
 
   it('方位角90°(自西向东)时-矩形沿东西方向', () => {
-    const vertices = generateRiverVertices(115.0, 38.0, 1000, 200, 90);
+    const vertices = generateRiverVertices(115.0, 38.0, 1000, 200, 50, 90);
     // 东西方向: 经度有变化, 纬度变化较小(仅两岸宽度)
     const lngs = vertices.map((v) => v.lng);
     const lats = vertices.map((v) => v.lat);
@@ -73,7 +73,7 @@ describe('generateRiverVertices', () => {
   });
 
   it('方位角0°(自南向北)时-矩形沿南北方向', () => {
-    const vertices = generateRiverVertices(115.0, 38.0, 1000, 200, 0);
+    const vertices = generateRiverVertices(115.0, 38.0, 1000, 200, 50, 0);
     // 南北方向: 纬度变化大
     const lngs = vertices.map((v) => v.lng);
     const lats = vertices.map((v) => v.lat);
@@ -113,21 +113,22 @@ describe('generateSourceZoneVertices', () => {
     expect(result.zones[0].vertices.length).toBeGreaterThan(0);
   });
 
-  it('河流型保护区拐点为4个', () => {
+  it('河流型保护区拐点为8个', () => {
     const result = generateSourceZoneVertices('ws_002', '河流测试', 115.0, 38.0, [
       {
         level: '一级',
         method: '经验值法',
-        formula: '5kmx500m',
+        formula: '5kmx50m',
         length: 5000,
-        width: 500,
-        area: 2.5,
+        width: 50,
+        area: 0.53,
         boundaryDescription: 'test',
         keyParams: 'test',
         standard: 'HJ 338-2018',
       },
     ]);
-    expect(result.zones[0].vertices).toHaveLength(4);
+    // 无 riverExt 时回退到旧逻辑，8个点
+    expect(result.zones[0].vertices).toHaveLength(8);
   });
 });
 

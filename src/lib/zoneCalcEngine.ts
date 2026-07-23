@@ -40,13 +40,37 @@ export interface CalcParams {
   /** 有效孔隙度（无量纲，用于实际流速计算） */
   effectivePorosity?: number;
 
-  // ---- 地表水参数 ----
-  /** 河流平均流量 m³/s */
+  // ---- 地表水参数（河流型）----
+  /** 河流多年平均流量 m³/s */
   riverFlow?: number;
-  /** 河流平均宽度 m */
+  /** 河道平均宽度 m */
   riverWidth?: number;
+  /** 河道平均水深 m */
+  riverDepth?: number;
+  /** 河床纵比降 ‰ */
+  riverSlope?: number;
+  /** 是否受潮汐影响 */
+  isTidal?: boolean;
+  /** 潮汐上溯距离 m（潮汐河段时启用） */
+  tidalUpstreamDistance?: number;
+  /** 是否有支流汇入（取水口上游1000m内） */
+  hasTributary?: boolean;
+
+  // ---- 地表水参数（湖库型）----
   /** 湖库水面面积 km² */
   lakeArea?: number;
+  /** 总库容 亿 m³ */
+  lakeCapacity?: number;
+  /** 最大水深 m */
+  maxDepth?: number;
+  /** 平均水深 m */
+  meanDepth?: number;
+  /** 取水口类型 */
+  intakeType?: '岸边' | '湖心' | '分层取水';
+  /** 取水层深度 m（分层取水时启用） */
+  intakeDepth?: number;
+
+  // ---- 通用参数 ----
   /** 水源地取水量 m³/d */
   dailyYield?: number;
 }
@@ -73,6 +97,36 @@ export interface ZoneResult {
   keyParams: string;
   /** 规范依据 */
   standard: string;
+  /** 河流型保护区扩展信息 */
+  riverExt?: RiverZoneExtension;
+  /** 湖库型保护区扩展信息 */
+  lakeExt?: LakeZoneExtension;
+}
+
+/** 河流型保护区扩展信息 */
+export interface RiverZoneExtension {
+  /** 上游总长度（从取水口起算）m */
+  upstreamLength: number;
+  /** 下游总长度（从取水口起算）m */
+  downstreamLength: number;
+  /** 两岸单侧纵深 m */
+  bankWidth: number;
+  /** 坡度修正信息 */
+  slopeAdjustment?: string;
+  /** 潮汐修正信息 */
+  tidalAdjustment?: string;
+}
+
+/** 湖库型保护区扩展信息 */
+export interface LakeZoneExtension {
+  /** 取水口类型 */
+  intakeType: '岸边' | '湖心' | '分层取水';
+  /** 水域面积 km² */
+  waterArea: number;
+  /** 陆域面积 km² */
+  landArea: number;
+  /** 取水层深度 m（分层取水时） */
+  intakeDepth?: number;
 }
 
 export interface CalcResult {
@@ -131,19 +185,75 @@ const GW_QUASI_FACTOR: Record<
   },
 };
 
-/** 河流型一级保护区经验值 — HJ 338-2018 */
-const RIVER_PRIMARY: Record<string, { length: number; width: number }> = {
-  大型: { length: 5000, width: 500 }, // 大型河流：长度不小于取水口上游5km，宽度不小于500m
-  中型: { length: 3000, width: 300 }, // 中型河流：长度不小于3km，宽度不小于300m
-  小型: { length: 1000, width: 200 }, // 小型河流：长度不小于1km，宽度不小于200m
+/** 河流型保护区经验值 — HJ 338-2018 第5.2节
+ *  一级保护区：
+ *    大型：上游≥5000m，下游≥300m，两岸纵深≥50m（坡度>15°时增至100m）
+ *    中型：上游≥3000m，下游≥200m，两岸纵深≥50m
+ *    小型：上游≥1000m，下游≥100m，两岸纵深≥50m
+ *  二级保护区（从一级边界起独立延伸）：
+ *    大型：上游延伸≥10000m，下游≥500m，两岸纵深≥1000m
+ *    中型：上游延伸≥5000m，下游≥300m，两岸纵深≥500m
+ *    小型：上游延伸≥2000m，下游≥200m，两岸纵深≥200m
+ */
+const RIVER_PRIMARY: Record<
+  string,
+  { upstream: number; downstream: number; bankWidth: number; bankWidthSteep: number }
+> = {
+  大型: { upstream: 5000, downstream: 300, bankWidth: 50, bankWidthSteep: 100 },
+  中型: { upstream: 3000, downstream: 200, bankWidth: 50, bankWidthSteep: 100 },
+  小型: { upstream: 1000, downstream: 100, bankWidth: 50, bankWidthSteep: 100 },
 };
 
-/** 湖库型一级保护区 — HJ 338-2018 */
-const LAKE_PRIMARY: Record<string, { radiusM: number; description: string }> = {
-  小型: { radiusM: 1000, description: '取水口半径1000m范围内的水域和陆域' },
-  中型: { radiusM: 2000, description: '取水口半径2000m范围内的水域和陆域' },
-  大型: { radiusM: 3000, description: '取水口半径3000m范围内的水域和陆域' },
+const RIVER_SECONDARY: Record<
+  string,
+  { upstreamExt: number; downstreamExt: number; bankWidth: number }
+> = {
+  大型: { upstreamExt: 10000, downstreamExt: 500, bankWidth: 1000 },
+  中型: { upstreamExt: 5000, downstreamExt: 300, bankWidth: 500 },
+  小型: { upstreamExt: 2000, downstreamExt: 200, bankWidth: 200 },
 };
+
+/** 河流型准保护区扩展系数（二级保护区外侧至汇水区边界） */
+const RIVER_QUASI_FACTOR: Record<string, { upstreamFactor: number; bankFactor: number }> = {
+  大型: { upstreamFactor: 2.0, bankFactor: 1.5 },
+  中型: { upstreamFactor: 2.0, bankFactor: 1.5 },
+  小型: { upstreamFactor: 2.0, bankFactor: 1.5 },
+};
+
+/** 湖库型一级保护区 — HJ 338-2018 第5.3节
+ *  小型：取水口半径300m范围水域，陆域外延50m
+ *  中型：取水口半径500m范围水域，陆域外延50m
+ *  大型：取水口半径1000m范围水域，陆域外延50m
+ */
+const LAKE_PRIMARY: Record<string, { radiusM: number; landExtM: number; description: string }> = {
+  小型: {
+    radiusM: 300,
+    landExtM: 50,
+    description: '取水口半径300m范围内的水域，陆域为水域外延50m',
+  },
+  中型: {
+    radiusM: 500,
+    landExtM: 50,
+    description: '取水口半径500m范围内的水域，陆域为水域外延50m',
+  },
+  大型: {
+    radiusM: 1000,
+    landExtM: 50,
+    description: '取水口半径1000m范围内的水域，陆域为水域外延50m',
+  },
+};
+
+/** 湖库型二级保护区 — HJ 338-2018 第5.3.2节
+ *  小型：整个水域 + 陆域外延不小于1000m
+ *  中型：一级外不小于1000m水域 + 陆域外延不小于1000m
+ *  大型：一级外不小于2000m水域 + 陆域外延不小于2000m
+ */
+const LAKE_SECONDARY: Record<string, { waterExtM: number; landExtM: number; wholeWater: boolean }> =
+  {
+    小型: { waterExtM: 0, landExtM: 1000, wholeWater: true },
+    中型: { waterExtM: 1000, landExtM: 1000, wholeWater: false },
+    大型: { waterExtM: 2000, landExtM: 2000, wholeWater: false },
+  };
 
 // ===== 经验值法 =====
 
@@ -204,145 +314,298 @@ function calcGWEmpirical(params: CalcParams): ZoneResult[] {
   return zones;
 }
 
-/** 地表水经验值法（河流型） */
+/** 河流型规模分级参数 */
+interface RiverScaleParams {
+  meanFlow: number;
+  riverWidth: number;
+  riverDepth?: number;
+}
+
+type RiverScale = '大型' | '中型' | '小型';
+
+/** 河流型规模判断 — HJ 338-2018 第5.2节 + 河北省河流特征 */
+function classifyRiverScale(params: RiverScaleParams): { scale: RiverScale; basis: string } {
+  const { meanFlow, riverWidth, riverDepth } = params;
+
+  // 分级标准：多年平均流量 + 河道宽度 + 水深综合判断
+  const flowScore = meanFlow >= 150 ? 3 : meanFlow >= 15 ? 2 : 1;
+  const widthScore = riverWidth >= 200 ? 3 : riverWidth >= 50 ? 2 : 1;
+  const depthScore = riverDepth ? (riverDepth >= 5 ? 3 : riverDepth >= 2 ? 2 : 1) : 0;
+
+  // 取最高分（保守原则）
+  const maxScore = Math.max(flowScore, widthScore, depthScore || 0);
+  const scale: RiverScale = maxScore >= 3 ? '大型' : maxScore === 2 ? '中型' : '小型';
+
+  const indicators: string[] = [
+    `流量${meanFlow}m³/s(${flowScore >= 3 ? '大' : flowScore === 2 ? '中' : '小'})`,
+    `河宽${riverWidth}m(${widthScore >= 3 ? '大' : widthScore === 2 ? '中' : '小'})`,
+  ];
+  if (riverDepth)
+    indicators.push(
+      `水深${riverDepth}m(${depthScore >= 3 ? '大' : depthScore === 2 ? '中' : '小'})`,
+    );
+
+  return { scale, basis: indicators.join('，') + ` → ${scale}` };
+}
+
+/** 地表水经验值法（河流型）— HJ 338-2018 第5.2节 */
 function calcRiverEmpirical(params: CalcParams): ZoneResult[] {
   const zones: ZoneResult[] = [];
   const flow = params.riverFlow || 0;
   const width = params.riverWidth || 0;
+  const depth = params.riverDepth || 0;
+  const slope = params.riverSlope || 0;
+  const isTidal = params.isTidal || false;
+  const tidalDist = params.tidalUpstreamDistance || 0;
 
-  // 判断河流规模
-  let scale: string;
-  if (flow >= 100 || width >= 200) {
-    scale = '大型';
-  } else if (flow >= 10 || width >= 50) {
-    scale = '中型';
-  } else {
-    scale = '小型';
-  }
+  // 规模判断
+  const { scale, basis } = classifyRiverScale({
+    meanFlow: flow,
+    riverWidth: width,
+    riverDepth: depth || undefined,
+  });
 
   const primary = RIVER_PRIMARY[scale] || RIVER_PRIMARY['中型'];
-  const primaryArea = (primary.length * primary.width) / 1e6;
+  const secondary = RIVER_SECONDARY[scale] || RIVER_SECONDARY['中型'];
+  const quasiF = RIVER_QUASI_FACTOR[scale] || RIVER_QUASI_FACTOR['中型'];
+
+  // 两岸纵深坡度修正：坡度>15‰时增加纵深
+  let bankWidth = primary.bankWidth;
+  let slopeAdj: string | undefined;
+  if (slope > 15) {
+    const adj = Math.round((slope - 15) * 2);
+    bankWidth = primary.bankWidthSteep;
+    slopeAdj = `坡度${slope}‰>15‰，两岸纵深从${primary.bankWidth}m增至${bankWidth}m`;
+  }
+
+  // 潮汐修正：下游距离取规范值与潮汐上溯距离的较大值
+  let downstream = primary.downstream;
+  let tidalAdj: string | undefined;
+  if (isTidal && tidalDist > 0) {
+    const origDownstream = downstream;
+    downstream = Math.max(downstream, tidalDist);
+    tidalAdj = `潮汐河段，下游距离从${origDownstream}m修正为${downstream}m（潮汐上溯${tidalDist}m）`;
+  }
+
+  // ===== 一级保护区 =====
+  const pUpstream = primary.upstream;
+  const pTotalLength = pUpstream + downstream;
+  const pArea = (pTotalLength * bankWidth * 2) / 1e6; // 两岸各 bankWidth
 
   zones.push({
     level: '一级',
     method: '经验值法',
-    formula: `河流${scale}：取水口上游${primary.length}m，下游${Math.round(primary.length * 0.2)}m，两岸宽度${primary.width}m`,
-    length: primary.length,
-    width: primary.width,
-    area: Math.round(primaryArea * 100) / 100,
-    boundaryDescription: `一级保护区长度为取水口上游不小于${primary.length}m、下游不小于${Math.round(primary.length * 0.2)}m范围内的河道水域及两岸陆域，宽度为沿岸不少于${primary.width}m。`,
-    keyParams: `河流规模=${scale}, 流量=${flow}m³/s, 河宽=${width}m`,
-    standard: 'HJ 338-2018 第5.2节',
+    formula: `河流${scale}：取水口上游${pUpstream}m，下游${downstream}m，两岸纵深各${bankWidth}m`,
+    length: pUpstream,
+    width: bankWidth,
+    area: Math.round(pArea * 100) / 100,
+    boundaryDescription: `一级保护区长度为取水口上游不小于${pUpstream}m、下游不小于${downstream}m范围内的河道水域及两岸陆域，两岸纵深各不少于${bankWidth}m。`,
+    keyParams: `河流规模=${scale}(${basis}), 流量=${flow}m³/s, 河宽=${width}m${slopeAdj ? ', ' + slopeAdj : ''}${tidalAdj ? ', ' + tidalAdj : ''}`,
+    standard: 'HJ 338-2018 第5.2.1节',
+    riverExt: {
+      upstreamLength: pUpstream,
+      downstreamLength: downstream,
+      bankWidth,
+      slopeAdjustment: slopeAdj,
+      tidalAdjustment: tidalAdj,
+    },
   });
 
-  // 二级保护区（经验值：一级外侧扩展）
-  const secondaryLength = primary.length * 3;
-  const secondaryWidth = primary.width * 2;
-  const secondaryArea = (secondaryLength * secondaryWidth) / 1e6;
+  // ===== 二级保护区（从一级边界起独立延伸）=====
+  const sUpstream = pUpstream + secondary.upstreamExt; // 总上游长度
+  const sDownstream = downstream + secondary.downstreamExt; // 总下游长度
+  const sBankWidth = secondary.bankWidth;
+  const sTotalLength = sUpstream + sDownstream;
+  const sArea = (sTotalLength * sBankWidth * 2) / 1e6 - pArea;
 
   zones.push({
     level: '二级',
     method: '经验值法',
-    formula: `二级保护区：取水口上游${secondaryLength}m，两岸宽度${secondaryWidth}m`,
-    length: secondaryLength,
-    width: secondaryWidth,
-    area: Math.round(secondaryArea * 100) / 100,
-    boundaryDescription: `二级保护区从一级保护区边界向上游延伸至不小于${secondaryLength}m，两岸宽度不小于${secondaryWidth}m。`,
-    keyParams: `上游=${secondaryLength}m, 两岸宽度=${secondaryWidth}m`,
-    standard: 'HJ 338-2018 第5.2节',
+    formula: `二级保护区：从一级边界上游延伸${secondary.upstreamExt}m，下游延伸${secondary.downstreamExt}m，两岸纵深各${sBankWidth}m`,
+    length: sUpstream,
+    width: sBankWidth,
+    area: Math.round(Math.max(sArea, 0) * 100) / 100,
+    boundaryDescription: `二级保护区从一级保护区边界向上游延伸不小于${secondary.upstreamExt}m，下游延伸不小于${secondary.downstreamExt}m，两岸纵深各不少于${sBankWidth}m。`,
+    keyParams: `上游延伸=${secondary.upstreamExt}m, 下游延伸=${secondary.downstreamExt}m, 两岸纵深=${sBankWidth}m`,
+    standard: 'HJ 338-2018 第5.2.2节',
+    riverExt: {
+      upstreamLength: sUpstream,
+      downstreamLength: sDownstream,
+      bankWidth: sBankWidth,
+    },
   });
 
-  // P3-2: 准保护区 — 河流型准保护区为二级保护区外侧至汇水区边界
-  const quasiLength = secondaryLength * 2; // 二级保护区上游长度的2倍
-  const quasiWidth = secondaryWidth * 1.5; // 二级保护区宽度的1.5倍
-  const quasiArea = (quasiLength * quasiWidth) / 1e6 - (secondaryLength * secondaryWidth) / 1e6;
+  // ===== 准保护区 =====
+  const qUpstreamExt = Math.round(secondary.upstreamExt * quasiF.upstreamFactor);
+  const qUpstream = sUpstream + qUpstreamExt;
+  const qDownstream = sDownstream + Math.round(secondary.downstreamExt * quasiF.upstreamFactor);
+  const qBankWidth = Math.round(sBankWidth * quasiF.bankFactor);
+  const qTotalLength = qUpstream + qDownstream;
+  const qArea = (qTotalLength * qBankWidth * 2) / 1e6 - (sTotalLength * sBankWidth * 2) / 1e6;
 
   zones.push({
     level: '准保护区',
     method: '经验值法',
-    formula: `准保护区：二级外侧至汇水区边界，上游延伸至${quasiLength}m，两岸宽度${quasiWidth}m`,
-    length: quasiLength,
-    width: quasiWidth,
-    area: Math.round(Math.max(quasiArea, 0) * 100) / 100,
-    boundaryDescription: `准保护区为二级保护区外侧至该河流取水河段汇水区域边界。上游延伸至不小于${quasiLength}m，两岸宽度不小于${quasiWidth}m。实际划定应以流域汇水分析为准。`,
-    keyParams: `上游=${quasiLength}m, 两岸宽度=${quasiWidth}m`,
-    standard: 'HJ 338-2018 第5.2节',
+    formula: `准保护区：二级外侧至汇水区边界，上游延伸${qUpstreamExt}m，两岸纵深各${qBankWidth}m`,
+    length: qUpstream,
+    width: qBankWidth,
+    area: Math.round(Math.max(qArea, 0) * 100) / 100,
+    boundaryDescription: `准保护区为二级保护区外侧至该河流取水河段汇水区域边界。上游延伸不小于${qUpstreamExt}m，两岸纵深各不少于${qBankWidth}m。实际划定应以流域汇水分析为准。`,
+    keyParams: `上游延伸=${qUpstreamExt}m, 两岸纵深=${qBankWidth}m`,
+    standard: 'HJ 338-2018 第5.2.3节',
+    riverExt: {
+      upstreamLength: qUpstream,
+      downstreamLength: qDownstream,
+      bankWidth: qBankWidth,
+    },
   });
 
   return zones;
 }
 
-/** 地表水经验值法（湖库型） */
+/** 湖库型规模分级参数 */
+interface LakeScaleParams {
+  surfaceArea: number;
+  totalCapacity?: number; // 亿 m³
+}
+
+/** 湖库型规模判断 — HJ 338-2018 第5.3节（库容为主要依据） */
+function classifyLakeScale(params: LakeScaleParams): {
+  scale: '大型' | '中型' | '小型';
+  basis: string;
+} {
+  const { surfaceArea, totalCapacity } = params;
+
+  let capacityScale: '大型' | '中型' | '小型' | null = null;
+  let areaScale: '大型' | '中型' | '小型';
+
+  if (totalCapacity != null && totalCapacity > 0) {
+    capacityScale = totalCapacity >= 10 ? '大型' : totalCapacity >= 1 ? '中型' : '小型';
+  }
+  areaScale = surfaceArea >= 50 ? '大型' : surfaceArea >= 5 ? '中型' : '小型';
+
+  // 取较高级别（保守原则）
+  const order = { 小型: 1, 中型: 2, 大型: 3 } as const;
+  const candidates = [areaScale];
+  if (capacityScale) candidates.push(capacityScale);
+  const scale = candidates.reduce((a, b) => (order[a] >= order[b] ? a : b));
+
+  const indicators: string[] = [`面积${surfaceArea}km²(${areaScale})`];
+  if (capacityScale) indicators.push(`库容${totalCapacity}亿m³(${capacityScale})`);
+
+  return { scale, basis: indicators.join('，') + ` → ${scale}` };
+}
+
+/** 地表水经验值法（湖库型）— HJ 338-2018 第5.3节 */
 function calcLakeEmpirical(params: CalcParams): ZoneResult[] {
   const zones: ZoneResult[] = [];
   const area = params.lakeArea || 0;
-  const yield_ = params.dailyYield || 0;
+  const capacity = params.lakeCapacity || 0;
+  const intakeType = params.intakeType || '湖心';
+  const intakeDepth = params.intakeDepth;
 
-  // 判断湖库规模
-  let scale: string;
-  if (area >= 50) {
-    scale = '大型';
-  } else if (area >= 5) {
-    scale = '中型';
+  // 规模判断（库容为主，面积为辅）
+  let scale: '大型' | '中型' | '小型';
+  let basis: string;
+  if (params.reservoirSize) {
+    scale = params.reservoirSize;
+    basis = `手动指定=${scale}`;
   } else {
-    scale = '小型';
+    const result = classifyLakeScale({ surfaceArea: area, totalCapacity: capacity || undefined });
+    scale = result.scale;
+    basis = result.basis;
   }
-  if (params.reservoirSize) scale = params.reservoirSize;
 
   const primary = LAKE_PRIMARY[scale] || LAKE_PRIMARY['小型'];
-  const primaryArea = (Math.PI * primary.radiusM * primary.radiusM) / 1e6;
+  const lakeSecondary = LAKE_SECONDARY[scale] || LAKE_SECONDARY['小型'];
+
+  // ===== 一级保护区 =====
+  // 水域面积：岸边取水为半圆，湖心/分层取水为全圆
+  const fullCircleArea = (Math.PI * primary.radiusM * primary.radiusM) / 1e6;
+  const waterArea = intakeType === '岸边' ? fullCircleArea / 2 : fullCircleArea;
+  // 陆域面积：水域外延 primary.landExtM
+  const landRadiusM = primary.radiusM + primary.landExtM;
+  const fullLandArea = (Math.PI * landRadiusM * landRadiusM) / 1e6;
+  const landArea =
+    intakeType === '岸边' ? (fullLandArea - fullCircleArea) / 2 : fullLandArea - fullCircleArea;
+  const primaryArea = waterArea + landArea;
+
+  let intakeDesc = '';
+  if (intakeType === '岸边') {
+    intakeDesc = '（岸边取水，保护区为水域侧半圆）';
+  } else if (intakeType === '分层取水') {
+    intakeDesc = intakeDepth ? `（分层取水，取水层深度${intakeDepth}m）` : '（分层取水）';
+  }
 
   zones.push({
     level: '一级',
     method: '经验值法',
-    formula: `湖库${scale}：取水口半径${primary.radiusM}m`,
+    formula: `湖库${scale}：取水口半径${primary.radiusM}m范围水域${intakeType === '岸边' ? '（半圆）' : ''}，陆域外延${primary.landExtM}m${intakeDesc}`,
     radius: primary.radiusM,
     area: Math.round(primaryArea * 100) / 100,
-    boundaryDescription: primary.description,
-    keyParams: `湖库规模=${scale}, 面积=${area}km², 取水口半径=${primary.radiusM}m`,
-    standard: 'HJ 338-2018 第5.3节',
+    boundaryDescription: `${primary.description}${intakeDesc}。`,
+    keyParams: `湖库规模=${scale}(${basis}), 取水口类型=${intakeType}, 水域半径=${primary.radiusM}m, 陆域外延=${primary.landExtM}m`,
+    standard: 'HJ 338-2018 第5.3.1节',
+    lakeExt: {
+      intakeType,
+      waterArea: Math.round(waterArea * 100) / 100,
+      landArea: Math.round(landArea * 100) / 100,
+      intakeDepth: intakeType === '分层取水' ? intakeDepth : undefined,
+    },
   });
 
-  // 二级保护区：整个水域 + 陆域一定范围
-  // 小型：整个水域面积，大中型：一级外侧至分水岭
-  const secondaryArea = scale === '小型' ? area : Math.max(area, primaryArea * 2);
+  // ===== 二级保护区 =====
+  let secondaryWaterArea: number;
+  let secondaryLandArea: number;
+  let secondaryDesc: string;
+
+  if (lakeSecondary.wholeWater) {
+    // 小型：整个水域 + 陆域外延
+    secondaryWaterArea = Math.max(area, primaryArea);
+    secondaryLandArea = Math.max(area * 0.5, 1.0); // 陆域估算
+    secondaryDesc = `小型湖库：整个水域划为二级保护区，陆域为水域外延不小于${lakeSecondary.landExtM}m`;
+  } else {
+    // 大中型：一级外延 + 陆域外延
+    const secRadiusM = primary.radiusM + lakeSecondary.waterExtM;
+    const secFullArea = (Math.PI * secRadiusM * secRadiusM) / 1e6;
+    secondaryWaterArea =
+      intakeType === '岸边' ? (secFullArea - fullCircleArea) / 2 : secFullArea - fullCircleArea;
+    // 陆域：二级水域边界外延
+    const secLandRadiusM = secRadiusM + lakeSecondary.landExtM;
+    const secFullLandArea = (Math.PI * secLandRadiusM * secLandRadiusM) / 1e6;
+    secondaryLandArea =
+      intakeType === '岸边' ? (secFullLandArea - secFullArea) / 2 : secFullLandArea - secFullArea;
+    secondaryDesc = `二级保护区为一级保护区外不小于${lakeSecondary.waterExtM}m范围水域，陆域外延不小于${lakeSecondary.landExtM}m`;
+  }
+
+  const secondaryArea = secondaryWaterArea + secondaryLandArea;
 
   zones.push({
     level: '二级',
     method: '经验值法',
-    formula:
-      scale === '小型'
-        ? '小型水库：整个汇水区域'
-        : `二级保护区面积不小于一级保护区面积，约${Math.round(secondaryArea)}km²`,
+    formula: secondaryDesc,
     area: Math.round(secondaryArea * 100) / 100,
-    boundaryDescription:
-      scale === '小型'
-        ? '小型湖库：将整个水面划为一级保护区，整个汇水区域划为二级保护区。'
-        : `二级保护区为一级保护区外的水域及沿岸一定范围的陆域，面积不小于${Math.round(secondaryArea)}km²。`,
-    keyParams: `湖库规模=${scale}, 水域面积=${area}km²`,
-    standard: 'HJ 338-2018 第5.3节',
+    boundaryDescription: `${secondaryDesc}。`,
+    keyParams: `湖库规模=${scale}, 水域面积=${Math.round(secondaryWaterArea * 100) / 100}km², 陆域面积=${Math.round(secondaryLandArea * 100) / 100}km²`,
+    standard: 'HJ 338-2018 第5.3.2节',
+    lakeExt: {
+      intakeType,
+      waterArea: Math.round(secondaryWaterArea * 100) / 100,
+      landArea: Math.round(secondaryLandArea * 100) / 100,
+    },
   });
 
-  // P3-2: 准保护区 — 湖库型准保护区为二级保护区外侧至分水岭/汇水区边界
-  const quasiArea =
-    scale === '小型'
-      ? Math.max(area * 0.5, secondaryArea * 0.3) // 小型：汇水区外扩
-      : Math.max(secondaryArea * 1.5, area); // 大中型：一级外侧至分水岭
+  // ===== 准保护区 =====
+  const quasiArea = secondaryArea * 1.5;
 
   zones.push({
     level: '准保护区',
     method: '经验值法',
-    formula:
-      scale === '小型'
-        ? `准保护区：汇水区外侧，估算面积约${Math.round(quasiArea)}km²`
-        : `准保护区：二级外侧至分水岭，估算面积约${Math.round(quasiArea)}km²`,
+    formula: `准保护区：二级外侧至分水岭，估算面积约${Math.round(quasiArea)}km²`,
     area: Math.round(quasiArea * 100) / 100,
-    boundaryDescription:
-      scale === '小型'
-        ? '小型湖库准保护区为二级保护区外侧至分水岭的区域。'
-        : `大中型湖库准保护区为二级保护区外侧至流域分水岭边界，面积不小于${Math.round(quasiArea)}km²。实际划定应基于流域汇水分析。`,
+    boundaryDescription: `湖库${scale}准保护区为二级保护区外侧至流域分水岭/汇水区边界，估算面积约${Math.round(quasiArea)}km²。实际划定应基于流域地形分析。`,
     keyParams: `湖库规模=${scale}`,
-    standard: 'HJ 338-2018 第5.3节',
+    standard: 'HJ 338-2018 第5.3.3节',
   });
 
   return zones;
@@ -529,9 +792,14 @@ export function inferDefaultParams(type: '地表水' | '地下水', subType?: st
   if (type === '地表水') {
     // 湖库型 vs 河流型
     if (subType?.includes('湖') || subType?.includes('库') || subType?.includes('南水北调')) {
-      return { sourceType: '地表水', swType: '湖库型', reservoirSize: '中型' };
+      return {
+        sourceType: '地表水',
+        swType: '湖库型',
+        reservoirSize: '中型',
+        intakeType: '湖心',
+      };
     }
-    return { sourceType: '地表水', swType: '河流型' };
+    return { sourceType: '地表水', swType: '河流型', isTidal: false };
   }
 
   // 地下水

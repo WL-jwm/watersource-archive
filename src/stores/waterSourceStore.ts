@@ -99,7 +99,11 @@ export interface ZoneCalcRecord {
     ne?: string;
     riverFlow?: string;
     riverWidth?: string;
+    riverDepth?: string;
+    riverSlope?: string;
     lakeArea?: string;
+    lakeCapacity?: string;
+    maxDepth?: string;
   };
 }
 

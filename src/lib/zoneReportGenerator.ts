@@ -30,6 +30,19 @@ import type { ZoneCalcRecord } from '@/stores/waterSourceStore';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 import { generateBatchVertices, type SourceZoneVertices } from './zoneCoordGenerator';
 
+// ===== 报告章节枚举 =====
+export type ReportChapter =
+  | 'cover' // 封面
+  | 'overview' // 第一章 概述
+  | 'sourceList' // 第二章 水源地概况
+  | 'calcDetail' // 第三章 保护区划分结果
+  | 'vertices' // 拐点坐标表（第三章子节）
+  | 'sensitivity' // 敏感性分析（第三章子节）
+  | 'summary' // 第四章 汇总统计
+  | 'compliance'; // 第五章 合规性检查（可选）
+
+export type ReportTemplate = 'simple' | 'standard' | 'detailed';
+
 // ===== 报告选项 =====
 
 export interface ReportOptions {
@@ -41,6 +54,49 @@ export interface ReportOptions {
   vertexCount?: number;
   /** 报告标题（默认自动生成） */
   title?: string;
+}
+
+// ===== 报告配置（B1增强） =====
+
+export interface ReportConfig extends ReportOptions {
+  /** 选中的章节 */
+  chapters?: ReportChapter[];
+  /** 模板 */
+  template?: ReportTemplate;
+  /** 报告编号 */
+  reportNumber?: string;
+  /** 编制单位 */
+  compileUnit?: string;
+  /** 委托单位 */
+  entrustUnit?: string;
+  /** 审核人 */
+  reviewer?: string;
+  /** 编制人 */
+  compiler?: string;
+  /** 嵌入的图件数据URL列表 */
+  imageUrls?: string[];
+}
+
+/** 模板预设章节 */
+const TEMPLATE_CHAPTERS: Record<ReportTemplate, ReportChapter[]> = {
+  simple: ['cover', 'overview', 'sourceList', 'calcDetail', 'summary'],
+  standard: ['cover', 'overview', 'sourceList', 'calcDetail', 'vertices', 'summary'],
+  detailed: [
+    'cover',
+    'overview',
+    'sourceList',
+    'calcDetail',
+    'vertices',
+    'sensitivity',
+    'summary',
+    'compliance',
+  ],
+};
+
+/** 生成报告编号 HJ-YYYY-NNN-CCCCCC */
+export function generateReportNumber(year: number, seq: number, cityCode?: string): string {
+  const seqStr = String(seq).padStart(3, '0');
+  return `HJ-${year}-${seqStr}${cityCode ? `-${cityCode}` : ''}`;
 }
 
 // ===== 辅助：创建段落 =====
@@ -214,9 +270,15 @@ export async function generateBatchReports(
 export async function generateZoneReport(
   results: ZoneCalcRecord[],
   sources: WaterSourceRecord[],
-  options: ReportOptions = {},
+  options: ReportOptions | ReportConfig = {},
 ): Promise<void> {
   const { cityNames = [], includeVertices = true, vertexCount = 24 } = options;
+  // B1: 章节配置
+  const config = options as ReportConfig;
+  const template = config.template || 'standard';
+  const chapters = config.chapters || TEMPLATE_CHAPTERS[template] || TEMPLATE_CHAPTERS.standard;
+  const hasChapter = (ch: ReportChapter) => chapters.includes(ch);
+  const effectiveIncludeVertices = includeVertices && hasChapter('vertices');
 
   // 建立映射
   const sourceMap = new Map<string, WaterSourceRecord>();
@@ -243,7 +305,7 @@ export async function generateZoneReport(
 
   // 生成拐点坐标数据
   let vertexData: Map<string, SourceZoneVertices> | null = null;
-  if (includeVertices) {
+  if (effectiveIncludeVertices) {
     const batchItems = filtered
       .map((r) => {
         const src = sourceMap.get(r.sourceId) || sourceNameMap.get(r.sourceName);
@@ -268,253 +330,289 @@ export async function generateZoneReport(
   const children: (Paragraph | Table)[] = [];
 
   // 封面
-  children.push(emptyLine());
-  children.push(emptyLine());
-  children.push(emptyLine());
-  children.push(emptyLine());
-  children.push(title(reportTitle));
-  children.push(
-    subtitle(
-      `（共${filtered.length}个水源地，${includeVertices ? '含拐点坐标' : '不含拐点坐标'}）`,
-    ),
-  );
-  children.push(subtitle(`生成日期：${new Date().toLocaleDateString('zh-CN')}`));
-  children.push(emptyLine());
-  children.push(emptyLine());
-  children.push(bodyText('依据：HJ 338-2018《饮用水水源保护区划分技术规范》'));
-  children.push(emptyLine());
+  if (hasChapter('cover')) {
+    children.push(emptyLine());
+    children.push(emptyLine());
+    children.push(emptyLine());
+    children.push(emptyLine());
+    // B1: 报告编号
+    if (config.reportNumber) {
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: `报告编号：${config.reportNumber}`,
+              size: 21,
+              font: 'SimSun',
+            }),
+          ],
+          alignment: AlignmentType.RIGHT,
+          spacing: { after: 200 },
+        }),
+      );
+    }
+    children.push(title(reportTitle));
+    children.push(
+      subtitle(
+        `（共${filtered.length}个水源地，${effectiveIncludeVertices ? '含拐点坐标' : '不含拐点坐标'}）`,
+      ),
+    );
+    children.push(subtitle(`生成日期：${new Date().toLocaleDateString('zh-CN')}`));
+    children.push(emptyLine());
+    children.push(emptyLine());
+    children.push(bodyText('依据：HJ 338-2018《饮用水水源保护区划分技术规范》'));
+    // B1: 元数据
+    if (config.compileUnit || config.entrustUnit || config.compiler || config.reviewer) {
+      children.push(emptyLine());
+      if (config.entrustUnit) children.push(bodyText(`委托单位：${config.entrustUnit}`));
+      if (config.compileUnit) children.push(bodyText(`编制单位：${config.compileUnit}`));
+      if (config.compiler) children.push(bodyText(`编制人：${config.compiler}`));
+      if (config.reviewer) children.push(bodyText(`审核人：${config.reviewer}`));
+    }
+    children.push(emptyLine());
 
-  // 分页
-  children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+    // 分页
+    children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+  }
 
-  // 第一章 概述
-  children.push(heading1('第一章 概述'));
-
-  children.push(heading2('1.1 划分依据'));
-  children.push(bodyText('本次饮用水水源保护区划分依据以下技术规范和标准：'));
-  children.push(bodyText('（1）HJ 338-2018《饮用水水源保护区划分技术规范》'));
-  children.push(bodyText('（2）《中华人民共和国水污染防治法》（2017年修正）'));
-  children.push(bodyText('（3）《河北省集中式饮用水水源地保护区划分方案》'));
-  children.push(emptyLine());
-
-  children.push(heading2('1.2 划分范围'));
-  children.push(
-    bodyText(
-      `本次划分范围涵盖${cityLabel}共${filtered.length}个集中式饮用水水源地。其中地下水水源地${filtered.filter((r) => r.params.sourceType === '地下水').length}个，地表水水源地${filtered.filter((r) => r.params.sourceType === '地表水').length}个。`,
-    ),
-  );
-  children.push(emptyLine());
-
-  // 计算方法统计
+  // 统计计算方法（供 overview 和 summary 使用）
   const empiricalCount = filtered.filter((r) =>
     r.zones.some((z) => z.method === '经验值法'),
   ).length;
   const analyticalCount = filtered.filter((r) => r.zones.some((z) => z.method === '解析法')).length;
-  children.push(heading2('1.3 划分方法'));
-  children.push(bodyText(`本次保护区划分采用以下方法：`));
-  if (empiricalCount > 0) {
-    children.push(
-      bodyText(
-        `（1）经验值法：适用于${empiricalCount}个水源地。根据地下水类型（孔隙水/裂隙水/岩溶水）或地表水类型（河流型/湖库型）查表取典型半径值。`,
-      ),
-    );
-  }
-  if (analyticalCount > 0) {
-    children.push(
-      bodyText(
-        `（2）解析法（Cooper-Jacob）：适用于${analyticalCount}个水源地。基于Cooper-Jacob近似解，通过导水系数T和储水系数S计算给定运移时间t内污染物运移距离。一级保护区取t=60天，二级保护区取t=25年。`,
-      ),
-    );
-  }
-  children.push(emptyLine());
 
-  // 分页
-  children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+  // 第一章 概述
+  if (hasChapter('overview')) {
+    children.push(heading1('第一章 概述'));
+
+    children.push(heading2('1.1 划分依据'));
+    children.push(bodyText('本次饮用水水源保护区划分依据以下技术规范和标准：'));
+    children.push(bodyText('（1）HJ 338-2018《饮用水水源保护区划分技术规范》'));
+    children.push(bodyText('（2）《中华人民共和国水污染防治法》（2017年修正）'));
+    children.push(bodyText('（3）《河北省集中式饮用水水源地保护区划分方案》'));
+    children.push(emptyLine());
+
+    children.push(heading2('1.2 划分范围'));
+    children.push(
+      bodyText(
+        `本次划分范围涵盖${cityLabel}共${filtered.length}个集中式饮用水水源地。其中地下水水源地${filtered.filter((r) => r.params.sourceType === '地下水').length}个，地表水水源地${filtered.filter((r) => r.params.sourceType === '地表水').length}个。`,
+      ),
+    );
+    children.push(emptyLine());
+
+    // 计算方法统计
+    children.push(heading2('1.3 划分方法'));
+    children.push(bodyText(`本次保护区划分采用以下方法：`));
+    if (empiricalCount > 0) {
+      children.push(
+        bodyText(
+          `（1）经验值法：适用于${empiricalCount}个水源地。根据地下水类型（孔隙水/裂隙水/岩溶水）或地表水类型（河流型/湖库型）查表取典型半径值。`,
+        ),
+      );
+    }
+    if (analyticalCount > 0) {
+      children.push(
+        bodyText(
+          `（2）解析法（Cooper-Jacob）：适用于${analyticalCount}个水源地。基于Cooper-Jacob近似解，通过导水系数T和储水系数S计算给定运移时间t内污染物运移距离。一级保护区取t=60天，二级保护区取t=25年。`,
+        ),
+      );
+    }
+    children.push(emptyLine());
+
+    // 分页
+    children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+  } // end overview
 
   // 第二章 水源地概况
-  children.push(heading1('第二章 水源地概况'));
-  children.push(bodyText('本次划分涉及的饮用水水源地清单如下：'));
-  children.push(emptyLine());
+  if (hasChapter('sourceList')) {
+    children.push(heading1('第二章 水源地概况'));
+    children.push(bodyText('本次划分涉及的饮用水水源地清单如下：'));
+    children.push(emptyLine());
 
-  const sourceListHeaders = [
-    '序号',
-    '水源地名称',
-    '城市',
-    '县区',
-    '级别',
-    '水源类型',
-    '细分类型',
-    '状态',
-  ];
-  const sourceListRows = filtered.map((r, i) => {
-    const src = sourceMap.get(r.sourceId) || sourceNameMap.get(r.sourceName);
-    return [
-      String(i + 1),
-      r.sourceName,
-      src?.cityName || '',
-      src?.county || '',
-      src?.level === 'municipal' ? '市级' : src?.level === 'county' ? '县级' : '乡镇级',
-      r.params.sourceType,
-      r.params.gwType || r.params.swType || '',
-      src?.status || '在用',
+    const sourceListHeaders = [
+      '序号',
+      '水源地名称',
+      '城市',
+      '县区',
+      '级别',
+      '水源类型',
+      '细分类型',
+      '状态',
     ];
-  });
-  children.push(
-    makeTable(sourceListHeaders, sourceListRows, [800, 3500, 1000, 1200, 800, 800, 1000, 800]),
-  );
-  children.push(emptyLine());
+    const sourceListRows = filtered.map((r, i) => {
+      const src = sourceMap.get(r.sourceId) || sourceNameMap.get(r.sourceName);
+      return [
+        String(i + 1),
+        r.sourceName,
+        src?.cityName || '',
+        src?.county || '',
+        src?.level === 'municipal' ? '市级' : src?.level === 'county' ? '县级' : '乡镇级',
+        r.params.sourceType,
+        r.params.gwType || r.params.swType || '',
+        src?.status || '在用',
+      ];
+    });
+    children.push(
+      makeTable(sourceListHeaders, sourceListRows, [800, 3500, 1000, 1200, 800, 800, 1000, 800]),
+    );
+    children.push(emptyLine());
 
-  // 分页
-  children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+    // 分页
+    children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+  } // end sourceList
 
   // 第三章 保护区划分结果
-  children.push(heading1('第三章 保护区划分结果'));
-  children.push(emptyLine());
+  if (hasChapter('calcDetail')) {
+    children.push(heading1('第三章 保护区划分结果'));
+    children.push(emptyLine());
 
-  for (let i = 0; i < filtered.length; i++) {
-    const r = filtered[i];
-    const src = sourceMap.get(r.sourceId) || sourceNameMap.get(r.sourceName);
+    for (let i = 0; i < filtered.length; i++) {
+      const r = filtered[i];
+      const src = sourceMap.get(r.sourceId) || sourceNameMap.get(r.sourceName);
 
-    children.push(heading2(`3.${i + 1} ${r.sourceName}`));
-    children.push(
-      bodyText(
-        `所在城市：${src?.cityName || '未知'}  |  县区：${src?.county || '未知'}  |  级别：${src?.level === 'municipal' ? '市级' : src?.level === 'county' ? '县级' : '乡镇级'}  |  水源类型：${r.params.sourceType}${r.params.gwType ? `（${r.params.gwType}）` : r.params.swType ? `（${r.params.swType}）` : ''}`,
-      ),
-    );
+      children.push(heading2(`3.${i + 1} ${r.sourceName}`));
+      children.push(
+        bodyText(
+          `所在城市：${src?.cityName || '未知'}  |  县区：${src?.county || '未知'}  |  级别：${src?.level === 'municipal' ? '市级' : src?.level === 'county' ? '县级' : '乡镇级'}  |  水源类型：${r.params.sourceType}${r.params.gwType ? `（${r.params.gwType}）` : r.params.swType ? `（${r.params.swType}）` : ''}`,
+        ),
+      );
 
-    if (src?.lng != null && src?.lat != null) {
-      children.push(bodyText(`中心坐标：东经${src.lng.toFixed(6)}°，北纬${src.lat.toFixed(6)}°`));
-    }
-
-    // 警告信息
-    if (r.warnings.length > 0) {
-      for (const w of r.warnings) {
-        children.push(bodyText(`注意：${w}`));
+      if (src?.lng != null && src?.lat != null) {
+        children.push(bodyText(`中心坐标：东经${src.lng.toFixed(6)}°，北纬${src.lat.toFixed(6)}°`));
       }
-    }
 
-    // 逐级保护区
-    for (const zone of r.zones) {
-      children.push(heading3(`${zone.level}保护区`));
-      children.push(bodyText(`面积：${zone.area} km²`));
-      if (zone.radius) {
-        children.push(bodyText(`半径：${zone.radius} m`));
+      // 警告信息
+      if (r.warnings.length > 0) {
+        for (const w of r.warnings) {
+          children.push(bodyText(`注意：${w}`));
+        }
       }
-      if (zone.length && zone.width) {
-        children.push(bodyText(`长度：${zone.length} m  |  宽度：${zone.width} m`));
-      }
-      children.push(bodyText(`计算方法：${zone.method}`));
-      children.push(bodyText(`边界描述：${zone.boundaryDescription}`));
-      children.push(emptyLine());
 
-      // 拐点坐标表
-      if (includeVertices && vertexData) {
-        const sv = vertexData.get(r.sourceId);
-        if (sv) {
-          const zv = sv.zones.find((z) => z.level === zone.level);
-          if (zv && zv.vertices.length > 0) {
-            children.push(bodyTextBold(`${zone.level}保护区拐点坐标表：`));
-            const vertHeaders = ['拐点编号', '东经(°)', '北纬(°)', '方位角(°)'];
-            const vertRows = zv.vertices.map((v) => [
-              v.id,
-              v.lng.toFixed(6),
-              v.lat.toFixed(6),
-              String(v.azimuth),
-            ]);
-            children.push(makeTable(vertHeaders, vertRows, [1200, 2500, 2500, 1500]));
-            children.push(emptyLine());
+      // 逐级保护区
+      for (const zone of r.zones) {
+        children.push(heading3(`${zone.level}保护区`));
+        children.push(bodyText(`面积：${zone.area} km²`));
+        if (zone.radius) {
+          children.push(bodyText(`半径：${zone.radius} m`));
+        }
+        if (zone.length && zone.width) {
+          children.push(bodyText(`长度：${zone.length} m  |  宽度：${zone.width} m`));
+        }
+        children.push(bodyText(`计算方法：${zone.method}`));
+        children.push(bodyText(`边界描述：${zone.boundaryDescription}`));
+        children.push(emptyLine());
+
+        // 拐点坐标表
+        if (effectiveIncludeVertices && vertexData) {
+          const sv = vertexData.get(r.sourceId);
+          if (sv) {
+            const zv = sv.zones.find((z) => z.level === zone.level);
+            if (zv && zv.vertices.length > 0) {
+              children.push(bodyTextBold(`${zone.level}保护区拐点坐标表：`));
+              const vertHeaders = ['拐点编号', '东经(°)', '北纬(°)', '方位角(°)'];
+              const vertRows = zv.vertices.map((v) => [
+                v.id,
+                v.lng.toFixed(6),
+                v.lat.toFixed(6),
+                String(v.azimuth),
+              ]);
+              children.push(makeTable(vertHeaders, vertRows, [1200, 2500, 2500, 1500]));
+              children.push(emptyLine());
+            }
           }
         }
       }
+
+      children.push(emptyLine());
+
+      // 每5个水源地分页
+      if ((i + 1) % 5 === 0 && i < filtered.length - 1) {
+        children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+      }
     }
 
-    children.push(emptyLine());
-
-    // 每5个水源地分页
-    if ((i + 1) % 5 === 0 && i < filtered.length - 1) {
-      children.push(new Paragraph({ children: [], pageBreakBefore: true }));
-    }
-  }
-
-  // 分页
-  children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+    // 分页
+    children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+  } // end calcDetail
 
   // 第四章 汇总统计
-  children.push(heading1('第四章 汇总统计'));
-  children.push(emptyLine());
+  if (hasChapter('summary')) {
+    children.push(heading1('第四章 汇总统计'));
+    children.push(emptyLine());
 
-  children.push(heading2('4.1 各市保护区面积统计'));
-  const cityAreaMap = new Map<
-    string,
-    { primary: number; secondary: number; quasi: number; count: number }
-  >();
-  for (const r of filtered) {
-    const src = sourceMap.get(r.sourceId) || sourceNameMap.get(r.sourceName);
-    const city = src?.cityName || '未知';
-    if (!cityAreaMap.has(city))
-      cityAreaMap.set(city, { primary: 0, secondary: 0, quasi: 0, count: 0 });
-    const entry = cityAreaMap.get(city)!;
-    entry.count++;
-    const z1 = r.zones.find((z) => z.level === '一级');
-    const z2 = r.zones.find((z) => z.level === '二级');
-    const zq = r.zones.find((z) => z.level === '准保护区');
-    if (z1) entry.primary += z1.area;
-    if (z2) entry.secondary += z2.area;
-    if (zq) entry.quasi += zq.area;
-  }
+    children.push(heading2('4.1 各市保护区面积统计'));
+    const cityAreaMap = new Map<
+      string,
+      { primary: number; secondary: number; quasi: number; count: number }
+    >();
+    for (const r of filtered) {
+      const src = sourceMap.get(r.sourceId) || sourceNameMap.get(r.sourceName);
+      const city = src?.cityName || '未知';
+      if (!cityAreaMap.has(city))
+        cityAreaMap.set(city, { primary: 0, secondary: 0, quasi: 0, count: 0 });
+      const entry = cityAreaMap.get(city)!;
+      entry.count++;
+      const z1 = r.zones.find((z) => z.level === '一级');
+      const z2 = r.zones.find((z) => z.level === '二级');
+      const zq = r.zones.find((z) => z.level === '准保护区');
+      if (z1) entry.primary += z1.area;
+      if (z2) entry.secondary += z2.area;
+      if (zq) entry.quasi += zq.area;
+    }
 
-  const cityAreaHeaders = [
-    '城市',
-    '水源地数量',
-    '一级面积(km²)',
-    '二级面积(km²)',
-    '准保护区(km²)',
-    '合计面积(km²)',
-  ];
-  const cityAreaRows = Array.from(cityAreaMap.entries())
-    .sort((a, b) => a[0].localeCompare(b[0], 'zh'))
-    .map(([city, data]) => [
-      city,
-      String(data.count),
-      data.primary.toFixed(2),
-      data.secondary.toFixed(2),
-      data.quasi.toFixed(2),
-      (data.primary + data.secondary + data.quasi).toFixed(2),
+    const cityAreaHeaders = [
+      '城市',
+      '水源地数量',
+      '一级面积(km²)',
+      '二级面积(km²)',
+      '准保护区(km²)',
+      '合计面积(km²)',
+    ];
+    const cityAreaRows = Array.from(cityAreaMap.entries())
+      .sort((a, b) => a[0].localeCompare(b[0], 'zh'))
+      .map(([city, data]) => [
+        city,
+        String(data.count),
+        data.primary.toFixed(2),
+        data.secondary.toFixed(2),
+        data.quasi.toFixed(2),
+        (data.primary + data.secondary + data.quasi).toFixed(2),
+      ]);
+
+    // 合计行
+    const totalPrimary = Array.from(cityAreaMap.values()).reduce((s, d) => s + d.primary, 0);
+    const totalSecondary = Array.from(cityAreaMap.values()).reduce((s, d) => s + d.secondary, 0);
+    const totalQuasi = Array.from(cityAreaMap.values()).reduce((s, d) => s + d.quasi, 0);
+    cityAreaRows.push([
+      '合  计',
+      String(filtered.length),
+      totalPrimary.toFixed(2),
+      totalSecondary.toFixed(2),
+      totalQuasi.toFixed(2),
+      (totalPrimary + totalSecondary + totalQuasi).toFixed(2),
     ]);
 
-  // 合计行
-  const totalPrimary = Array.from(cityAreaMap.values()).reduce((s, d) => s + d.primary, 0);
-  const totalSecondary = Array.from(cityAreaMap.values()).reduce((s, d) => s + d.secondary, 0);
-  const totalQuasi = Array.from(cityAreaMap.values()).reduce((s, d) => s + d.quasi, 0);
-  cityAreaRows.push([
-    '合  计',
-    String(filtered.length),
-    totalPrimary.toFixed(2),
-    totalSecondary.toFixed(2),
-    totalQuasi.toFixed(2),
-    (totalPrimary + totalSecondary + totalQuasi).toFixed(2),
-  ]);
+    children.push(makeTable(cityAreaHeaders, cityAreaRows, [1400, 1100, 1600, 1600, 1600, 1600]));
+    children.push(emptyLine());
 
-  children.push(makeTable(cityAreaHeaders, cityAreaRows, [1400, 1100, 1600, 1600, 1600, 1600]));
-  children.push(emptyLine());
-
-  children.push(heading2('4.2 计算方法统计'));
-  const methodHeaders = ['计算方法', '水源地数量', '占比'];
-  const methodRows = [
-    [
-      '经验值法',
-      String(empiricalCount),
-      `${((empiricalCount / filtered.length) * 100).toFixed(1)}%`,
-    ],
-    [
-      '解析法',
-      String(analyticalCount),
-      `${((analyticalCount / filtered.length) * 100).toFixed(1)}%`,
-    ],
-    ['合  计', String(filtered.length), '100%'],
-  ];
-  children.push(makeTable(methodHeaders, methodRows, [2000, 1500, 1500]));
-  children.push(emptyLine());
+    children.push(heading2('4.2 计算方法统计'));
+    const methodHeaders = ['计算方法', '水源地数量', '占比'];
+    const methodRows = [
+      [
+        '经验值法',
+        String(empiricalCount),
+        `${((empiricalCount / filtered.length) * 100).toFixed(1)}%`,
+      ],
+      [
+        '解析法',
+        String(analyticalCount),
+        `${((analyticalCount / filtered.length) * 100).toFixed(1)}%`,
+      ],
+      ['合  计', String(filtered.length), '100%'],
+    ];
+    children.push(makeTable(methodHeaders, methodRows, [2000, 1500, 1500]));
+    children.push(emptyLine());
+  } // end summary
 
   // ===== 生成文件 =====
   const doc = new Document({
