@@ -27,6 +27,7 @@ import {
 } from '@/lib/zoneReportGenerator';
 import { generatePdfReport } from '@/lib/reportPdfExporter';
 import ReportConfigModal from '@/components/ReportConfigModal';
+import BatchReportModal from '@/components/BatchReportModal';
 import WellFieldCalc from '@/components/WellFieldCalc';
 import CompliancePanel from '@/components/CompliancePanel';
 import QuickCalcPanel from '@/components/protection-zone/QuickCalcPanel';
@@ -53,6 +54,8 @@ function ProtectionZoneCalc() {
   const [sensitivityResult, setSensitivityResult] = useState<SensitivityResult | null>(null);
   // B1: 报告配置弹窗
   const [reportConfigOpen, setReportConfigOpen] = useState(false);
+  // E2: 批量报告弹窗
+  const [batchReportOpen, setBatchReportOpen] = useState(false);
 
   // B1: 报告生成处理
   const handleGenerateReport = async (config: ReportConfig, format: 'word' | 'pdf' | 'both') => {
@@ -353,40 +356,11 @@ function ProtectionZoneCalc() {
                     </div>
                   </div>
                   <button
-                    onClick={async () => {
-                      if (
-                        !confirm(
-                          `将按城市分组生成${
-                            new Set(
-                              zoneResults.map((r) => {
-                                const s = sources.find((s) => s.name === r.sourceName);
-                                return s?.cityName || '未知';
-                              }),
-                            ).size
-                          }个独立Word报告文件，是否继续？`,
-                        )
-                      )
-                        return;
-                      setBatchExporting(true);
-                      setBatchProgress({ current: 0, total: 0, cityName: '' });
-                      try {
-                        await generateBatchReports(zoneResults, sources, {
-                          includeVertices: true,
-                          onProgress: (current, total, cityName) => {
-                            setBatchProgress({ current, total, cityName });
-                          },
-                        });
-                      } finally {
-                        setBatchExporting(false);
-                        setBatchProgress(null);
-                      }
-                    }}
+                    onClick={() => setBatchReportOpen(true)}
                     disabled={batchExporting}
                     className="text-xs px-2 py-1 rounded border border-indigo-200 text-indigo-700 hover:bg-indigo-50 disabled:opacity-50"
                   >
-                    {batchExporting
-                      ? `导出中 ${batchProgress ? `${batchProgress.current}/${batchProgress.total}` : ''}`
-                      : '批量导出(按城市分报告)'}
+                    批量报告生成
                   </button>
                 </>
               )}
@@ -804,6 +778,13 @@ function ProtectionZoneCalc() {
         open={reportConfigOpen}
         onClose={() => setReportConfigOpen(false)}
         onGenerate={handleGenerateReport}
+      />
+      {/* E2: 批量报告生成弹窗 */}
+      <BatchReportModal
+        open={batchReportOpen}
+        onClose={() => setBatchReportOpen(false)}
+        results={zoneResults}
+        sources={sources}
       />
     </div>
   );

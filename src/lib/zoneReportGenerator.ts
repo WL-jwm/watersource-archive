@@ -271,7 +271,8 @@ export async function generateZoneReport(
   results: ZoneCalcRecord[],
   sources: WaterSourceRecord[],
   options: ReportOptions | ReportConfig = {},
-): Promise<void> {
+  returnBlob: boolean = false,
+): Promise<void | Blob> {
   const { cityNames = [], includeVertices = true, vertexCount = 24 } = options;
   // B1: 章节配置
   const config = options as ReportConfig;
@@ -299,8 +300,8 @@ export async function generateZoneReport(
   }
 
   if (filtered.length === 0) {
-    alert('没有可生成报告的计算结果');
-    return;
+    if (!returnBlob) alert('没有可生成报告的计算结果');
+    return returnBlob ? new Blob([], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }) : undefined;
   }
 
   // 生成拐点坐标数据
@@ -629,6 +630,20 @@ export async function generateZoneReport(
   });
 
   const blob = await Packer.toBlob(doc);
+  if (returnBlob) return blob;
   const dateStr = new Date().toISOString().slice(0, 10);
   saveAs(blob, `${cityLabel}水源地保护区划分报告_${dateStr}.docx`);
+}
+
+/**
+ * E2: 生成报告内容 Blob（不触发下载）
+ * 供 batchReportPackager 打包 ZIP 使用
+ * 直接调用 generateZoneReport 的 returnBlob 模式
+ */
+export async function generateZoneReportContent(
+  results: ZoneCalcRecord[],
+  sources: WaterSourceRecord[],
+  options: ReportOptions | ReportConfig = {},
+): Promise<Blob> {
+  return await generateZoneReport(results, sources, options, true) as unknown as Blob;
 }
