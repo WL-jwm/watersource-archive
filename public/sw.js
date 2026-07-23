@@ -8,7 +8,7 @@
  * 4. 行政区划JSON → Cache First（静态数据）
  */
 
-const CACHE_VERSION = 'ws-archive-v1';
+const CACHE_VERSION = 'ws-archive-v2'; // G1: 升级缓存版本
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 

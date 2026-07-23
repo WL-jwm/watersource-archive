@@ -2,6 +2,8 @@ import React, { Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Layout from '@/components/layout/Layout';
+import { OfflineIndicator, SWUpdateToast, InstallPromptBanner } from '@/lib/pwaEnhanced';
+// pwaEnhanced.tsx contains PWA hooks and UI components
 
 // F3: 路由级懒加载 — 按页面拆分 chunk，减小首屏加载体积
 const Home = lazy(() => import('@/pages/Home'));
@@ -28,6 +30,9 @@ const App: React.FC = () => {
   return (
     <HashRouter>
       <ErrorBoundary>
+        <OfflineIndicator />
+        <SWUpdateToast />
+        <InstallPromptBanner />
         <Layout>
           <Suspense fallback={<PageFallback />}>
             <Routes>
