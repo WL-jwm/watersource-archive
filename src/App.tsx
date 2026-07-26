@@ -15,6 +15,7 @@ const WaterSourceManager = lazy(() => import('@/pages/WaterSourceManager'));
 const ProtectionZoneCalc = lazy(() => import('@/pages/ProtectionZoneCalc'));
 const ProjectAnalysis = lazy(() => import('@/pages/ProjectAnalysis'));
 const VersionHistory = lazy(() => import('@/pages/VersionHistory'));
+const AuditLog = lazy(() => import('@/pages/AuditLog'));
 
 /** 懒加载回退 UI */
 const PageFallback = () => (
@@ -45,6 +46,7 @@ const App: React.FC = () => {
               <Route path="/versions" element={<VersionHistory />} />
               <Route path="/report/:id" element={<ReportDetail />} />
               <Route path="/divisions" element={<DivisionOverview />} />
+              <Route path="/audit" element={<AuditLog />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

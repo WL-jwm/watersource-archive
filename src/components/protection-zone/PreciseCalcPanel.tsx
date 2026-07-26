@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useWaterSourceStore, type WaterSourceRecord, type ZoneCalcRecord } from '@/stores/waterSourceStore';
 import { calcProtectionZones, type CalcParams, type CalcResult } from '@/lib/zoneCalcEngine';
+import ParamRecommendV2Modal from './ParamRecommendV2Modal';
 import {
   type RecommendedParams,
   PARAM_RECOMMENDATIONS,
@@ -22,6 +23,8 @@ function PreciseCalcPanel({ onResult }: {
   const [recommendation, setRecommendation] = useState<RecommendedParams | null>(null);
   const [showRecommendation, setShowRecommendation] = useState(false);
   const [recommendSource, setRecommendSource] = useState<string>('');
+  // P0: V2智能推荐弹窗
+  const [v2ModalOpen, setV2ModalOpen] = useState(false);
 
   // 解析法参数
   const [K, setK] = useState<string>('');
@@ -293,6 +296,35 @@ function PreciseCalcPanel({ onResult }: {
     setShowRecommendation(false);
   };
 
+  // P0: V2推荐参数应用回调
+  const handleV2Apply = (v2: {
+    sourceName: string;
+    sourceType: '地下水' | '地表水';
+    gwType?: '孔隙水' | '裂隙水' | '岩溶水';
+    swType?: '河流型' | '湖库型';
+    reservoirSize?: '小型' | '中型' | '大型';
+    K?: string; M?: string; T?: string; I?: string; ne?: string;
+    riverFlow?: string; riverWidth?: string; riverDepth?: string; riverSlope?: string;
+    isTidal?: boolean; intakeType?: string;
+  }) => {
+    if (v2.sourceName) setSourceName(v2.sourceName);
+    setSourceType(v2.sourceType);
+    if (v2.gwType) setGwType(v2.gwType);
+    if (v2.swType) setSwType(v2.swType);
+    if (v2.reservoirSize) setReservoirSize(v2.reservoirSize);
+    if (v2.K !== undefined) setK(v2.K);
+    if (v2.M !== undefined) setM(v2.M);
+    if (v2.T !== undefined) setT(v2.T);
+    if (v2.I !== undefined) setI(v2.I);
+    if (v2.ne !== undefined) setNe(v2.ne);
+    if (v2.riverFlow !== undefined) setRiverFlow(v2.riverFlow);
+    if (v2.riverWidth !== undefined) setRiverWidth(v2.riverWidth);
+    if (v2.riverDepth !== undefined) setRiverDepth(v2.riverDepth);
+    if (v2.riverSlope !== undefined) setRiverSlope(v2.riverSlope);
+    if (v2.isTidal !== undefined) setIsTidal(v2.isTidal);
+    if (v2.intakeType) setIntakeType(v2.intakeType as '岸边' | '湖心' | '分层取水');
+  };
+
   // P3-19: 根据水源地记录设置类型
   const setTypeAndSubtype = (record: WaterSourceRecord) => {
     setSourceType(record.type as '地下水' | '地表水');
@@ -322,6 +354,12 @@ function PreciseCalcPanel({ onResult }: {
             className="text-[10px] px-2 py-1 rounded border border-emerald-200 text-emerald-700 hover:bg-emerald-50 font-medium"
           >
             智能推荐
+          </button>
+          <button
+            onClick={() => setV2ModalOpen(true)}
+            className="text-[10px] px-2 py-1 rounded border border-indigo-200 text-indigo-700 hover:bg-indigo-50 font-medium"
+          >
+            V2推荐
           </button>
           <button
             onClick={loadExample}
@@ -696,6 +734,13 @@ function PreciseCalcPanel({ onResult }: {
       >
         开始计算
       </button>
+      <ParamRecommendV2Modal
+        open={v2ModalOpen}
+        onClose={() => setV2ModalOpen(false)}
+        onApply={handleV2Apply}
+        currentSourceType={sourceType}
+        currentSourceName={sourceName}
+      />
     </div>
   );
 };

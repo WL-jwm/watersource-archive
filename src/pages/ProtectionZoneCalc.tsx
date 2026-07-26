@@ -28,6 +28,7 @@ import {
 import { generatePdfReport } from '@/lib/reportPdfExporter';
 import ReportConfigModal from '@/components/ReportConfigModal';
 import BatchReportModal from '@/components/BatchReportModal';
+import EAConclusionPanel from '@/components/protection-zone/EAConclusionPanel';
 import WellFieldCalc from '@/components/WellFieldCalc';
 import CompliancePanel from '@/components/CompliancePanel';
 import QuickCalcPanel from '@/components/protection-zone/QuickCalcPanel';
@@ -597,6 +598,11 @@ function ProtectionZoneCalc() {
         <div className="rounded-lg p-4 bg-white border border-teal-200">
           <CompliancePanel zoneResults={zoneResults} sources={sources} />
         </div>
+      )}
+
+      {/* P1: 环评结论自动判定 */}
+      {zoneResults.length > 0 && (
+        <EAConclusionPanel zoneResults={zoneResults} />
       )}
 
       {/* P4-3: 行政区划裁剪面板 */}
