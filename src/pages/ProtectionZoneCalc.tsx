@@ -35,6 +35,7 @@ import QuickCalcPanel from '@/components/protection-zone/QuickCalcPanel';
 import PreciseCalcPanel from '@/components/protection-zone/PreciseCalcPanel';
 import ResultCard from '@/components/protection-zone/ResultCard';
 import ComparePanel from '@/components/protection-zone/ComparePanel';
+import ZoneSchemeCompare from '@/components/protection-zone/ZoneSchemeCompare';
 
 
 function ProtectionZoneCalc() {
@@ -228,7 +229,10 @@ function ProtectionZoneCalc() {
       ) : activeTab === 'precise' ? (
         <PreciseCalcPanel onResult={handleSingleResult} />
       ) : (
-        <ComparePanel results={results} />
+        <div className="space-y-4">
+          <ComparePanel results={results} />
+          <ZoneSchemeCompare />
+        </div>
       )}
 
       {/* 结果汇总 */}

@@ -23,6 +23,7 @@ import {
   SENSITIVE_TARGET_TEMPLATES,
 } from '@/lib/bufferAnalysisEngine';
 import { generateSourceZoneVertices } from '@/lib/zoneCoordGenerator';
+import WaterQualityTrendPanel from '@/components/WaterQualityTrendPanel';
 
 // ===== 主页面 =====
 
@@ -547,6 +548,9 @@ const ProjectAnalysis: React.FC = () => {
           )}
         </div>
       )}
+
+      {/* T1: 水质趋势分析 */}
+      <WaterQualityTrendPanel />
 
       {/* 无计算结果提示 */}
       {loaded && zoneResults.length === 0 && (
