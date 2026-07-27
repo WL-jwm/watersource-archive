@@ -2,13 +2,13 @@
  * B1: 报告生成配置弹窗
  *
  * 功能：
- * 1. 模板选择（简版/标准版/详版）
+ * 1. 模板选择（简版/标准版/详版/河北环评版）
  * 2. 章节勾选
  * 3. 元数据填写（编号/编制单位/委托单位/编制人/审核人）
  * 4. 导出格式选择（Word/PDF）
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import type { ReportChapter, ReportTemplate, ReportConfig } from '@/lib/zoneReportGenerator';
 
 const TEMPLATE_CHAPTERS: Record<ReportTemplate, ReportChapter[]> = {
@@ -24,29 +24,47 @@ const TEMPLATE_CHAPTERS: Record<ReportTemplate, ReportChapter[]> = {
     'summary',
     'compliance',
   ],
+  hjjp: [
+    'cover',
+    'foreword',
+    'overview',
+    'sourceList',
+    'hydrogeology',
+    'calcDetail',
+    'vertices',
+    'sensitivity',
+    'summary',
+    'compliance',
+    'suggestion',
+  ],
 };
 
 const CHAPTER_LABELS: Record<ReportChapter, string> = {
   cover: '封面',
+  foreword: '前言（编制依据/评价标准/评价等级）',
   overview: '第一章 概述（依据/范围/方法）',
   sourceList: '第二章 水源地概况（清单表）',
-  calcDetail: '第三章 保护区划分结果',
+  hydrogeology: '第三章 水文地质条件',
+  calcDetail: '第四章 保护区划分结果',
   vertices: '拐点坐标表',
   sensitivity: '敏感性分析',
-  summary: '第四章 汇总统计',
-  compliance: '第五章 合规性检查',
+  summary: '第五章 汇总统计',
+  compliance: '第六章 合规性检查',
+  suggestion: '第七章 结论与建议',
 };
 
 const TEMPLATE_LABELS: Record<ReportTemplate, string> = {
   simple: '简版',
   standard: '标准版',
   detailed: '详版',
+  hjjp: '河北环评版',
 };
 
 const TEMPLATE_DESC: Record<ReportTemplate, string> = {
   simple: '仅含汇总表和统计，适合快速查看',
   standard: '含计算过程和拐点坐标，适合常规提交',
   detailed: '含图件/敏感性分析/合规检查，适合正式归档',
+  hjjp: '对齐HJ 338-2018 + 河北省实施细则，含前言/水文地质/结论建议',
 };
 
 interface ReportConfigModalProps {
@@ -98,13 +116,16 @@ const ReportConfigModal: React.FC<ReportConfigModalProps> = ({ open, onClose, on
 
   const allChapters: ReportChapter[] = [
     'cover',
+    'foreword',
     'overview',
     'sourceList',
+    'hydrogeology',
     'calcDetail',
     'vertices',
     'sensitivity',
     'summary',
     'compliance',
+    'suggestion',
   ];
 
   return (
@@ -123,12 +144,12 @@ const ReportConfigModal: React.FC<ReportConfigModalProps> = ({ open, onClose, on
         {/* 模板选择 */}
         <div className="mb-4">
           <label className="text-xs font-medium text-gray-600 mb-2 block">模板</label>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {(Object.keys(TEMPLATE_LABELS) as ReportTemplate[]).map((t) => (
               <button
                 key={t}
                 onClick={() => handleTemplateChange(t)}
-                className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium border transition-colors ${
+                className={`px-3 py-2 rounded-lg text-xs font-medium border transition-colors text-left ${
                   template === t
                     ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
                     : 'border-gray-200 text-gray-600 hover:bg-gray-50'

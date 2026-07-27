@@ -33,15 +33,18 @@ import { generateBatchVertices, type SourceZoneVertices } from './zoneCoordGener
 // ===== 报告章节枚举 =====
 export type ReportChapter =
   | 'cover' // 封面
+  | 'foreword' // 前言（编制依据/评价标准/评价等级）T9新增
   | 'overview' // 第一章 概述
   | 'sourceList' // 第二章 水源地概况
-  | 'calcDetail' // 第三章 保护区划分结果
-  | 'vertices' // 拐点坐标表（第三章子节）
-  | 'sensitivity' // 敏感性分析（第三章子节）
-  | 'summary' // 第四章 汇总统计
-  | 'compliance'; // 第五章 合规性检查（可选）
+  | 'hydrogeology' // 第三章 水文地质条件 T9新增
+  | 'calcDetail' // 第四章 保护区划分结果
+  | 'vertices' // 拐点坐标表（第四章子节）
+  | 'sensitivity' // 敏感性分析（第四章子节）
+  | 'summary' // 第五章 汇总统计
+  | 'compliance' // 第六章 合规性检查（可选）
+  | 'suggestion'; // 第七章 结论与建议 T9新增
 
-export type ReportTemplate = 'simple' | 'standard' | 'detailed';
+export type ReportTemplate = 'simple' | 'standard' | 'detailed' | 'hjjp';
 
 // ===== 报告选项 =====
 
@@ -90,6 +93,20 @@ const TEMPLATE_CHAPTERS: Record<ReportTemplate, ReportChapter[]> = {
     'sensitivity',
     'summary',
     'compliance',
+  ],
+  // T9: 河北省环评报告标准模板（对齐HJ 338-2018 + 河北省实施细则）
+  hjjp: [
+    'cover',
+    'foreword',
+    'overview',
+    'sourceList',
+    'hydrogeology',
+    'calcDetail',
+    'vertices',
+    'sensitivity',
+    'summary',
+    'compliance',
+    'suggestion',
   ],
 };
 
@@ -382,6 +399,35 @@ export async function generateZoneReport(
   ).length;
   const analyticalCount = filtered.filter((r) => r.zones.some((z) => z.method === '解析法')).length;
 
+  // T9: 前言（编制依据/评价标准/评价等级）
+  if (hasChapter('foreword')) {
+    children.push(heading1('前言'));
+    children.push(heading2('编制依据'));
+    children.push(bodyText('本次饮用水水源保护区划分工作依据以下法律法规和技术规范：'));
+    children.push(bodyText('（1）《中华人民共和国水污染防治法》（2017年修正）'));
+    children.push(bodyText('（2）《中华人民共和国环境保护法》（2014年修订）'));
+    children.push(bodyText('（3）HJ 338-2018《饮用水水源保护区划分技术规范》'));
+    children.push(bodyText('（4）HJ/T 338-2007《饮用水水源保护区划分技术规范》（废止参考）'));
+    children.push(bodyText('（5）GB/T 14848-2017《地下水质量标准》'));
+    children.push(bodyText('（6）GB 3838-2002《地表水环境质量标准》'));
+    children.push(bodyText('（7）《河北省集中式饮用水水源地保护区划分方案》'));
+    children.push(bodyText('（8）《河北省水污染防治条例》'));
+    children.push(emptyLine());
+    children.push(heading2('评价标准'));
+    children.push(bodyText('地下水水源地水质执行GB/T 14848-2017 III类标准；地表水水源地水质执行GB 3838-2002 III类标准。保护区划分级别分为一级保护区、二级保护区和准保护区。'));
+    children.push(emptyLine());
+    children.push(heading2('评价等级'));
+    const fwGwCount = filtered.filter(r => r.params.sourceType === '地下水').length;
+    const fwSwCount = filtered.filter(r => r.params.sourceType === '地表水').length;
+    const fwCitySet = new Set<string>();
+    for (const r of filtered) {
+      const src = sourceMap.get(r.sourceId) || sourceNameMap.get(r.sourceName);
+      if (src?.cityName) fwCitySet.add(src.cityName);
+    }
+    children.push(bodyText(`本次评价共涉及${filtered.length}个集中式饮用水水源地，其中地下水水源地${fwGwCount}个，地表水水源地${fwSwCount}个，分布${fwCitySet.size}个地级市。`));
+    children.push(emptyLine());
+  }
+
   // 第一章 概述
   if (hasChapter('overview')) {
     children.push(heading1('第一章 概述'));
@@ -614,6 +660,26 @@ export async function generateZoneReport(
     children.push(makeTable(methodHeaders, methodRows, [2000, 1500, 1500]));
     children.push(emptyLine());
   } // end summary
+
+  // T9: 第七章 结论与建议
+  if (hasChapter('suggestion')) {
+    const sgGwCount = filtered.filter(r => r.params.sourceType === '地下水').length;
+    const sgSwCount = filtered.filter(r => r.params.sourceType === '地表水').length;
+    const sgPrimary = filtered.reduce((s, r) => s + (r.zones.find(z => z.level === '一级')?.area || 0), 0);
+    const sgSecondary = filtered.reduce((s, r) => s + (r.zones.find(z => z.level === '二级')?.area || 0), 0);
+    const sgQuasi = filtered.reduce((s, r) => s + (r.zones.find(z => z.level === '准保护区')?.area || 0), 0);
+    children.push(heading1('第七章 结论与建议'));
+    children.push(heading2('7.1 主要结论'));
+    children.push(bodyText(`本次饮用水水源保护区划分工作共完成${filtered.length}个水源地的保护区划分，其中地下水水源地${sgGwCount}个、地表水水源地${sgSwCount}个。一级保护区总面积${sgPrimary.toFixed(2)}km²，二级保护区总面积${sgSecondary.toFixed(2)}km²，准保护区总面积${sgQuasi.toFixed(2)}km²。`));
+    children.push(emptyLine());
+    children.push(heading2('7.2 保护措施建议'));
+    children.push(bodyText('（1）一级保护区内禁止新建、改建、扩建与供水设施和保护水源无关的建设项目；'));
+    children.push(bodyText('（2）二级保护区内禁止新建、改建、扩建排放污染物的建设项目；'));
+    children.push(bodyText('（3）准保护区内当直接或间接影响水源水质时，应采取相应防治措施；'));
+    children.push(bodyText('（4）建议定期开展水质监测，建立水源地巡查制度；'));
+    children.push(bodyText('（5）建议编制水源地突发环境事件应急预案。'));
+    children.push(emptyLine());
+  }
 
   // ===== 生成文件 =====
   const doc = new Document({

@@ -16,6 +16,7 @@ import {
   exportKML,
   exportWKT,
   exportBatchGeoJSON as exportAllGeoJSON,
+  exportBatchShapefileZip,
 } from '@/lib/zoneGISExporter';
 import { generateSourceZoneVertices } from '@/lib/zoneCoordGenerator';
 import { clipBatchZones, summarizeClipResults, type SourceClipResult } from '@/lib/zoneClipEngine';
@@ -351,6 +352,16 @@ function ProtectionZoneCalc() {
                         className="w-full text-left text-xs px-3 py-2 hover:bg-purple-50 flex items-center gap-2"
                       >
                         <span className="text-amber-500">●</span> WKT（文本图层）
+                      </button>
+                      <button
+                        onClick={async () => {
+                          const items = prepareGisExport();
+                          if (items.length === 0) return alert('无已保存的计算结果');
+                          await exportBatchShapefileZip(items);
+                        }}
+                        className="w-full text-left text-xs px-3 py-2 hover:bg-purple-50 flex items-center gap-2"
+                      >
+                        <span className="text-purple-500">●</span> Shapefile（.shp/.shx/.dbf ZIP）
                       </button>
                       <div className="border-t border-purple-100 my-1"></div>
                       <div className="px-3 py-1.5 text-[9px] text-gray-400 leading-tight">

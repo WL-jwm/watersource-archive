@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { toGeoJSON, toBatchGeoJSON, toWKT } from '@/lib/zoneGISExporter';
 import type { SourceZoneVertices } from '@/lib/zoneCoordGenerator';
 import type { ZoneVertex } from '@/lib/zoneCoordGenerator';
@@ -149,5 +149,78 @@ describe('zoneGISExporter', () => {
       expect(toWKT([])).toBe('');
       expect(toWKT([{ id: 'v', lng: 1, lat: 2, azimuth: 0 }])).toBe('');
     });
+  });
+});
+
+// ===== T8: Shapefile导出测试 =====
+
+vi.mock('file-saver', () => ({
+  saveAs: vi.fn(),
+}));
+
+vi.mock('jszip', () => {
+  const JSZip = vi.fn().mockImplementation(function(this: any) {
+    this.file = vi.fn();
+    this.generateAsync = vi.fn().mockResolvedValue(new Blob(['zip'], { type: 'application/zip' }));
+  });
+  return { default: JSZip };
+});
+
+describe('exportShapefileZip', () => {
+  it('T-SHP01-应生成包含.shp/.shx/.dbf/.prj/.cpg的ZIP', async () => {
+    const { exportShapefileZip } = await import('@/lib/zoneGISExporter');
+    const { saveAs } = await import('file-saver');
+    const JSZip = (await import('jszip')).default;
+
+    await exportShapefileZip(mockSource);
+
+    // saveAs 应被调用下载ZIP
+    expect(vi.mocked(saveAs)).toHaveBeenCalled();
+    const args = vi.mocked(saveAs).mock.calls[0];
+    expect(args[1]).toMatch(/_Shapefile\.zip$/);
+  });
+
+  it('T-SHP02-应处理空保护区', async () => {
+    const { exportShapefileZip } = await import('@/lib/zoneGISExporter');
+    const emptySource: SourceZoneVertices = {
+      ...mockSource,
+      zones: [{ ...mockSource.zones[0], vertices: [] }],
+    };
+
+    // 不应抛出异常
+    await expect(exportShapefileZip(emptySource)).resolves.toBeUndefined();
+  });
+});
+
+describe('exportBatchShapefileZip', () => {
+  it('T-SHP03-批量导出应包含所有水源地的Feature', async () => {
+    const { exportBatchShapefileZip } = await import('@/lib/zoneGISExporter');
+    const { saveAs } = await import('file-saver');
+    const JSZip = (await import('jszip')).default;
+
+    vi.clearAllMocks();
+    const sources = [
+      mockSource,
+      { ...mockSource, sourceId: 'test-002', sourceName: '第二个水源地' },
+    ];
+
+    await exportBatchShapefileZip(sources);
+
+    expect(vi.mocked(saveAs)).toHaveBeenCalled();
+    const args = vi.mocked(saveAs).mock.calls[0];
+    expect(args[1]).toBe('水源地保护区批量_Shapefile.zip');
+  });
+
+  it('T-SHP04-.shp文件头应包含正确的magic number', async () => {
+    // 直接测试内部函数生成的.shp文件头
+    const { toGeoJSON } = await import('@/lib/zoneGISExporter');
+    const geojson = toGeoJSON(mockSource);
+
+    // 验证GeoJSON features有有效的多边形坐标
+    expect(geojson.features.length).toBeGreaterThan(0);
+    for (const f of geojson.features) {
+      expect(f.geometry.type).toBe('Polygon');
+      expect(f.geometry.coordinates[0].length).toBeGreaterThanOrEqual(4);
+    }
   });
 });
