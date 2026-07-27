@@ -12,15 +12,7 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useWaterSourceStore, type ZoneCalcRecord } from '@/stores/waterSourceStore';
 import type { CalcResult } from '@/lib/zoneCalcEngine';
 import { exportZoneExcel } from '@/lib/zoneExcelExporter';
-import {
-  exportKML,
-  exportWKT,
-  exportBatchGeoJSON as exportAllGeoJSON,
-  exportBatchShapefileZip,
-} from '@/lib/zoneGISExporter';
-import { generateSourceZoneVertices } from '@/lib/zoneCoordGenerator';
-import { clipBatchZones, summarizeClipResults, type SourceClipResult } from '@/lib/zoneClipEngine';
-import { analyzeSensitivity, toChartData, type SensitivityResult } from '@/lib/sensitivityEngine';
+
 import {
   generateZoneReport,
   generateBatchReports,
@@ -37,6 +29,9 @@ import PreciseCalcPanel from '@/components/protection-zone/PreciseCalcPanel';
 import ResultCard from '@/components/protection-zone/ResultCard';
 import ComparePanel from '@/components/protection-zone/ComparePanel';
 import ZoneSchemeCompare from '@/components/protection-zone/ZoneSchemeCompare';
+import SensitivityPanel from '@/components/protection-zone/SensitivityPanel';
+import ZoneClipPanel from '@/components/protection-zone/ZoneClipPanel';
+import GisExportMenu from '@/components/protection-zone/GisExportMenu';
 
 
 function ProtectionZoneCalc() {
@@ -52,9 +47,6 @@ function ProtectionZoneCalc() {
     cityName: string;
   } | null>(null);
   const [batchExporting, setBatchExporting] = useState(false);
-  const [clipResults, setClipResults] = useState<SourceClipResult[] | null>(null);
-  const [clipLoading, setClipLoading] = useState(false);
-  const [sensitivityResult, setSensitivityResult] = useState<SensitivityResult | null>(null);
   // B1: 报告配置弹窗
   const [reportConfigOpen, setReportConfigOpen] = useState(false);
   // E2: 批量报告弹窗
@@ -155,18 +147,6 @@ function ProtectionZoneCalc() {
 
   const clearResults = () => setResults([]);
 
-  // P4-5: 准备GIS导出数据
-  const prepareGisExport = useCallback(() => {
-    return zoneResults
-      .map((zr) => {
-        const source = sources.find((s) => s.name === zr.sourceName);
-        const lng = source?.lng;
-        const lat = source?.lat;
-        if (lng == null || lat == null) return null;
-        return generateSourceZoneVertices(zr.sourceId, zr.sourceName, lng, lat, zr.zones);
-      })
-      .filter(Boolean) as ReturnType<typeof generateSourceZoneVertices>[];
-  }, [zoneResults, sources]);
 
   // 仅地下水水源地用于快速计算
   const gwSources = useMemo(() => sources.filter((s) => s.type === '地下水'), [sources]);
@@ -291,87 +271,8 @@ function ProtectionZoneCalc() {
                   >
                     导出报告(Word/PDF)
                   </button>
-                  {/* P4-5: GIS导出 */}
-                  <div className="relative group inline-block">
-                    <button className="text-xs px-2 py-1 rounded border border-purple-200 text-purple-700 hover:bg-purple-50 flex items-center gap-1">
-                      <svg
-                        className="w-3 h-3"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-                        />
-                      </svg>
-                      GIS导出
-                      <svg
-                        className="w-2.5 h-2.5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </button>
-                    <div className="absolute right-0 top-full mt-1 bg-white border border-purple-200 rounded-lg shadow-lg py-1 w-44 z-30 hidden group-hover:block">
-                      <button
-                        onClick={() => {
-                          const items = prepareGisExport();
-                          if (items.length === 0) return alert('无已保存的计算结果');
-                          exportAllGeoJSON(items);
-                        }}
-                        className="w-full text-left text-xs px-3 py-2 hover:bg-purple-50 flex items-center gap-2"
-                      >
-                        <span className="text-green-500">●</span> GeoJSON（QGIS/ArcGIS通用）
-                      </button>
-                      <button
-                        onClick={() => {
-                          const items = prepareGisExport();
-                          if (items.length === 0) return alert('无已保存的计算结果');
-                          items.forEach((item) => exportKML(item));
-                        }}
-                        className="w-full text-left text-xs px-3 py-2 hover:bg-purple-50 flex items-center gap-2"
-                      >
-                        <span className="text-blue-500">●</span> KML（Google Earth）
-                      </button>
-                      <button
-                        onClick={() => {
-                          const items = prepareGisExport();
-                          if (items.length === 0) return alert('无已保存的计算结果');
-                          items.forEach((item) => exportWKT(item));
-                        }}
-                        className="w-full text-left text-xs px-3 py-2 hover:bg-purple-50 flex items-center gap-2"
-                      >
-                        <span className="text-amber-500">●</span> WKT（文本图层）
-                      </button>
-                      <button
-                        onClick={async () => {
-                          const items = prepareGisExport();
-                          if (items.length === 0) return alert('无已保存的计算结果');
-                          await exportBatchShapefileZip(items);
-                        }}
-                        className="w-full text-left text-xs px-3 py-2 hover:bg-purple-50 flex items-center gap-2"
-                      >
-                        <span className="text-purple-500">●</span> Shapefile（.shp/.shx/.dbf ZIP）
-                      </button>
-                      <div className="border-t border-purple-100 my-1"></div>
-                      <div className="px-3 py-1.5 text-[9px] text-gray-400 leading-tight">
-                        导出所有已保存计算结果的保护区坐标
-                        <br />
-                        坐标系：WGS84（EPSG:4326）
-                      </div>
-                    </div>
-                  </div>
-                  <button
+                  <GisExportMenu zoneResults={zoneResults} sources={sources} />
+                                    <button
                     onClick={() => setBatchReportOpen(true)}
                     disabled={batchExporting}
                     className="text-xs px-2 py-1 rounded border border-indigo-200 text-indigo-700 hover:bg-indigo-50 disabled:opacity-50"
@@ -473,137 +374,10 @@ function ProtectionZoneCalc() {
         </div>
       )}
 
-      {/* P4-7: 参数敏感性分析面板 */}
-      {results.length > 0 && results[results.length - 1].params.sourceType === '地下水' && (
-        <div className="rounded-lg p-4 bg-white border border-amber-200 space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-4 h-4 text-amber-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
-                />
-              </svg>
-              <h3 className="text-sm font-semibold text-amber-700">参数敏感性分析</h3>
-            </div>
-            <button
-              onClick={() => {
-                const lastResult = results[results.length - 1];
-                const result = analyzeSensitivity(
-                  lastResult.sourceName,
-                  lastResult.params,
-                  lastResult.zones[0]?.method || '解析法',
-                );
-                setSensitivityResult(result);
-              }}
-              className="text-xs px-3 py-1.5 rounded-lg bg-amber-500 text-white hover:bg-amber-600 transition-colors"
-            >
-              分析
-            </button>
-          </div>
-          <p className="text-[10px] text-gray-500">
-            固定其他参数不变，在合理范围内变化单个参数，观察保护区面积响应（仅支持地下水解析法）
-          </p>
+      {/* T7: 参数敏感性分析面板（已拆分为子组件） */}
+      <SensitivityPanel results={results} />
 
-          {sensitivityResult && sensitivityResult.curves.length > 0 && (
-            <div className="space-y-4">
-              {/* 敏感度排名 */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {sensitivityResult.curves.map((curve, i) => (
-                  <div
-                    key={i}
-                    className={`rounded-lg p-2 text-center ${
-                      curve.sensitivityLevel === '高'
-                        ? 'bg-red-50 border border-red-200'
-                        : curve.sensitivityLevel === '中'
-                          ? 'bg-amber-50 border border-amber-200'
-                          : 'bg-green-50 border border-green-200'
-                    }`}
-                  >
-                    <div
-                      className={`text-xs font-bold ${
-                        curve.sensitivityLevel === '高'
-                          ? 'text-red-600'
-                          : curve.sensitivityLevel === '中'
-                            ? 'text-amber-600'
-                            : 'text-green-600'
-                      }`}
-                    >
-                      {curve.paramKey}
-                    </div>
-                    <div className="text-[9px] text-gray-500">{curve.paramName}</div>
-                    <div
-                      className={`text-[9px] font-medium mt-0.5 ${
-                        curve.sensitivityLevel === '高'
-                          ? 'text-red-500'
-                          : curve.sensitivityLevel === '中'
-                            ? 'text-amber-500'
-                            : 'text-green-500'
-                      }`}
-                    >
-                      {curve.sensitivityLevel}敏感度
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* 敏感度曲线图表（用纯CSS+div模拟简易图表） */}
-              {sensitivityResult.curves.slice(0, 2).map((curve, ci) => {
-                const chartData = toChartData(curve);
-                const maxArea = Math.max(...chartData.map((d) => d.area2), 0.001);
-                return (
-                  <div key={ci} className="space-y-1">
-                    <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-medium text-gray-700">
-                        {curve.paramName}（{curve.paramKey}）对二级保护区面积影响
-                      </span>
-                      <span className="text-gray-400">
-                        基准值: {curve.baseValue} {curve.unit}
-                      </span>
-                    </div>
-                    <div className="flex items-end gap-px h-20 bg-gray-50 rounded p-1">
-                      {chartData.map((d, di) => (
-                        <div
-                          key={di}
-                          className="flex-1 flex flex-col items-center justify-end h-full group relative"
-                        >
-                          <div
-                            className="w-full bg-amber-400 hover:bg-amber-500 rounded-t transition-colors cursor-pointer"
-                            style={{ height: `${Math.max((d.area2 / maxArea) * 100, 1)}%` }}
-                            title={`${curve.paramKey}=${d.paramValue}\n二级面积: ${d.area2.toFixed(4)} km²`}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex justify-between text-[8px] text-gray-400">
-                      <span>{curve.range[0]}</span>
-                      <span className="text-amber-600 font-medium">{curve.baseValue}</span>
-                      <span>
-                        {curve.range[1]} {curve.unit}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {sensitivityResult && sensitivityResult.curves.length === 0 && (
-            <div className="text-[10px] text-gray-400 text-center py-2">
-              当前参数配置不支持敏感性分析（需填入渗透系数K和储水系数S等水文地质参数）
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* A2: 多井干扰保护区计算面板 */}
+            {/* A2: 多井干扰保护区计算面板 */}
       <div className="rounded-lg p-4 bg-white border border-cyan-200">
         <WellFieldCalc />
       </div>
@@ -620,160 +394,10 @@ function ProtectionZoneCalc() {
         <EAConclusionPanel zoneResults={zoneResults} />
       )}
 
-      {/* P4-3: 行政区划裁剪面板 */}
-      {zoneResults.length > 0 && (
-        <div className="rounded-lg p-4 bg-white border border-indigo-200 space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-4 h-4 text-indigo-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-                />
-              </svg>
-              <h3 className="text-sm font-semibold text-indigo-700">行政区划裁剪</h3>
-            </div>
-            <button
-              onClick={async () => {
-                setClipLoading(true);
-                try {
-                  const items = prepareGisExport();
-                  if (items.length === 0) {
-                    alert('无已保存的计算结果');
-                    return;
-                  }
-                  const getCityName = (name: string) => {
-                    const s = sources.find((src) => src.name === name);
-                    return s?.cityName || '未知';
-                  };
-                  const results = await clipBatchZones(items, getCityName);
-                  setClipResults(results);
-                } catch (e) {
-                  console.error('裁剪计算失败:', e);
-                  alert('裁剪计算失败: ' + (e as Error).message);
-                } finally {
-                  setClipLoading(false);
-                }
-              }}
-              disabled={clipLoading}
-              className="text-xs px-3 py-1.5 rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 disabled:bg-indigo-300 transition-colors"
-            >
-              {clipLoading ? '计算中...' : '执行裁剪'}
-            </button>
-          </div>
-          <p className="text-[10px] text-gray-500">
-            将保护区理论范围与行政区划边界求交集，计算实际管控面积（扣除超出行政边界的部分）
-          </p>
+      {/* T7: 行政区划裁剪面板（已拆分为子组件） */}
+      <ZoneClipPanel zoneResults={zoneResults} sources={sources} />
 
-          {clipResults &&
-            clipResults.length > 0 &&
-            (() => {
-              const summary = summarizeClipResults(clipResults);
-              return (
-                <div className="space-y-3">
-                  {/* 汇总卡片 */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <div className="bg-indigo-50 rounded-lg p-2 text-center">
-                      <div className="text-lg font-bold text-indigo-600">
-                        {summary.totalSources}
-                      </div>
-                      <div className="text-[9px] text-indigo-400">水源地总数</div>
-                    </div>
-                    <div className="bg-red-50 rounded-lg p-2 text-center">
-                      <div className="text-lg font-bold text-red-600">{summary.clippedSources}</div>
-                      <div className="text-[9px] text-red-400">被裁剪数量</div>
-                    </div>
-                    <div className="bg-amber-50 rounded-lg p-2 text-center">
-                      <div className="text-lg font-bold text-amber-600">
-                        {summary.totalOriginalArea.toFixed(2)}
-                      </div>
-                      <div className="text-[9px] text-amber-400">理论面积 km²</div>
-                    </div>
-                    <div className="bg-green-50 rounded-lg p-2 text-center">
-                      <div className="text-lg font-bold text-green-600">
-                        {summary.totalClippedArea.toFixed(2)}
-                      </div>
-                      <div className="text-[9px] text-green-400">实际面积 km²</div>
-                    </div>
-                  </div>
-                  {summary.reductionPct > 0.01 && (
-                    <div className="text-xs text-center text-gray-500">
-                      裁剪缩减 {summary.totalReduction.toFixed(2)} km²（{summary.reductionPct}%）
-                    </div>
-                  )}
-
-                  {/* 明细表 */}
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-[10px] border-collapse">
-                      <thead>
-                        <tr className="bg-indigo-100">
-                          <th className="border border-indigo-200 px-2 py-1 text-left">水源地</th>
-                          <th className="border border-indigo-200 px-2 py-1 text-left">城市</th>
-                          <th className="border border-indigo-200 px-2 py-1">级别</th>
-                          <th className="border border-indigo-200 px-2 py-1 text-right">
-                            理论 km²
-                          </th>
-                          <th className="border border-indigo-200 px-2 py-1 text-right">
-                            实际 km²
-                          </th>
-                          <th className="border border-indigo-200 px-2 py-1 text-right">
-                            裁剪比例
-                          </th>
-                          <th className="border border-indigo-200 px-2 py-1">状态</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {clipResults.flatMap((cr) =>
-                          cr.zones.map((z, i) => (
-                            <tr
-                              key={`${cr.sourceName}-${i}`}
-                              className={z.isClipped ? 'bg-red-50' : ''}
-                            >
-                              <td className="border border-gray-200 px-2 py-1 text-left max-w-[120px] truncate">
-                                {cr.sourceName}
-                              </td>
-                              <td className="border border-gray-200 px-2 py-1 text-left">
-                                {cr.cityName}
-                              </td>
-                              <td className="border border-gray-200 px-2 py-1 text-center">
-                                {z.level}
-                              </td>
-                              <td className="border border-gray-200 px-2 py-1 text-right">
-                                {z.originalArea.toFixed(4)}
-                              </td>
-                              <td className="border border-gray-200 px-2 py-1 text-right">
-                                {z.clippedArea.toFixed(4)}
-                              </td>
-                              <td className="border border-gray-200 px-2 py-1 text-right">
-                                {z.clipRatio < 1 ? `${(z.clipRatio * 100).toFixed(1)}%` : '-'}
-                              </td>
-                              <td className="border border-gray-200 px-2 py-1 text-center">
-                                {z.isClipped ? (
-                                  <span className="text-red-500">被裁剪</span>
-                                ) : (
-                                  <span className="text-green-500">完整</span>
-                                )}
-                              </td>
-                            </tr>
-                          )),
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              );
-            })()}
-        </div>
-      )}
-
-      {/* 参考说明 */}
+            {/* 参考说明 */}
       <div className="rounded-lg p-4 bg-gray-50 border border-gray-200">
         <h3 className="text-xs font-semibold text-gray-600 mb-2">技术依据</h3>
         <div className="text-[10px] text-gray-500 space-y-1">
