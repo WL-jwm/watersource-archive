@@ -19,6 +19,7 @@ import AdvancedSearchPanel, { HighlightedText } from '@/components/AdvancedSearc
 import { useSearchFilter } from '@/hooks/useSearchFilter';
 import type { ImportResult } from '@/lib/dataImportEngine';
 import type { WaterSourceInfo } from '@/types';
+import { MobileCardList } from '@/lib/mobileEnhanced';
 
 const cityOrder = [
   '石家庄市',
@@ -413,8 +414,21 @@ const WaterSourceManager: React.FC = () => {
         </div>
       )}
 
-      {/* 数据表格 */}
-      <div className="rounded-lg overflow-hidden bg-white border border-gray-200">
+      {/* T5: 移动端卡片列表 */}
+      <MobileCardList
+        items={(pageData as WaterSourceRecord[]).map((s) => ({
+          id: s.id,
+          title: s.name,
+          subtitle: `${s.cityName || ""} · ${s.type || ""} · ${s.county || ""}`,
+          badges: [
+            { text: s.level || "", color: "bg-blue-100 text-blue-600" },
+            ...(s.type === "地下水" ? [{ text: "地下水", color: "bg-cyan-100 text-cyan-600" }] : []),
+          ],
+        }))}
+      />
+
+      {/* 数据表格（桌面端） */}
+      <div className="hidden md:block rounded-lg overflow-hidden bg-white border border-gray-200">
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
