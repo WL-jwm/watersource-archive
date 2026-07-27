@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Layout from '@/components/layout/Layout';
 import { OfflineIndicator, SWUpdateToast, InstallPromptBanner } from '@/lib/pwaEnhanced';
+import { I18nProvider, LocaleSwitcher } from '@/lib/i18n';
 // pwaEnhanced.tsx contains PWA hooks and UI components
 
 // F3: 路由级懒加载 — 按页面拆分 chunk，减小首屏加载体积
@@ -29,12 +30,16 @@ const PageFallback = () => (
 
 const App: React.FC = () => {
   return (
-    <HashRouter>
-      <ErrorBoundary>
-        <OfflineIndicator />
-        <SWUpdateToast />
-        <InstallPromptBanner />
-        <Layout>
+    <I18nProvider>
+      <HashRouter>
+        <ErrorBoundary>
+          <OfflineIndicator />
+          <SWUpdateToast />
+          <InstallPromptBanner />
+          <div className="fixed top-2 right-2 z-50">
+            <LocaleSwitcher />
+          </div>
+          <Layout>
           <Suspense fallback={<PageFallback />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -53,6 +58,7 @@ const App: React.FC = () => {
         </Layout>
       </ErrorBoundary>
     </HashRouter>
+    </I18nProvider>
   );
 };
 

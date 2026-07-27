@@ -26,7 +26,7 @@ vi.mock('file-saver', () => ({
 }));
 
 vi.mock('docx', () => {
-  function MockCtor(opts) { this.__opts = opts; }
+  function MockCtor(this: any, opts: any) { this.__opts = opts; }
   return {
     Packer: { toBlob: vi.fn().mockResolvedValue(new Blob(['doc'], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' })) },
     Document: MockCtor,
@@ -55,7 +55,7 @@ vi.mock('@/lib/reportPdfExporter', () => ({
 }));
 
 vi.mock('jszip', () => {
-  function JSZip() {
+  function JSZip(this: any) {
     this.folder = vi.fn().mockReturnValue({ file: vi.fn() });
     this.generateAsync = vi.fn().mockResolvedValue(new Blob(['zip'], { type: 'application/zip' }));
   }
@@ -63,7 +63,7 @@ vi.mock('jszip', () => {
 });
 
 vi.mock('jspdf', () => {
-  function jsPDF() {
+  function jsPDF(this: any) {
     this.setFontSize = vi.fn();
     this.setFont = vi.fn();
     this.text = vi.fn();
@@ -88,7 +88,9 @@ function makeSource(id: string, name: string, cityName: string): WaterSourceReco
     lat: 38.0,
     supplyCapacity: '10000',
     supplyPopulation: '50000',
-    level: '县级',
+    level: 'county',
+    county: '测试县',
+    status: '在用',
     wells: [],
     hydrogeology: {} as any,
     waterQuality: {} as any,
