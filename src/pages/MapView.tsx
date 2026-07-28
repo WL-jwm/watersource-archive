@@ -7,12 +7,15 @@ import { CalcResult } from '@/lib/zoneCalcEngine';
 import { MapDrawController, type DrawTool } from '@/lib/mapDrawTools';
 import MapToolbar from '@/components/MapToolbar';
 
-// Leaflet图标修复（webpack/vite默认marker图标路径问题）
+// P7: Leaflet图标修复 — 使用本地资源替代CDN（离线环境兼容）
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
 });
 
 interface GeoSource {

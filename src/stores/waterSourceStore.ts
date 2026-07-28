@@ -300,7 +300,7 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
           recordId: id,
           recordName: sourceData.name,
           description: `新增水源地 "${sourceData.name}"`,
-        });
+        }).catch((err) => console.error('[waterSourceStore] 版本记录失败:', err));
         checkAutoSnapshot(newSources);
       });
       return { sources: newSources };
@@ -339,7 +339,7 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
             diff: diffs,
           });
           checkAutoSnapshot(newSources);
-        });
+        }).catch((err) => console.error('[waterSourceStore] 版本记录失败:', err));
       }
       return { sources: newSources };
     });
@@ -366,7 +366,7 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
             description: `删除水源地 "${current.name}"`,
           });
           checkAutoSnapshot(newSources);
-        });
+        }).catch((err) => console.error('[waterSourceStore] 版本记录失败:', err));
       }
       return { sources: newSources };
     });

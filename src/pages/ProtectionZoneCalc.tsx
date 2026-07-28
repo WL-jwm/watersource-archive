@@ -88,7 +88,7 @@ function ProtectionZoneCalc() {
             })),
           );
         }
-      });
+      }).catch((err) => console.error('[ProtectionZoneCalc] 加载历史计算结果失败:', err));
     } else if (zoneResults.length > 0 && results.length === 0) {
       // zoneResults已加载但results未恢复
       setResults(

@@ -383,7 +383,7 @@ function PreciseCalcPanel({ onResult }: {
           />
           <select
             value={sourceType}
-            onChange={(e) => setSourceType(e.target.value as any)}
+            onChange={(e) => setSourceType(e.target.value as '地下水' | '地表水')}
             className="w-full text-xs border border-gray-200 rounded px-2 py-1.5"
           >
             <option value="地下水">地下水</option>
@@ -392,7 +392,7 @@ function PreciseCalcPanel({ onResult }: {
           {sourceType === '地下水' ? (
             <select
               value={gwType}
-              onChange={(e) => setGwType(e.target.value as any)}
+              onChange={(e) => setGwType(e.target.value as '孔隙水' | '裂隙水' | '岩溶水')}
               className="w-full text-xs border border-gray-200 rounded px-2 py-1.5"
             >
               <option value="孔隙水">孔隙水（冲洪积扇/冲积平原）</option>
@@ -403,7 +403,7 @@ function PreciseCalcPanel({ onResult }: {
             <>
               <select
                 value={swType}
-                onChange={(e) => setSwType(e.target.value as any)}
+                onChange={(e) => setSwType(e.target.value as '河流型' | '湖库型')}
                 className="w-full text-xs border border-gray-200 rounded px-2 py-1.5"
               >
                 <option value="河流型">河流型</option>
@@ -412,7 +412,7 @@ function PreciseCalcPanel({ onResult }: {
               {swType === '湖库型' && (
                 <select
                   value={reservoirSize}
-                  onChange={(e) => setReservoirSize(e.target.value as any)}
+                  onChange={(e) => setReservoirSize(e.target.value as '小型' | '中型' | '大型')}
                   className="w-full text-xs border border-gray-200 rounded px-2 py-1.5"
                 >
                   <option value="小型">小型（水面面积 &lt; 5km²）</option>

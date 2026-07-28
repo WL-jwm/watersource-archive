@@ -15,7 +15,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('./sw.js', { scope: './' })
       .then((reg) => {
-        console.log('[PWA] Service Worker 已注册，scope:', reg.scope);
+        // SW注册成功，无需输出
       })
       .catch((err) => {
         console.warn('[PWA] Service Worker 注册失败:', err);

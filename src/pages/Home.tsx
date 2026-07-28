@@ -61,9 +61,11 @@ const Home: React.FC = () => {
   // P2-1: 懒加载水源地静态数据
   const [wsData, setWsData] = React.useState<{ cities: any[]; stats: any } | null>(null);
   React.useEffect(() => {
-    import('@/data/hebeiWaterSources').then((m) => {
-      setWsData({ cities: m.hebeiWaterSources, stats: m.getHebeiWaterSourceStats() });
-    });
+    import('@/data/hebeiWaterSources')
+      .then((m) => {
+        setWsData({ cities: m.hebeiWaterSources, stats: m.getHebeiWaterSourceStats() });
+      })
+      .catch((err) => console.error('[Home] 加载水源地数据失败:', err));
   }, []);
 
   const filteredReports = searchReports(reports, searchQuery);

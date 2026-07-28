@@ -8,7 +8,7 @@
  * 4. 底部导航栏（移动端替代侧边栏的快捷导航）
  */
 
-import { useState, useEffect, useCallback, ReactNode } from 'react';
+import React, { useState, useEffect, useCallback, ReactNode } from 'react';
 
 // ===== 设备检测 Hook =====
 export type DeviceType = 'mobile' | 'tablet' | 'desktop';
@@ -96,34 +96,82 @@ const BOTTOM_NAV_ITEMS: BottomNavItem[] = [
   { label: '管理', icon: '📋', href: '#/manage' },
 ];
 
+// P6: 更多导航项（展开菜单）
+const MORE_NAV_ITEMS: BottomNavItem[] = [
+  { label: '分析', icon: '📈', href: '#/analysis' },
+  { label: '行政区划', icon: '🗺️', href: '#/divisions' },
+  { label: '审计日志', icon: '📝', href: '#/audit' },
+  { label: '版本历史', icon: '📋', href: '#/versions' },
+];
+
 export function MobileBottomNav() {
   const device = useDeviceType();
+  const [moreOpen, setMoreOpen] = useState(false);
   if (device !== 'mobile') return null;
 
   const currentHash = window.location.hash;
 
+  const renderItem = (item: BottomNavItem) => {
+    const isActive = currentHash === item.href;
+    return (
+      <a
+        key={item.href}
+        href={item.href}
+        className={`flex flex-col items-center justify-center flex-1 h-full text-xs transition-colors ${
+          isActive
+            ? 'text-blue-600 border-t-2 border-blue-600'
+            : 'text-gray-500 hover:text-gray-700'
+        }`}
+      >
+        <span className="text-lg leading-none mb-0.5">{item.icon}</span>
+        <span className="text-[10px]">{item.label}</span>
+      </a>
+    );
+  };
+
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40 md:hidden">
-      <div className="flex justify-around items-center h-14">
-        {BOTTOM_NAV_ITEMS.map((item) => {
-          const isActive = currentHash === item.href;
-          return (
-            <a
-              key={item.href}
-              href={item.href}
-              className={`flex flex-col items-center justify-center flex-1 h-full text-xs transition-colors ${
-                isActive
-                  ? 'text-blue-600 border-t-2 border-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              <span className="text-lg leading-none mb-0.5">{item.icon}</span>
-              <span className="text-[10px]">{item.label}</span>
-            </a>
-          );
-        })}
-      </div>
-    </nav>
+    <>
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40 md:hidden">
+        <div className="flex justify-around items-center h-14">
+          {BOTTOM_NAV_ITEMS.slice(0, 4).map(renderItem)}
+          {/* P6: 更多按钮 */}
+          <button
+            onClick={() => setMoreOpen(prev => !prev)}
+            className={`flex flex-col items-center justify-center flex-1 h-full text-xs transition-colors ${
+              moreOpen || MORE_NAV_ITEMS.some(i => i.href === currentHash)
+                ? 'text-blue-600 border-t-2 border-blue-600'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            <span className="text-lg leading-none mb-0.5">{moreOpen ? '✕' : '⋯'}</span>
+            <span className="text-[10px]">{moreOpen ? '关闭' : '更多'}</span>
+          </button>
+        </div>
+      </nav>
+      {/* P6: 展开菜单 */}
+      {moreOpen && (
+        <div className="fixed bottom-14 left-0 right-0 bg-white border-t border-gray-100 shadow-lg z-30 md:hidden">
+          <div className="grid grid-cols-4 gap-px bg-gray-100">
+            {MORE_NAV_ITEMS.map((item) => {
+              const isActive = currentHash === item.href;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMoreOpen(false)}
+                  className={`flex flex-col items-center justify-center py-3 bg-white ${
+                    isActive ? 'text-blue-600' : 'text-gray-600'
+                  }`}
+                >
+                  <span className="text-xl mb-1">{item.icon}</span>
+                  <span className="text-[10px]">{item.label}</span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

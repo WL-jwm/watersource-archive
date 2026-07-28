@@ -37,7 +37,7 @@ export default defineConfig({
             if (id.includes('@turf')) {
               return 'vendor-turf';
             }
-            // 其他node_modules（zustand等）归入vendor-react避免循环依赖
+            // 其余node_modules归入vendor-react（zustand依赖react，拆分会致循环依赖）
             return 'vendor-react';
           }
 
@@ -56,6 +56,6 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 1000,
   },
 });

@@ -49,9 +49,11 @@ const DivisionOverview: React.FC = () => {
     stats: { total: number; byCity: Record<string, number> };
   } | null>(null);
   React.useEffect(() => {
-    import('@/data/hebeiTownships').then((m) => {
-      setTownshipState({ data: m.townshipData, stats: m.townshipStats });
-    });
+    import('@/data/hebeiTownships')
+      .then((m) => {
+        setTownshipState({ data: m.townshipData, stats: m.townshipStats });
+      })
+      .catch((err) => console.error('[DivisionOverview] 加载行政区划数据失败:', err));
   }, []);
 
   const townshipData = townshipState?.data || {};

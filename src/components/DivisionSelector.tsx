@@ -55,7 +55,9 @@ const DivisionSelector: React.FC = () => {
     >
   >({});
   React.useEffect(() => {
-    import('@/data/hebeiTownships').then((m) => setTownshipData(m.townshipData));
+    import('@/data/hebeiTownships')
+      .then((m) => setTownshipData(m.townshipData))
+      .catch((err) => console.error('[DivisionSelector] 加载行政区划数据失败:', err));
   }, []);
 
   const [searchCity, setSearchCity] = useState('');
