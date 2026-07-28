@@ -3,12 +3,7 @@
  */
 
 import React from 'react';
-import {
-  exportKML,
-  exportWKT,
-  exportBatchGeoJSON,
-  exportBatchShapefileZip,
-} from '@/lib/zoneGISExporter';
+
 import { generateSourceZoneVertices } from '@/lib/zoneCoordGenerator';
 import type { ZoneCalcRecord, WaterSourceRecord } from '@/stores/waterSourceStore';
 
@@ -32,24 +27,25 @@ const GisExportMenu: React.FC<GisExportMenuProps> = ({ zoneResults, sources }) =
       .filter(Boolean) as ReturnType<typeof generateSourceZoneVertices>[];
   };
 
-  const handleExport = (type: 'geojson' | 'kml' | 'wkt' | 'shp') => {
+  const handleExport = async (type: 'geojson' | 'kml' | 'wkt' | 'shp') => {
     const items = prepareGisExport();
     if (items.length === 0) {
       alert('无已保存的计算结果');
       return;
     }
+    const gis = await import('@/lib/zoneGISExporter');
     switch (type) {
       case 'geojson':
-        exportBatchGeoJSON(items);
+        gis.exportBatchGeoJSON(items);
         break;
       case 'kml':
-        items.forEach((item) => exportKML(item));
+        items.forEach((item) => gis.exportKML(item));
         break;
       case 'wkt':
-        items.forEach((item) => exportWKT(item));
+        items.forEach((item) => gis.exportWKT(item));
         break;
       case 'shp':
-        exportBatchShapefileZip(items);
+        gis.exportBatchShapefileZip(items);
         break;
     }
   };

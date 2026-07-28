@@ -11,16 +11,10 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useWaterSourceStore, type ZoneCalcRecord } from '@/stores/waterSourceStore';
 import type { CalcResult } from '@/lib/zoneCalcEngine';
-import { exportZoneExcel } from '@/lib/zoneExcelExporter';
 
-import {
-  generateZoneReport,
-  generateBatchReports,
-  type ReportConfig,
-} from '@/lib/zoneReportGenerator';
-import { generatePdfReport } from '@/lib/reportPdfExporter';
-import ReportConfigModal from '@/components/ReportConfigModal';
-import BatchReportModal from '@/components/BatchReportModal';
+import type { ReportConfig } from '@/lib/zoneReportGenerator';
+const ReportConfigModal = React.lazy(() => import('@/components/ReportConfigModal'));
+const BatchReportModal = React.lazy(() => import('@/components/BatchReportModal'));
 import EAConclusionPanel from '@/components/protection-zone/EAConclusionPanel';
 import WellFieldCalc from '@/components/WellFieldCalc';
 import CompliancePanel from '@/components/CompliancePanel';
@@ -56,9 +50,11 @@ function ProtectionZoneCalc() {
   const handleGenerateReport = async (config: ReportConfig, format: 'word' | 'pdf' | 'both') => {
     const opts = { ...config, cityNames: config.cityNames };
     if (format === 'word' || format === 'both') {
+      const { generateZoneReport } = await import('@/lib/zoneReportGenerator');
       await generateZoneReport(zoneResults, sources, opts);
     }
     if (format === 'pdf' || format === 'both') {
+      const { generatePdfReport } = await import('@/lib/reportPdfExporter');
       await generatePdfReport(zoneResults, sources, opts);
     }
   };
@@ -260,7 +256,10 @@ function ProtectionZoneCalc() {
               {zoneResults.length > 0 && (
                 <>
                   <button
-                    onClick={() => exportZoneExcel(zoneResults, sources, { includeVertices: true })}
+                    onClick={async () => {
+                      const { exportZoneExcel } = await import('@/lib/zoneExcelExporter');
+                      exportZoneExcel(zoneResults, sources, { includeVertices: true });
+                    }}
                     className="text-xs px-2 py-1 rounded border border-green-200 text-green-700 hover:bg-green-50"
                   >
                     导出Excel
@@ -418,19 +417,23 @@ function ProtectionZoneCalc() {
           </p>
         </div>
       </div>
-      {/* B1: 报告配置弹窗 */}
-      <ReportConfigModal
-        open={reportConfigOpen}
-        onClose={() => setReportConfigOpen(false)}
-        onGenerate={handleGenerateReport}
-      />
-      {/* E2: 批量报告生成弹窗 */}
-      <BatchReportModal
-        open={batchReportOpen}
-        onClose={() => setBatchReportOpen(false)}
-        results={zoneResults}
-        sources={sources}
-      />
+      {/* B1: 报告配置弹窗（懒加载，减少首屏体积） */}
+      <React.Suspense fallback={null}>
+        <ReportConfigModal
+          open={reportConfigOpen}
+          onClose={() => setReportConfigOpen(false)}
+          onGenerate={handleGenerateReport}
+        />
+      </React.Suspense>
+      {/* E2: 批量报告生成弹窗（懒加载） */}
+      <React.Suspense fallback={null}>
+        <BatchReportModal
+          open={batchReportOpen}
+          onClose={() => setBatchReportOpen(false)}
+          results={zoneResults}
+          sources={sources}
+        />
+      </React.Suspense>
     </div>
   );
 };

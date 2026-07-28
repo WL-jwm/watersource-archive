@@ -46,8 +46,18 @@ export default defineConfig({
           // 仅 hebeiDivisions.ts (26KB) 静态 import，打包入 index chunk
           // hebeiWaterSources.ts / waterSourceGeoData.ts / hebeiTownships.ts / sampleData.ts 动态 import
 
-          // 计算引擎与导出工具（~80KB，按需加载）
+          // 计算引擎与导出工具
+          // P-Perf: 拆分为核心引擎(calc-tools)和报告导出工具(report-export)
+          // 报告导出工具仅在生成报告时按需加载
           if (id.includes('src/lib/')) {
+            if (id.includes('batchReportPackager') ||
+                id.includes('zoneReportGenerator') ||
+                id.includes('reportPdfExporter') ||
+                id.includes('zoneExcelExporter') ||
+                id.includes('dataExchange') ||
+                id.includes('zoneGISExporter')) {
+              return 'report-export';
+            }
             return 'calc-tools';
           }
 
