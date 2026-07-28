@@ -225,6 +225,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           {/* 功能导航 */}
           <a
             href="#/map"
+              onMouseEnter={() => preloadPage('/map')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
             title="GIS地图"
           >
@@ -246,6 +247,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </a>
           <a
             href="#/dashboard"
+              onMouseEnter={() => preloadPage('/dashboard')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
             title="统计仪表盘"
           >
@@ -261,6 +263,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </a>
           <a
             href="#/zone-calc"
+              onMouseEnter={() => preloadPage('/zone-calc')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
             title="保护区划分计算"
           >
@@ -276,6 +279,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </a>
           <a
             href="#/analysis"
+              onMouseEnter={() => preloadPage('/analysis')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
             title="项目空间分析"
           >
@@ -292,6 +296,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </a>
           <a
             href="#/audit"
+              onMouseEnter={() => preloadPage('/audit')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
             title="审计日志"
           >
@@ -307,6 +312,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </a>
           <a
             href="#/divisions"
+              onMouseEnter={() => preloadPage('/divisions')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
             title="行政区划总览"
           >
@@ -362,6 +368,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <nav className="flex items-center gap-1.5 text-sm min-w-0">
             <a
               href="#/"
+              onMouseEnter={() => preloadPage('/')}
               className="text-text-secondary truncate hover:text-text-primary transition-colors"
             >
               全部报告
@@ -392,6 +399,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="ml-auto flex items-center gap-2">
             <a
               href="#/map"
+              onMouseEnter={() => preloadPage('/map')}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs text-text-secondary hover:text-accent-500 hover:bg-accent-50 rounded-md transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -412,6 +420,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </a>
             <a
               href="#/dashboard"
+              onMouseEnter={() => preloadPage('/dashboard')}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs text-text-secondary hover:text-accent-500 hover:bg-accent-50 rounded-md transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -426,6 +435,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </a>
             <a
               href="#/divisions"
+              onMouseEnter={() => preloadPage('/divisions')}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs text-text-secondary hover:text-accent-500 hover:bg-accent-50 rounded-md transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -440,6 +450,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </a>
             <a
               href="#/manage"
+              onMouseEnter={() => preloadPage('/manage')}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs text-text-secondary hover:text-accent-500 hover:bg-accent-50 rounded-md transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -454,6 +465,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </a>
             <a
               href="#/zone-calc"
+              onMouseEnter={() => preloadPage('/zone-calc')}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs text-text-secondary hover:text-accent-500 hover:bg-accent-50 rounded-md transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -468,6 +480,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </a>
             <a
               href="#/analysis"
+              onMouseEnter={() => preloadPage('/analysis')}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs text-text-secondary hover:text-accent-500 hover:bg-accent-50 rounded-md transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -488,6 +501,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </a>
             <a
               href="#/versions"
+              onMouseEnter={() => preloadPage('/versions')}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs text-text-secondary hover:text-accent-500 hover:bg-accent-50 rounded-md transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -669,5 +683,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 import DivisionSelector from '@/components/DivisionSelector';
 import UndoRedoToolbar from '@/components/UndoRedoToolbar';
 import { MobileBottomNav } from '@/lib/mobileEnhanced';
+import { preloadPage } from '@/lib/preload';
 
 export default Layout;

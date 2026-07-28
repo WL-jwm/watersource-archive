@@ -9,6 +9,7 @@
  */
 
 import React, { useState, useEffect, useCallback, ReactNode } from 'react';
+import { preloadPage } from '@/lib/preload';
 
 // ===== 设备检测 Hook =====
 export type DeviceType = 'mobile' | 'tablet' | 'desktop';
@@ -117,6 +118,7 @@ export function MobileBottomNav() {
       <a
         key={item.href}
         href={item.href}
+        onTouchStart={() => preloadPage(item.href.replace('#', ''))}
         className={`flex flex-col items-center justify-center flex-1 h-full text-xs transition-colors ${
           isActive
             ? 'text-blue-600 border-t-2 border-blue-600'
@@ -158,6 +160,7 @@ export function MobileBottomNav() {
                 <a
                   key={item.href}
                   href={item.href}
+                  onTouchStart={() => preloadPage(item.href.replace('#', ''))}
                   onClick={() => setMoreOpen(false)}
                   className={`flex flex-col items-center justify-center py-3 bg-white ${
                     isActive ? 'text-blue-600' : 'text-gray-600'

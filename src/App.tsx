@@ -4,19 +4,23 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import Layout from '@/components/layout/Layout';
 import { OfflineIndicator, SWUpdateToast, InstallPromptBanner } from '@/lib/pwaEnhanced';
 import { I18nProvider, LocaleSwitcher } from '@/lib/i18n';
-// pwaEnhanced.tsx contains PWA hooks and UI components
+import { getPageImporter } from '@/lib/preload';
 
 // F3: 路由级懒加载 — 按页面拆分 chunk，减小首屏加载体积
-const Home = lazy(() => import('@/pages/Home'));
+// 方案A: lazy 的 import 函数与 preloadPage 共享，预加载后点击零延迟
+const Home = lazy(getPageImporter('/'));
 const ReportDetail = lazy(() => import('@/pages/ReportDetail'));
-const DivisionOverview = lazy(() => import('@/pages/DivisionOverview'));
-const MapView = lazy(() => import('@/pages/MapView'));
-const Dashboard = lazy(() => import('@/pages/Dashboard'));
-const WaterSourceManager = lazy(() => import('@/pages/WaterSourceManager'));
-const ProtectionZoneCalc = lazy(() => import('@/pages/ProtectionZoneCalc'));
-const ProjectAnalysis = lazy(() => import('@/pages/ProjectAnalysis'));
-const VersionHistory = lazy(() => import('@/pages/VersionHistory'));
-const AuditLog = lazy(() => import('@/pages/AuditLog'));
+const DivisionOverview = lazy(getPageImporter('/divisions'));
+const MapView = lazy(getPageImporter('/map'));
+const Dashboard = lazy(getPageImporter('/dashboard'));
+const WaterSourceManager = lazy(getPageImporter('/manage'));
+const ProtectionZoneCalc = lazy(getPageImporter('/zone-calc'));
+const ProjectAnalysis = lazy(getPageImporter('/analysis'));
+const VersionHistory = lazy(getPageImporter('/versions'));
+const AuditLog = lazy(getPageImporter('/audit'));
+
+// ReportDetail 是动态路由 /report/:id，无法从路径直接预加载，保持独立 lazy
+// 用户从报告列表点击进入时，Home 页面已渲染，chunk 加载可接受
 
 /** 懒加载回退 UI */
 const PageFallback = () => (
