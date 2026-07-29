@@ -14,7 +14,7 @@ import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 
 // ===== 河北省行政区划代码 =====
 
-const CITY_CODES: Record<string, string> = {
+export const CITY_CODES: Record<string, string> = {
   石家庄市: '130100',
   唐山市: '130200',
   秦皇岛市: '130300',
@@ -27,6 +27,8 @@ const CITY_CODES: Record<string, string> = {
   廊坊市: '131000',
   衡水市: '131100',
   雄安新区: '133100',
+  辛集市: '130181',
+  定州市: '130682',
 };
 
 /** 水源类型编码 */
@@ -228,5 +230,190 @@ export function summarizeCodes(codeMap: Map<string, StandardCode>): {
     byType: Object.entries(byType).map(([type, count]) => ({ type, count })),
     byLevel: Object.entries(byLevel).map(([level, count]) => ({ level, count })),
     codeCoverage: codeMap.size > 0 ? 100 : 0,
+  };
+}
+
+// ===== N2: 编码校验与补全 =====
+
+/** 格式化编码为可读形式 SD130100-1-1-001 */
+export function formatCodeForDisplay(code: string): string {
+  if (!code || code.length !== 13 || !code.startsWith('SD')) return code;
+  const admin = code.substring(2, 8);
+  const type = code.substring(8, 9);
+  const level = code.substring(9, 10);
+  const serial = code.substring(10, 13);
+  return `SD${admin}-${type}-${level}-${serial}`;
+}
+
+/** 编码校验结果 */
+export interface CodeValidationResult {
+  recordId: string;
+  recordName: string;
+  cityName: string;
+  level: string;
+  type: string;
+  generatedCode: string;
+  displayCode: string;
+  issues: string[];
+  valid: boolean;
+}
+
+/** 校验单条记录的编码生成条件 */
+export function validateRecordForCoding(record: WaterSourceRecord): { valid: boolean; issues: string[] } {
+  const issues: string[] = [];
+
+  if (!record.cityName) {
+    issues.push('缺少城市名称');
+  } else if (!CITY_CODES[record.cityName]) {
+    issues.push(`城市"${record.cityName}"不在河北省行政区划代码表中`);
+  }
+
+  if (!record.type) {
+    issues.push('缺少水源类型');
+  } else if (!TYPE_CODES[record.type]) {
+    issues.push(`水源类型"${record.type}"无效（应为"地下水"或"地表水"）`);
+  }
+
+  if (!record.level) {
+    issues.push('缺少级别');
+  } else if (!LEVEL_CODES[record.level]) {
+    issues.push(`级别"${record.level}"无效（应为 municipal/county/township）`);
+  }
+
+  if (!record.name || !record.name.trim()) {
+    issues.push('缺少水源地名称');
+  }
+
+  return { valid: issues.length === 0, issues };
+}
+
+/** 校验编码字符串格式 */
+export function validateCode(code: string): { valid: boolean; errors: string[] } {
+  const errors: string[] = [];
+
+  if (!code) {
+    errors.push('编码为空');
+    return { valid: false, errors };
+  }
+
+  if (!code.startsWith('SD')) {
+    errors.push('编码应以"SD"开头');
+  }
+
+  if (code.length !== 13) {
+    errors.push(`编码长度应为13位（当前${code.length}位）`);
+  }
+
+  if (code.length >= 8) {
+    const adminCode = code.substring(2, 8);
+    const cityName = Object.entries(CITY_CODES).find(([_, v]) => v === adminCode)?.[0];
+    if (!cityName) {
+      errors.push(`行政区划代码"${adminCode}"不在河北省代码表中`);
+    }
+  }
+
+  if (code.length >= 9) {
+    const typeCode = code.substring(8, 9);
+    if (!Object.values(TYPE_CODES).includes(typeCode)) {
+      errors.push(`水源类型编码"${typeCode}"无效（应为1或2）`);
+    }
+  }
+
+  if (code.length >= 10) {
+    const levelCode = code.substring(9, 10);
+    if (!Object.values(LEVEL_CODES).includes(levelCode)) {
+      errors.push(`级别编码"${levelCode}"无效（应为1、2或3）`);
+    }
+  }
+
+  if (code.length >= 13) {
+    const serial = code.substring(10, 13);
+    if (!/^\d{3}$/.test(serial)) {
+      errors.push(`序号"${serial}"应为3位数字`);
+    }
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+/** 批量校验所有水源地记录的编码 */
+export function batchValidateCodes(records: WaterSourceRecord[]): CodeValidationResult[] {
+  const codeMap = batchGenerateCodes(records);
+  const results: CodeValidationResult[] = [];
+
+  for (const record of records) {
+    const validation = validateRecordForCoding(record);
+    const code = codeMap.get(record.id);
+
+    results.push({
+      recordId: record.id,
+      recordName: record.name || '(未命名)',
+      cityName: record.cityName || '(缺失)',
+      level: record.level || '(缺失)',
+      type: record.type || '(缺失)',
+      generatedCode: code?.code || '',
+      displayCode: code ? formatCodeForDisplay(code.code) : '(无法生成)',
+      issues: validation.issues,
+      valid: validation.valid,
+    });
+  }
+
+  return results;
+}
+
+/** 生成表单预览编码（不需要完整记录） */
+export function generateCodePreview(
+  cityName: string,
+  level: string,
+  type: string,
+  existingRecords: WaterSourceRecord[],
+  excludeId?: string,
+): string {
+  const adminCode = CITY_CODES[cityName];
+  const typeCode = TYPE_CODES[type];
+  const levelCode = LEVEL_CODES[level];
+
+  if (!adminCode || !typeCode || !levelCode) {
+    return '(请补全城市、类型、级别)';
+  }
+
+  // 计算同组已有数量+1
+  const sameGroup = existingRecords.filter(
+    (r) =>
+      r.cityName === cityName &&
+      r.level === level &&
+      r.type === type &&
+      r.id !== excludeId,
+  );
+  const serial = String(sameGroup.length + 1).padStart(3, '0');
+
+  return formatCodeForDisplay(`SD${adminCode}${typeCode}${levelCode}${serial}`);
+}
+
+/** 获取编码校验统计摘要 */
+export function summarizeValidation(results: CodeValidationResult[]): {
+  total: number;
+  valid: number;
+  invalid: number;
+  issueBreakdown: Record<string, number>;
+} {
+  const issueBreakdown: Record<string, number> = {};
+  let valid = 0;
+
+  for (const r of results) {
+    if (r.valid) {
+      valid++;
+    } else {
+      for (const issue of r.issues) {
+        issueBreakdown[issue] = (issueBreakdown[issue] || 0) + 1;
+      }
+    }
+  }
+
+  return {
+    total: results.length,
+    valid,
+    invalid: results.length - valid,
+    issueBreakdown,
   };
 }

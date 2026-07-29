@@ -15,6 +15,7 @@ import { useWaterSourceStore, WaterSourceRecord } from '@/stores/waterSourceStor
 import DataImportPanel from '@/components/DataImportPanel';
 import DataSourceManager from '@/components/DataSourceManager';
 import SourceFormModal from '@/components/SourceFormModal';
+import CodeValidationPanel from '@/components/CodeValidationPanel';
 import AdvancedSearchPanel, { HighlightedText } from '@/components/AdvancedSearchPanel';
 import { useSearchFilter } from '@/hooks/useSearchFilter';
 import type { ImportResult } from '@/lib/dataImportEngine';
@@ -71,6 +72,7 @@ const WaterSourceManager: React.FC = () => {
   const [showDataSourceMgr, setShowDataSourceMgr] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
   const [editTarget, setEditTarget] = useState<WaterSourceRecord | null>(null);
+  const [showCodeValidation, setShowCodeValidation] = useState(false);
   const pageSize = 30;
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const jsonInputRef = React.useRef<HTMLInputElement>(null);
@@ -394,6 +396,13 @@ const WaterSourceManager: React.FC = () => {
           </button>
 
           <button
+            onClick={() => setShowCodeValidation(true)}
+            className="text-xs px-3 py-1.5 rounded border border-indigo-200 text-indigo-600 hover:bg-indigo-50"
+          >
+            编码校验
+          </button>
+
+          <button
             onClick={handleReset}
             className="text-xs px-3 py-1.5 rounded border border-red-200 text-red-600 hover:bg-red-50 ml-auto"
           >
@@ -550,8 +559,14 @@ const WaterSourceManager: React.FC = () => {
       <SourceFormModal
         open={showFormModal}
         source={editTarget}
+        allSources={sources}
         onClose={() => setShowFormModal(false)}
         onSubmit={handleFormSubmit}
+      />
+      <CodeValidationPanel
+        open={showCodeValidation}
+        sources={sources}
+        onClose={() => setShowCodeValidation(false)}
       />
     </div>
   );

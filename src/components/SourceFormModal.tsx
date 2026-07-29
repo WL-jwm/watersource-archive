@@ -11,8 +11,9 @@
  * - 备注（可选）
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
+import { generateCodePreview } from '@/lib/waterSourceCoder';
 
 const cityOptions = [
   '石家庄市',
@@ -44,11 +45,13 @@ export interface SourceFormModalProps {
   open: boolean;
   /** 传入已有记录则为编辑模式，null 为新增模式 */
   source: WaterSourceRecord | null;
+  /** 全部水源地列表，用于编码预览序号计算 */
+  allSources?: WaterSourceRecord[];
   onClose: () => void;
   onSubmit: (data: Omit<WaterSourceRecord, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
 }
 
-const SourceFormModal: React.FC<SourceFormModalProps> = ({ open, source, onClose, onSubmit }) => {
+const SourceFormModal: React.FC<SourceFormModalProps> = ({ open, source, allSources = [], onClose, onSubmit }) => {
   const isEdit = !!source;
 
   const [form, setForm] = useState({
@@ -260,6 +263,31 @@ const SourceFormModal: React.FC<SourceFormModalProps> = ({ open, source, onClose
               </select>
             </div>
           </div>
+
+          {/* N2: 编码预览 */}
+          {(() => {
+            const previewCode = generateCodePreview(
+              form.cityName,
+              form.level,
+              form.type,
+              allSources,
+              source?.id,
+            );
+            const isPlaceholder = previewCode.startsWith('(请补全');
+            return (
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-blue-700 dark:text-blue-300">水源地标准编码（自动生成）</span>
+                  <code className={`text-xs font-mono ${isPlaceholder ? 'text-gray-400' : 'text-blue-600 dark:text-blue-400 font-bold'}`}>
+                    {previewCode}
+                  </code>
+                </div>
+                <p className="text-[10px] text-blue-500 dark:text-blue-400 mt-0.5">
+                  编码格式：SD + 行政区划代码(6位) + 水源类型(1位) + 级别(1位) + 序号(3位)
+                </p>
+              </div>
+            );
+          })()}
 
           {/* 备注 */}
           <div>
