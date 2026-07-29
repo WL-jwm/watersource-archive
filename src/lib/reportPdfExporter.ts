@@ -9,6 +9,7 @@
 import { saveAs } from 'file-saver';
 import type { ZoneCalcRecord, WaterSourceRecord } from '@/stores/waterSourceStore';
 import type { ReportConfig } from './zoneReportGenerator';
+import { toast } from '@/stores/toastStore';
 
 // ===== 辅助函数 =====
 
@@ -117,7 +118,7 @@ export async function generatePdfReport(
   }
 
   if (filtered.length === 0) {
-    alert('没有可生成报告的计算结果');
+    toast.warning('没有可生成报告的计算结果');
     return;
   }
 

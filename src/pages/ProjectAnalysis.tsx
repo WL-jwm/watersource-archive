@@ -8,6 +8,7 @@
  * 4. 给出法规提示
  */
 
+import { useToast } from '@/hooks/useToast';
 import React, { useState, useMemo } from 'react';
 import { useWaterSourceStore, WaterSourceRecord, ZoneCalcRecord } from '@/stores/waterSourceStore';
 import {
@@ -30,6 +31,7 @@ import WaterQualityTrendPanel from '@/components/WaterQualityTrendPanel';
 const ProjectAnalysis: React.FC = () => {
   const { loaded, sources, zoneResults, loadZoneResults } = useWaterSourceStore();
 
+  const toast = useToast();
   const [projectName, setProjectName] = useState('');
   const [lng, setLng] = useState('');
   const [lat, setLat] = useState('');
@@ -60,22 +62,22 @@ const ProjectAnalysis: React.FC = () => {
 
   const handleAnalyze = () => {
     if (!projectName.trim()) {
-      alert('请输入项目名称');
+      toast.warning('请输入项目名称');
       return;
     }
     const lngVal = parseFloat(lng);
     const latVal = parseFloat(lat);
     const radiusVal = parseFloat(radiusM) || 0;
     if (isNaN(lngVal) || isNaN(latVal)) {
-      alert('请输入有效的经纬度');
+      toast.warning('请输入有效的经纬度');
       return;
     }
     if (lngVal < 113 || lngVal > 120 || latVal < 35 || latVal > 43) {
-      alert('经纬度不在河北省范围内（经度113~120，纬度35~43）');
+      toast.warning('经纬度不在河北省范围内（经度113~120，纬度35~43）');
       return;
     }
     if (zoneResults.length === 0) {
-      alert('暂无保护区计算结果，请先在"保护区划分"页面进行计算');
+      toast.warning('暂无保护区计算结果，请先在"保护区划分"页面进行计算');
       return;
     }
 
@@ -408,7 +410,7 @@ const ProjectAnalysis: React.FC = () => {
                   (document.getElementById('buf-target-lat') as HTMLInputElement)?.value || '',
                 );
                 if (!name || isNaN(lngVal) || isNaN(latVal)) {
-                  alert('请填写完整信息');
+                  toast.warning('请填写完整信息');
                   return;
                 }
                 const newTarget: SensitiveTarget = {

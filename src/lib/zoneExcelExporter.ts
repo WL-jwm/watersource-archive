@@ -14,6 +14,7 @@ import { saveAs } from 'file-saver';
 import type { ZoneCalcRecord } from '@/stores/waterSourceStore';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 import { generateBatchVertices, toExcelRows } from './zoneCoordGenerator';
+import { toast } from '@/stores/toastStore';
 
 // ===== Excel导出选项 =====
 
@@ -101,7 +102,7 @@ export function exportZoneExcel(
   }
 
   if (filtered.length === 0) {
-    alert('没有可导出的计算结果');
+    toast.warning('没有可导出的计算结果');
     return;
   }
 

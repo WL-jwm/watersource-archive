@@ -9,6 +9,7 @@
  * 5. 版本删除
  */
 
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useWaterSourceStore } from '@/stores/waterSourceStore';
 import {
@@ -28,6 +29,7 @@ type ViewMode = 'list' | 'diff' | 'rollback';
 
 const VersionHistory: React.FC = () => {
   const { sources, resetToStatic } = useWaterSourceStore();
+  const confirm = useConfirm();
   const [versions, setVersions] = useState<VersionSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState<ViewMode>('list');
@@ -106,7 +108,7 @@ const VersionHistory: React.FC = () => {
   /** 回滚到指定版本 */
   const handleRollback = async (v: VersionSummary) => {
     if (
-      !window.confirm(`确定回滚到版本"${v.name}"？\n当前数据将被替换。建议先创建当前版本的快照。`)
+      !await confirm({ message: `确定回滚到版本"${v.name}"？\n当前数据将被替换。建议先创建当前版本的快照。`, danger: true })
     )
       return;
 
@@ -143,7 +145,7 @@ const VersionHistory: React.FC = () => {
 
   /** 删除版本 */
   const handleDeleteVersion = async (v: VersionSummary) => {
-    if (!window.confirm(`确定删除版本"${v.name}"？此操作不可恢复。`)) return;
+    if (!await confirm({ message: `确定删除版本"${v.name}"？此操作不可恢复。`, danger: true })) return;
     try {
       await deleteVersion(v.id);
       setMessage({ type: 'success', text: `版本"${v.name}"已删除` });

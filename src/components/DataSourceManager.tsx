@@ -10,6 +10,7 @@
  * 6. 展示合并统计结果
  */
 
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDataSourceStore } from '@/stores/dataSourceStore';
 import {
@@ -38,6 +39,7 @@ interface DataSourceManagerProps {
 }
 
 const DataSourceManager: React.FC<DataSourceManagerProps> = ({ onClose }) => {
+  const confirm = useConfirm();
   const {
     sources,
     loaded,
@@ -114,8 +116,8 @@ const DataSourceManager: React.FC<DataSourceManagerProps> = ({ onClose }) => {
             {merging ? '合并中...' : '加载并合并全部'}
           </button>
           <button
-            onClick={() => {
-              if (window.confirm('重置为默认数据源配置？这将清除所有自定义数据源。')) {
+            onClick={async () => {
+              if (await confirm({ message: '重置为默认数据源配置？这将清除所有自定义数据源。', danger: true })) {
                 resetToDefault();
               }
             }}
@@ -184,14 +186,14 @@ const DataSourceManager: React.FC<DataSourceManagerProps> = ({ onClose }) => {
                 onEdit={() => setEditingId(editingId === source.id ? null : source.id)}
                 onTest={() => handleTest(source.id)}
                 onToggle={() => toggleSource(source.id)}
-                onRemove={() => {
+                onRemove={async () => {
                   if (
                     source.type === 'static' &&
-                    !window.confirm('删除内置数据源可能导致应用无法正常工作，确定继续？')
+                    !await confirm({ message: '删除内置数据源可能导致应用无法正常工作，确定继续？', danger: true })
                   ) {
                     return;
                   }
-                  if (source.type !== 'static' && !window.confirm(`删除数据源「${source.name}」？`))
+                  if (source.type !== 'static' && !await confirm({ message: `删除数据源「${source.name}」？`, danger: true }))
                     return;
                   removeSource(source.id);
                 }}

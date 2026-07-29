@@ -11,6 +11,7 @@
  * 依据：HJ 338-2018 对保护区图件的要求
  */
 
+import { useToast } from '@/hooks/useToast';
 import React, { useState } from 'react';
 import type { ZoneCalcRecord, WaterSourceRecord } from '@/stores/waterSourceStore';
 import { generateSourceZoneVertices } from '@/lib/zoneCoordGenerator';
@@ -35,6 +36,7 @@ interface MapFigureExportProps {
 }
 
 const MapFigureExport: React.FC<MapFigureExportProps> = ({ zoneResults, sources }) => {
+  const toast = useToast();
   const [selectedSource, setSelectedSource] = useState('');
   const [figureSize, setFigureSize] = useState<FigureSize>('A4-landscape');
   const [resolution, setResolution] = useState(2); // 2x = ~300dpi
@@ -70,7 +72,7 @@ const MapFigureExport: React.FC<MapFigureExportProps> = ({ zoneResults, sources 
       }
 
       if (allPoints.length === 0) {
-        alert('该水源地无拐点坐标数据');
+        toast.warning('该水源地无拐点坐标数据');
         return;
       }
 
@@ -111,7 +113,7 @@ const MapFigureExport: React.FC<MapFigureExportProps> = ({ zoneResults, sources 
       // 打开预览窗口
       const previewWindow = window.open('', '_blank', `width=${dims.w + 40},height=${dims.h + 80}`);
       if (!previewWindow) {
-        alert('请允许弹出窗口以生成图件');
+        toast.warning('请允许弹出窗口以生成图件');
         return;
       }
 
@@ -316,7 +318,7 @@ const MapFigureExport: React.FC<MapFigureExportProps> = ({ zoneResults, sources 
       previewWindow.document.close();
     } catch (err) {
       console.error('[图件生成] 失败:', err);
-      alert('图件生成失败: ' + (err as Error).message);
+      toast.error('图件生成失败: ' + (err as Error).message);
     } finally {
       setGenerating(false);
     }

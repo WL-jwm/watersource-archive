@@ -14,6 +14,7 @@
  * - 使用 zoneCompareEngine 生成更丰富的分析（参数变化/调整说明/预警）
  */
 
+import { useToast } from '@/hooks/useToast';
 import React, { useState, useMemo, useEffect } from 'react';
 import { useWaterSourceStore, type ZoneCalcRecord } from '@/stores/waterSourceStore';
 import { compareZoneSchemes, type ZoneComparisonResult } from '@/lib/zoneCompareEngine';
@@ -49,15 +50,16 @@ const ZoneSchemeCompare: React.FC = () => {
       .sort((a, b) => b[1].length - a[1].length);
   }, [groupedBySource]);
 
+  const toast = useToast();
   const handleCompare = () => {
     const recordA = zoneResults.find(r => r.id === selectedA);
     const recordB = zoneResults.find(r => r.id === selectedB);
     if (!recordA || !recordB) {
-      alert('请选择两个方案');
+      toast.warning('请选择两个方案');
       return;
     }
     if (recordA.id === recordB.id) {
-      alert('请选择不同的方案进行对比');
+      toast.warning('请选择不同的方案进行对比');
       return;
     }
     const comparison = compareZoneSchemes(recordA, recordB);

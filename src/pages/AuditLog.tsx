@@ -5,6 +5,7 @@
  */
 
 import { useState, useMemo } from 'react';
+import { useConfirm } from '@/hooks/useConfirm';
 import {
   queryAuditLogs,
   getAuditStats,
@@ -47,6 +48,7 @@ const sourceLabels: Record<string, string> = {
 };
 
 export default function AuditLogPage() {
+  const confirm = useConfirm();
   const [refreshKey, setRefreshKey] = useState(0);
   const [filterAction, setFilterAction] = useState<AuditAction | ''>('');
   const [keyword, setKeyword] = useState('');
@@ -69,8 +71,8 @@ export default function AuditLogPage() {
     saveAs(blob, `审计日志_${new Date().toISOString().slice(0, 10)}.json`);
   };
 
-  const handleClear = () => {
-    if (confirm('确定清空全部审计日志？此操作不可恢复。')) {
+  const handleClear = async () => {
+    if (await confirm({ message: '确定清空全部审计日志？此操作不可恢复。', danger: true })) {
       clearAuditLogs();
       setRefreshKey((k) => k + 1);
     }

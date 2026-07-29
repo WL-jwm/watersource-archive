@@ -10,6 +10,7 @@
  * 使用 @media print CSS 控制打印布局
  */
 
+import { useToast } from '@/hooks/useToast';
 import React, { useState, useMemo } from 'react';
 import type { ZoneCalcRecord, WaterSourceRecord } from '@/stores/waterSourceStore';
 import { generateSourceZoneVertices } from '@/lib/zoneCoordGenerator';
@@ -87,10 +88,11 @@ const VertexPrintTable: React.FC<VertexPrintTableProps> = ({ zoneResults, source
   const headers = getCoordHeaders(format);
 
   // 打印预览
+  const toast = useToast();
   const handlePrint = () => {
     const printWindow = window.open('', '_blank', 'width=1123,height=794');
     if (!printWindow) {
-      alert('请允许弹出窗口以进行打印预览');
+      toast.warning('请允许弹出窗口以进行打印预览');
       return;
     }
 

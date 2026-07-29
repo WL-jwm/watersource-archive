@@ -2,6 +2,7 @@
  * T7: 行政区划裁剪面板（从 ProtectionZoneCalc 拆分）
  */
 
+import { useToast } from '@/hooks/useToast';
 import React, { useState } from 'react';
 import { clipBatchZones, summarizeClipResults, type SourceClipResult } from '@/lib/zoneClipEngine';
 import { generateSourceZoneVertices } from '@/lib/zoneCoordGenerator';
@@ -14,6 +15,7 @@ interface ZoneClipPanelProps {
 }
 
 const ZoneClipPanel: React.FC<ZoneClipPanelProps> = ({ zoneResults, sources }) => {
+  const toast = useToast();
   const [clipLoading, setClipLoading] = useState(false);
   const [clipResults, setClipResults] = useState<SourceClipResult[] | null>(null);
 
@@ -47,7 +49,7 @@ const ZoneClipPanel: React.FC<ZoneClipPanelProps> = ({ zoneResults, sources }) =
             try {
               const items = prepareGisExport();
               if (items.length === 0) {
-                alert('无已保存的计算结果');
+                toast.warning('无已保存的计算结果');
                 return;
               }
               const getCityName = (name: string) => {
@@ -58,7 +60,7 @@ const ZoneClipPanel: React.FC<ZoneClipPanelProps> = ({ zoneResults, sources }) =
               setClipResults(results);
             } catch (e) {
               console.error('裁剪计算失败:', e);
-              alert('裁剪计算失败: ' + (e as Error).message);
+              toast.error('裁剪计算失败: ' + (e as Error).message);
             } finally {
               setClipLoading(false);
             }

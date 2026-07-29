@@ -8,6 +8,7 @@
  * - RecommendationPanel: 智能推荐信息面板
  */
 
+import { useToast } from '@/hooks/useToast';
 import React, { useState } from 'react';
 import { useWaterSourceStore, type WaterSourceRecord, type ZoneCalcRecord } from '@/stores/waterSourceStore';
 import { calcProtectionZones, type CalcParams, type CalcResult } from '@/lib/zoneCalcEngine';
@@ -92,8 +93,9 @@ function PreciseCalcPanel({ onResult }: {
   }, []);
 
   // ===== 计算逻辑 =====
+  const toast = useToast();
   const handleCalc = () => {
-    if (!sourceName.trim()) { alert('请输入水源地名称'); return; }
+    if (!sourceName.trim()) { toast.warning('请输入水源地名称'); return; }
 
     const params: CalcParams = { sourceType };
     if (sourceType === '地下水') {

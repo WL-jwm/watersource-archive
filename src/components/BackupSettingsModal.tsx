@@ -18,6 +18,7 @@ import {
   type RestoreResult,
 } from '@/lib/backupManager';
 import { encryptAndDownload } from '@/lib/cryptoExport';
+import { useToast } from '@/hooks/useToast';
 
 interface BackupSettingsModalProps {
   open: boolean;
@@ -31,6 +32,7 @@ const BackupSettingsModal: React.FC<BackupSettingsModalProps> = ({ open, onClose
   const [restoring, setRestoring] = useState(false);
   const [restoreResult, setRestoreResult] = useState<RestoreResult | null>(null);
   const [backupInfo, setBackupInfo] = useState<{ fileName: string; size: number } | null>(null);
+  const toast = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // 加载上次备份时间
@@ -215,7 +217,7 @@ const BackupSettingsModal: React.FC<BackupSettingsModalProps> = ({ open, onClose
                 if (!pwd) return;
                 const confirmPwd = prompt('请再次输入密码确认：');
                 if (pwd !== confirmPwd) {
-                  alert('两次输入的密码不一致');
+                  toast.warning('两次输入的密码不一致');
                   return;
                 }
                 setBacking(true);
@@ -226,7 +228,7 @@ const BackupSettingsModal: React.FC<BackupSettingsModalProps> = ({ open, onClose
                   setBackupInfo({ fileName: result.fileName, size: result.encryptedSize });
                   setLastTime(new Date().toISOString());
                 } catch (err) {
-                  alert(`加密备份失败：${err instanceof Error ? err.message : String(err)}`);
+                  toast.error(`加密备份失败：${err instanceof Error ? err.message : String(err)}`);
                 } finally {
                   setBacking(false);
                 }

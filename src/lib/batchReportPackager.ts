@@ -30,6 +30,7 @@ import {
 import type { ZoneCalcRecord, WaterSourceRecord } from '@/stores/waterSourceStore';
 import { generateZoneReport, type ReportConfig, type ReportChapter } from './zoneReportGenerator';
 import { generatePdfReport } from './reportPdfExporter';
+import { toast } from '@/stores/toastStore';
 
 // ===== 类型定义 =====
 
@@ -360,7 +361,7 @@ export async function generateBatchReportsV2(
   }
 
   if (targetCities.length === 0) {
-    alert('没有匹配的城市数据');
+    toast.warning('没有匹配的城市数据');
     return;
   }
 

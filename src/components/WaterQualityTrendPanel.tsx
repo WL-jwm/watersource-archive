@@ -9,6 +9,7 @@
  * 依据：GB/T 14848-2017《地下水质量标准》
  */
 
+import { useToast } from '@/hooks/useToast';
 import React, { useState, useMemo, useCallback } from 'react';
 import { useWaterSourceStore } from '@/stores/waterSourceStore';
 import {
@@ -74,6 +75,7 @@ const WaterQualityTrendPanel: React.FC = () => {
   const { loaded, sources } = useWaterSourceStore();
 
   const [selectedSourceId, setSelectedSourceId] = useState('');
+  const toast = useToast();
   const [periods, setPeriods] = useState<WaterQualityPeriod[]>([]);
   const [report, setReport] = useState<WaterQualityTrendReport | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
@@ -88,7 +90,7 @@ const WaterQualityTrendPanel: React.FC = () => {
 
   const handleAddPeriod = useCallback(() => {
     if (!newPeriodLabel.trim() || !newPeriodDate) {
-      alert('请填写监测期次标签和日期');
+      toast.warning('请填写监测期次标签和日期');
       return;
     }
     const indicators: Record<string, number> = {};
@@ -97,7 +99,7 @@ const WaterQualityTrendPanel: React.FC = () => {
       if (!isNaN(num)) indicators[k] = num;
     }
     if (Object.keys(indicators).length === 0) {
-      alert('请至少填写一个指标监测值');
+      toast.warning('请至少填写一个指标监测值');
       return;
     }
     setPeriods(prev => [...prev, { date: newPeriodDate, label: newPeriodLabel.trim(), indicators }]);
@@ -119,7 +121,7 @@ const WaterQualityTrendPanel: React.FC = () => {
 
   const handleAnalyze = useCallback(() => {
     if (periods.length < 2) {
-      alert('至少需要2期监测数据');
+      toast.warning('至少需要2期监测数据');
       return;
     }
     setAnalyzing(true);

@@ -11,6 +11,7 @@
  */
 
 import { useState, useMemo } from 'react';
+import { useToast } from '@/hooks/useToast';
 import {
   generateBatchReportsV2,
   groupByCity,
@@ -28,6 +29,7 @@ interface Props {
 }
 
 export default function BatchReportModal({ open, onClose, results, sources }: Props) {
+  const toast = useToast();
   const [format, setFormat] = useState<BatchFormat>('word');
   const [zipOutput, setZipOutput] = useState(true);
   const [includeSummary, setIncludeSummary] = useState(true);
@@ -71,7 +73,7 @@ export default function BatchReportModal({ open, onClose, results, sources }: Pr
       });
       onClose();
     } catch (err) {
-      alert(`批量报告生成失败：${err instanceof Error ? err.message : String(err)}`);
+      toast.error(`批量报告生成失败：${err instanceof Error ? err.message : String(err)}`);
     } finally {
       setRunning(false);
       setProgress(null);

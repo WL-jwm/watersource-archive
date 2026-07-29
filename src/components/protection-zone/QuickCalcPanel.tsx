@@ -1,5 +1,6 @@
 /** 快速批量计算面板 */
 
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useState } from 'react';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 import { calcProtectionZones, inferDefaultParams, type CalcResult } from '@/lib/zoneCalcEngine';
@@ -24,10 +25,11 @@ function QuickCalcPanel({ sources, onBatchResult }: {
   const selectAll = () => setSelectedIds(new Set(sources.map((s) => s.id)));
   const clearSelect = () => setSelectedIds(new Set());
 
-  const handleCalcAll = () => {
+  const confirm = useConfirm();
+  const handleCalcAll = async () => {
     if (
       sources.length === 0 ||
-      !window.confirm(`确定对全部 ${sources.length} 个地下水水源地进行保护区计算？`)
+      !await confirm({ message: `确定对全部 ${sources.length} 个地下水水源地进行保护区计算？` })
     )
       return;
     const sourceIdMap = new Map<string, string>();
@@ -40,7 +42,7 @@ function QuickCalcPanel({ sources, onBatchResult }: {
     onBatchResult(allResults, sourceIdMap);
   };
 
-  const handleCalc = () => {
+  const handleCalc = async () => {
     if (selectedIds.size === 0) return;
     const selected = sources.filter((s) => selectedIds.has(s.id));
     const sourceIdMap = new Map<string, string>();

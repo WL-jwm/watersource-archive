@@ -29,6 +29,7 @@ import { saveAs } from 'file-saver';
 import type { ZoneCalcRecord } from '@/stores/waterSourceStore';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 import { generateBatchVertices, type SourceZoneVertices } from './zoneCoordGenerator';
+import { toast } from '@/stores/toastStore';
 
 // ===== 报告章节枚举 =====
 export type ReportChapter =
@@ -317,7 +318,7 @@ export async function generateZoneReport(
   }
 
   if (filtered.length === 0) {
-    if (!returnBlob) alert('没有可生成报告的计算结果');
+    if (!returnBlob) toast.warning('没有可生成报告的计算结果');
     return returnBlob ? new Blob([], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }) : undefined;
   }
 

@@ -7,6 +7,8 @@
 import { useState, useCallback } from 'react';
 import L from 'leaflet';
 
+import { toast } from '@/stores/toastStore';
+
 export function useMapExport(
   mapRef: React.RefObject<HTMLDivElement>,
   mapInstanceRef: React.RefObject<L.Map | null>,
@@ -65,7 +67,7 @@ export function useMapExport(
       } catch {
         canvas.toBlob((blob) => {
           if (!blob) {
-            alert('地图导出失败');
+            toast.error('地图导出失败');
             return;
           }
           const link = document.createElement('a');
@@ -76,7 +78,7 @@ export function useMapExport(
         }, 'image/png');
       }
     } catch (err) {
-      alert('地图导出失败：' + (err as Error).message);
+      toast.error('地图导出失败：' + (err as Error).message);
     } finally {
       setExporting(false);
     }

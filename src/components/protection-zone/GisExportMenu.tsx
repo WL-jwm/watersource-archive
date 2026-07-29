@@ -2,6 +2,7 @@
  * T7: GIS导出下拉菜单（从 ProtectionZoneCalc 拆分）
  */
 
+import { useToast } from '@/hooks/useToast';
 import React from 'react';
 
 import { generateSourceZoneVertices } from '@/lib/zoneCoordGenerator';
@@ -27,10 +28,11 @@ const GisExportMenu: React.FC<GisExportMenuProps> = ({ zoneResults, sources }) =
       .filter(Boolean) as ReturnType<typeof generateSourceZoneVertices>[];
   };
 
+  const toast = useToast();
   const handleExport = async (type: 'geojson' | 'kml' | 'wkt' | 'shp') => {
     const items = prepareGisExport();
     if (items.length === 0) {
-      alert('无已保存的计算结果');
+      toast.warning('无已保存的计算结果');
       return;
     }
     const gis = await import('@/lib/zoneGISExporter');

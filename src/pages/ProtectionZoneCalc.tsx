@@ -8,6 +8,7 @@
  * 5. 从水源地列表快速导入
  */
 
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useWaterSourceStore, type ZoneCalcRecord } from '@/stores/waterSourceStore';
 import type { CalcResult } from '@/lib/zoneCalcEngine';
@@ -33,6 +34,7 @@ import MapFigureExport from '@/components/protection-zone/MapFigureExport';
 function ProtectionZoneCalc() {
   const { loaded, sources, zoneResults, saveZoneResult, loadZoneResults } =
     useWaterSourceStore();
+  const confirm = useConfirm();
   const [results, setResults] = useState<CalcResult[]>([]);
   const [activeTab, setActiveTab] = useState<'quick' | 'precise' | 'compare'>('quick');
   const [autoSave, setAutoSave] = useState(true);
@@ -238,8 +240,8 @@ function ProtectionZoneCalc() {
             <div className="flex items-center gap-2">
               {zoneResults.length > 0 && (
                 <button
-                  onClick={() => {
-                    if (confirm(`确定清空全部${zoneResults.length}条保存的计算结果？`)) {
+                  onClick={async () => {
+                    if (await confirm({ message: `确定清空全部${zoneResults.length}条保存的计算结果？`, danger: true })) {
                       useWaterSourceStore.getState().clearZoneResults();
                       setResults([]);
                     }

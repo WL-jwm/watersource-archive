@@ -9,6 +9,8 @@
  * 5. 重置为静态默认数据
  */
 
+import { useToast } from '@/hooks/useToast';
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useEffect, useState, useCallback } from 'react';
 // F3: XLSX 改为动态导入，减小首屏体积(426KB)
 import { useWaterSourceStore, WaterSourceRecord } from '@/stores/waterSourceStore';
@@ -48,6 +50,8 @@ const levelLabels: Record<string, string> = {
 const statusOptions = ['在用', '备用', '取消', '规划', '在建'];
 
 const WaterSourceManager: React.FC = () => {
+  const toast = useToast();
+  const confirm = useConfirm();
   const {
     loaded,
     initializing,
@@ -106,9 +110,9 @@ const WaterSourceManager: React.FC = () => {
     try {
       const text = await file.text();
       const count = await importJSON(text, 'merge');
-      alert(`成功导入 ${count} 条水源地记录`);
+      toast.success(`成功导入 ${count} 条水源地记录`);
     } catch {
-      alert('导入失败，请检查文件格式');
+      toast.error('导入失败，请检查文件格式');
     }
     if (jsonInputRef.current) jsonInputRef.current.value = '';
   };
@@ -147,7 +151,7 @@ const WaterSourceManager: React.FC = () => {
         imported++;
       }
       setShowImportPanel(false);
-      alert(`成功导入 ${imported} 条水源地记录（共 ${result.meta.parsedRows} 行解析成功）`);
+      toast.success(`成功导入 ${imported} 条水源地记录（共 ${result.meta.parsedRows} 行解析成功）`);
     },
     [addSource],
   );
@@ -231,14 +235,14 @@ const WaterSourceManager: React.FC = () => {
 
   // 处理重置
   const handleReset = async () => {
-    if (!window.confirm('确定重置为默认数据？所有手动修改将丢失。')) return;
+    if (!await confirm({ message: '确定重置为默认数据？所有手动修改将丢失。', danger: true })) return;
     await resetToStatic();
     setCurrentPage(1);
   };
 
   // 处理删除
   const handleDelete = async (source: WaterSourceRecord) => {
-    if (!window.confirm(`确定删除"${source.name}"？`)) return;
+    if (!await confirm({ message: `确定删除"${source.name}"？`, danger: true })) return;
     await deleteSource(source.id);
   };
 

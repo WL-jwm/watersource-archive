@@ -1,3 +1,5 @@
+import { useToast } from '@/hooks/useToast';
+import { useConfirm } from '@/hooks/useConfirm';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/stores/appStore';
@@ -43,6 +45,8 @@ function getCityKnownSources(
 }
 
 const Home: React.FC = () => {
+  const toast = useToast();
+  const confirm = useConfirm();
   const navigate = useNavigate();
   const {
     reports,
@@ -159,7 +163,7 @@ const Home: React.FC = () => {
       importData(json);
       setShowImportConfirm(false);
     } catch {
-      alert('导入失败，请检查文件格式');
+      toast.error('导入失败，请检查文件格式');
     }
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
@@ -178,12 +182,12 @@ const Home: React.FC = () => {
       }
     }
     if (count === 0) {
-      alert('示例数据已全部加载');
+      toast.success('示例数据已全部加载');
     }
   };
 
-  const handleDelete = (id: string, name: string) => {
-    if (window.confirm(`确定删除报告"${name.replace(/（[^）]*）/, '')}"？此操作不可恢复。`)) {
+  const handleDelete = async (id: string, name: string) => {
+    if (await confirm({ message: `确定删除报告"${name.replace(/（[^）]*）/, '')}"？此操作不可恢复。`, danger: true })) {
       deleteReport(id);
     }
   };

@@ -4,6 +4,8 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import Layout from '@/components/layout/Layout';
 import { OfflineIndicator, SWUpdateToast, InstallPromptBanner } from '@/lib/pwaEnhanced';
 import { I18nProvider, LocaleSwitcher } from '@/lib/i18n';
+import ToastContainer from '@/components/ToastContainer';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import { getPageImporter } from '@/lib/preload';
 
 // F3: 路由级懒加载 — 按页面拆分 chunk，减小首屏加载体积
@@ -43,6 +45,8 @@ const App: React.FC = () => {
           <div className="fixed top-2 right-2 z-50">
             <LocaleSwitcher />
           </div>
+          <ToastContainer />
+          <ConfirmDialog />
           <Layout>
           <Suspense fallback={<PageFallback />}>
             <Routes>
