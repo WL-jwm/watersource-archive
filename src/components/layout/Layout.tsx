@@ -33,10 +33,19 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       return false;
     }
   });
+  const [backupModalOpen, setBackupModalOpen] = React.useState(false);
 
   // 全局IDB初始化（应用启动时仅执行一次）
   useEffect(() => {
     initDB();
+  }, []);
+
+  // N4: 自动备份检测（启动后延迟5秒检查）
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      tryAutoBackup().catch(() => {});
+    }, 5000);
+    return () => clearTimeout(timer);
   }, []);
 
   // P4-9: 网络状态监听 + PWA安装提示
@@ -96,6 +105,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-surface-secondary">
+      {/* N4: 备份提醒横幅 */}
+      <BackupBanner />
+
       {/* P4-9: PWA安装提示横幅 */}
       {showInstallBanner && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-indigo-600 text-white px-4 py-2 flex items-center justify-between text-sm">
@@ -310,6 +322,17 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </svg>
             {!sidebarCollapsed && '审计日志'}
           </a>
+          {/* N4: 数据备份入口 */}
+          <button
+            onClick={() => setBackupModalOpen(true)}
+            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
+            title="数据备份与恢复"
+          >
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            {!sidebarCollapsed && '数据备份'}
+          </button>
           <a
             href="#/divisions"
               onMouseEnter={() => preloadPage('/divisions')}
@@ -675,6 +698,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <DivisionSelector />
       {/* G2: 移动端底部导航栏 */}
       <MobileBottomNav />
+      {/* N4: 备份设置弹窗 */}
+      <BackupSettingsModal open={backupModalOpen} onClose={() => setBackupModalOpen(false)} />
     </div>
   );
 };
@@ -684,5 +709,8 @@ import DivisionSelector from '@/components/DivisionSelector';
 import UndoRedoToolbar from '@/components/UndoRedoToolbar';
 import { MobileBottomNav } from '@/lib/mobileEnhanced';
 import { preloadPage } from '@/lib/preload';
+import BackupBanner from '@/components/BackupBanner';
+import BackupSettingsModal from '@/components/BackupSettingsModal';
+import { tryAutoBackup } from '@/lib/backupManager';
 
 export default Layout;
