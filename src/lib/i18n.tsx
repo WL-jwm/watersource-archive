@@ -17,7 +17,7 @@ export type Locale = 'zh' | 'en';
 type TranslationDict = Record<string, string>;
 
 // ===== 翻译字典 =====
-const translations: Record<Locale, TranslationDict> = {
+export const translations: Record<Locale, TranslationDict> = {
   zh: {
     // 应用
     'app.title': '河北省水源地保护区档案管理平台',
@@ -88,6 +88,51 @@ const translations: Record<Locale, TranslationDict> = {
     'ea.needAdjust': '需调整',
     'ea.notConform': '不符合',
     'ea.confidence': '置信度',
+    // N8: Layout 侧边栏
+    'layout.sidebarTitle': '水源地档案管理',
+    'layout.sidebarSubtitle': '保护区划分技术报告',
+    'layout.statReports': '报告',
+    'layout.statSources': '水源地',
+    'layout.statWells': '水井',
+    'layout.reportList': '报告列表',
+    'layout.noReports': '暂无报告数据',
+    'layout.noReportsHint': '点击"导入数据"添加',
+    'layout.collapseSidebar': '收起侧栏',
+    'layout.allReports': '全部报告',
+    // N8: Layout 功能导航
+    'nav.gis': 'GIS地图',
+    'nav.dashboardFull': '统计仪表盘',
+    'nav.zoneCalcFull': '保护区划分',
+    'nav.audit': '审计日志',
+    'nav.backup': '数据备份',
+    'nav.divisionsFull': '行政区划',
+    'nav.manageShort': '管理',
+    'nav.zoneShort': '保护区',
+    'nav.versionsShort': '版本',
+    // N8: 操作按钮
+    'action.print': '打印',
+    'action.install': '安装',
+    'action.close': '关闭',
+    'action.importData': '导入数据',
+    // N8: PWA安装提示
+    'pwa.installHint': '安装水源地档案应用到桌面，离线使用',
+    // N8: 页面加载
+    'page.loading': '页面加载中...',
+    // N8: Home 页面
+    'home.title': '河北省饮用水水源地保护区档案管理平台',
+    'home.subtitle': '集中式饮用水水源地保护区划分技术报告管理系统',
+    'home.totalReports': '报告总数',
+    'home.totalSources': '水源地总数',
+    'home.totalCities': '覆盖城市',
+    'home.totalZones': '保护区计算',
+    'home.quickActions': '快捷操作',
+    'home.recentReports': '最近报告',
+    'home.cityDistribution': '城市分布',
+    'home.noReports': '暂无报告',
+    'home.importData': '导入数据',
+    'home.newReport': '新建报告',
+    'home.viewMap': '查看地图',
+    'home.zoneCalc': '保护区计算',
   },
   en: {
     // App
@@ -159,6 +204,51 @@ const translations: Record<Locale, TranslationDict> = {
     'ea.needAdjust': 'Need Adjustment',
     'ea.notConform': 'Not Conform',
     'ea.confidence': 'Confidence',
+    // N8: Layout sidebar
+    'layout.sidebarTitle': 'Water Source Archive',
+    'layout.sidebarSubtitle': 'Protection Zone Technical Reports',
+    'layout.statReports': 'Reports',
+    'layout.statSources': 'Sources',
+    'layout.statWells': 'Wells',
+    'layout.reportList': 'Report List',
+    'layout.noReports': 'No report data',
+    'layout.noReportsHint': 'Click "Import Data" to add',
+    'layout.collapseSidebar': 'Collapse',
+    'layout.allReports': 'All Reports',
+    // N8: Layout navigation
+    'nav.gis': 'GIS Map',
+    'nav.dashboardFull': 'Dashboard',
+    'nav.zoneCalcFull': 'Zone Calculator',
+    'nav.audit': 'Audit Log',
+    'nav.backup': 'Backup',
+    'nav.divisionsFull': 'Divisions',
+    'nav.manageShort': 'Manage',
+    'nav.zoneShort': 'Zones',
+    'nav.versionsShort': 'Versions',
+    // N8: Actions
+    'action.print': 'Print',
+    'action.install': 'Install',
+    'action.close': 'Close',
+    'action.importData': 'Import Data',
+    // N8: PWA install
+    'pwa.installHint': 'Install Water Source Archive app for offline use',
+    // N8: Page loading
+    'page.loading': 'Loading...',
+    // N8: Home page
+    'home.title': 'Hebei Drinking Water Source Protection Zone Archive Platform',
+    'home.subtitle': 'Centralized Drinking Water Source Protection Zone Delineation Report Management System',
+    'home.totalReports': 'Total Reports',
+    'home.totalSources': 'Total Sources',
+    'home.totalCities': 'Cities Covered',
+    'home.totalZones': 'Zone Calculations',
+    'home.quickActions': 'Quick Actions',
+    'home.recentReports': 'Recent Reports',
+    'home.cityDistribution': 'City Distribution',
+    'home.noReports': 'No reports yet',
+    'home.importData': 'Import Data',
+    'home.newReport': 'New Report',
+    'home.viewMap': 'View Map',
+    'home.zoneCalc': 'Zone Calculator',
   },
 };
 

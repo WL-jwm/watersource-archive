@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { I18nProvider, useI18n } from '@/lib/i18n';
+import { I18nProvider, useI18n, translations } from '@/lib/i18n';
 
 function wrapper({ children }: { children: React.ReactNode }) {
   return <I18nProvider>{children}</I18nProvider>;
@@ -86,4 +86,78 @@ describe('i18n - 国际化框架', () => {
     expect(result.current.t('zone.primary')).toBe('Primary Zone');
     expect(result.current.t('zone.secondary')).toBe('Secondary Zone');
   });
+
+  // N8: 新增 Layout 键值
+  it('T11-Layout侧边栏标题翻译', () => {
+    const { result } = renderHook(() => useI18n(), { wrapper });
+    expect(result.current.t('layout.sidebarTitle')).toBe('水源地档案管理');
+    expect(result.current.t('layout.sidebarSubtitle')).toBe('保护区划分技术报告');
+    act(() => result.current.setLocale('en'));
+    expect(result.current.t('layout.sidebarTitle')).toBe('Water Source Archive');
+    expect(result.current.t('layout.sidebarSubtitle')).toBe('Protection Zone Technical Reports');
+  });
+
+  it('T12-统计标签翻译', () => {
+    const { result } = renderHook(() => useI18n(), { wrapper });
+    expect(result.current.t('layout.statReports')).toBe('报告');
+    expect(result.current.t('layout.statSources')).toBe('水源地');
+    expect(result.current.t('layout.statWells')).toBe('水井');
+    act(() => result.current.setLocale('en'));
+    expect(result.current.t('layout.statReports')).toBe('Reports');
+    expect(result.current.t('layout.statSources')).toBe('Sources');
+    expect(result.current.t('layout.statWells')).toBe('Wells');
+  });
+
+  it('T13-导航项翻译', () => {
+    const { result } = renderHook(() => useI18n(), { wrapper });
+    expect(result.current.t('nav.gis')).toBe('GIS地图');
+    expect(result.current.t('nav.dashboardFull')).toBe('统计仪表盘');
+    expect(result.current.t('nav.zoneCalcFull')).toBe('保护区划分');
+    expect(result.current.t('nav.audit')).toBe('审计日志');
+    expect(result.current.t('nav.backup')).toBe('数据备份');
+    act(() => result.current.setLocale('en'));
+    expect(result.current.t('nav.gis')).toBe('GIS Map');
+    expect(result.current.t('nav.dashboardFull')).toBe('Dashboard');
+    expect(result.current.t('nav.zoneCalcFull')).toBe('Zone Calculator');
+    expect(result.current.t('nav.audit')).toBe('Audit Log');
+    expect(result.current.t('nav.backup')).toBe('Backup');
+  });
+
+  it('T14-Home页面键值翻译', () => {
+    const { result } = renderHook(() => useI18n(), { wrapper });
+    expect(result.current.t('home.title')).toBe('河北省饮用水水源地保护区档案管理平台');
+    expect(result.current.t('home.quickActions')).toBe('快捷操作');
+    act(() => result.current.setLocale('en'));
+    expect(result.current.t('home.title')).toBe('Hebei Drinking Water Source Protection Zone Archive Platform');
+    expect(result.current.t('home.quickActions')).toBe('Quick Actions');
+  });
+
+  it('T15-操作按钮翻译', () => {
+    const { result } = renderHook(() => useI18n(), { wrapper });
+    expect(result.current.t('action.print')).toBe('打印');
+    expect(result.current.t('action.install')).toBe('安装');
+    expect(result.current.t('action.close')).toBe('关闭');
+    act(() => result.current.setLocale('en'));
+    expect(result.current.t('action.print')).toBe('Print');
+    expect(result.current.t('action.install')).toBe('Install');
+    expect(result.current.t('action.close')).toBe('Close');
+  });
+
+  it('T16-PWA安装提示翻译', () => {
+    const { result } = renderHook(() => useI18n(), { wrapper });
+    expect(result.current.t('pwa.installHint')).toBe('安装水源地档案应用到桌面，离线使用');
+    act(() => result.current.setLocale('en'));
+    expect(result.current.t('pwa.installHint')).toBe('Install Water Source Archive app for offline use');
+  });
+
+  it('T17-中英双语键值数量一致', () => {
+    // 确保所有中文键都有对应的英文翻译
+    const zhKeys = Object.keys(translations.zh);
+    const enKeys = Object.keys(translations.en);
+    expect(enKeys.length).toBe(zhKeys.length);
+    for (const key of zhKeys) {
+      expect(enKeys).toContain(key);
+    }
+  });
 });
+

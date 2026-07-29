@@ -34,6 +34,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   });
   const [backupModalOpen, setBackupModalOpen] = React.useState(false);
+  const { t } = useI18n();
 
   // 全局IDB初始化（应用启动时仅执行一次）
   useEffect(() => {
@@ -120,20 +121,20 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-            <span>安装水源地档案应用到桌面，离线使用</span>
+            <span>{t('pwa.installHint')}</span>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={handleInstall}
               className="px-3 py-1 bg-white text-indigo-600 rounded font-medium text-xs hover:bg-indigo-50"
             >
-              安装
+              {t('action.install')}
             </button>
             <button
               onClick={() => setShowInstallBanner(false)}
               className="text-white/70 hover:text-white text-xs"
             >
-              关闭
+              {t('action.close')}
             </button>
           </div>
         </div>
@@ -160,8 +161,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </div>
           {!sidebarCollapsed && (
             <div className="min-w-0">
-              <h1 className="text-sm font-semibold text-text-primary truncate">水源地档案管理</h1>
-              <p className="text-xs text-text-tertiary truncate">保护区划分技术报告</p>
+              <h1 className="text-sm font-semibold text-text-primary truncate">{t('layout.sidebarTitle')}</h1>
+              <p className="text-xs text-text-tertiary truncate">{t('layout.sidebarSubtitle')}</p>
             </div>
           )}
         </div>
@@ -172,15 +173,15 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <div className="grid grid-cols-3 gap-2">
               <div className="text-center">
                 <div className="text-lg font-bold text-accent-500">{stats.reportCount}</div>
-                <div className="text-[10px] text-text-tertiary">报告</div>
+                <div className="text-[10px] text-text-tertiary">{t('layout.statReports')}</div>
               </div>
               <div className="text-center">
                 <div className="text-lg font-bold text-accent-500">{stats.sourceCount}</div>
-                <div className="text-[10px] text-text-tertiary">水源地</div>
+                <div className="text-[10px] text-text-tertiary">{t('layout.statSources')}</div>
               </div>
               <div className="text-center">
                 <div className="text-lg font-bold text-accent-500">{stats.wellCount}</div>
-                <div className="text-[10px] text-text-tertiary">水井</div>
+                <div className="text-[10px] text-text-tertiary">{t('layout.statWells')}</div>
               </div>
             </div>
           </div>
@@ -192,15 +193,15 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           {!sidebarCollapsed && (
             <div className="px-4 py-1.5">
               <span className="text-[10px] font-semibold text-text-tertiary uppercase tracking-wider">
-                报告列表
+                {t('layout.reportList')}
               </span>
             </div>
           )}
           {!sidebarCollapsed && reports.length === 0 && (
             <div className="px-4 py-8 text-center text-sm text-text-tertiary">
-              暂无报告数据
+              {t('layout.noReports')}
               <br />
-              点击"导入数据"添加
+              {t('layout.noReportsHint')}
             </div>
           )}
           {reports.map((report) => (
@@ -239,7 +240,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             href="#/map"
               onMouseEnter={() => preloadPage('/map')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
-            title="GIS地图"
+            title={t('nav.gis')}
           >
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -255,13 +256,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-            {!sidebarCollapsed && 'GIS地图'}
+            {!sidebarCollapsed && t('nav.gis')}
           </a>
           <a
             href="#/dashboard"
               onMouseEnter={() => preloadPage('/dashboard')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
-            title="统计仪表盘"
+            title={t('nav.dashboardFull')}
           >
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -271,13 +272,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
               />
             </svg>
-            {!sidebarCollapsed && '统计仪表盘'}
+            {!sidebarCollapsed && t('nav.dashboardFull')}
           </a>
           <a
             href="#/zone-calc"
               onMouseEnter={() => preloadPage('/zone-calc')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
-            title="保护区划分计算"
+            title={t('nav.zoneCalcFull')}
           >
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -287,13 +288,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
               />
             </svg>
-            {!sidebarCollapsed && '保护区划分'}
+            {!sidebarCollapsed && t('nav.zoneCalcFull')}
           </a>
           <a
             href="#/analysis"
               onMouseEnter={() => preloadPage('/analysis')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
-            title="项目空间分析"
+            title={t('nav.analysis')}
           >
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -304,13 +305,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3" />
             </svg>
-            {!sidebarCollapsed && '项目分析'}
+            {!sidebarCollapsed && t('nav.analysis')}
           </a>
           <a
             href="#/audit"
               onMouseEnter={() => preloadPage('/audit')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
-            title="审计日志"
+            title={t('nav.audit')}
           >
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -320,24 +321,24 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-            {!sidebarCollapsed && '审计日志'}
+            {!sidebarCollapsed && t('nav.audit')}
           </a>
           {/* N4: 数据备份入口 */}
           <button
             onClick={() => setBackupModalOpen(true)}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
-            title="数据备份与恢复"
+            title={t('nav.backup')}
           >
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
-            {!sidebarCollapsed && '数据备份'}
+            {!sidebarCollapsed && t('nav.backup')}
           </button>
           <a
             href="#/divisions"
               onMouseEnter={() => preloadPage('/divisions')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
-            title="行政区划总览"
+            title={t('nav.divisionsFull')}
           >
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -347,7 +348,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            {!sidebarCollapsed && '行政区划'}
+            {!sidebarCollapsed && t('nav.divisionsFull')}
           </a>
           <button
             onClick={toggleSidebar}
@@ -366,7 +367,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
               />
             </svg>
-            {!sidebarCollapsed && '收起侧栏'}
+            {!sidebarCollapsed && t('layout.collapseSidebar')}
           </button>
         </div>
       </aside>
@@ -394,7 +395,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               onMouseEnter={() => preloadPage('/')}
               className="text-text-secondary truncate hover:text-text-primary transition-colors"
             >
-              全部报告
+              {t('layout.allReports')}
             </a>
             {selectedReport && (
               <>
@@ -469,7 +470,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span>行政区划</span>
+              <span>{t('nav.divisionsFull')}</span>
             </a>
             <a
               href="#/manage"
@@ -484,7 +485,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
                 />
               </svg>
-              <span>管理</span>
+              <span>{t('nav.manageShort')}</span>
             </a>
             <a
               href="#/zone-calc"
@@ -499,7 +500,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
                 />
               </svg>
-              <span>保护区</span>
+              <span>{t('nav.zoneShort')}</span>
             </a>
             <a
               href="#/analysis"
@@ -520,7 +521,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   d="M12 8v4l3 3"
                 />
               </svg>
-              <span>项目分析</span>
+              <span>{t('nav.analysis')}</span>
             </a>
             <a
               href="#/versions"
@@ -535,7 +536,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span>版本</span>
+              <span>{t('nav.versionsShort')}</span>
             </a>
             {/* P4-4: 打印按钮 */}
             <button
@@ -709,6 +710,7 @@ import DivisionSelector from '@/components/DivisionSelector';
 import UndoRedoToolbar from '@/components/UndoRedoToolbar';
 import { MobileBottomNav } from '@/lib/mobileEnhanced';
 import { preloadPage } from '@/lib/preload';
+import { useI18n } from '@/lib/i18n';
 import BackupBanner from '@/components/BackupBanner';
 import BackupSettingsModal from '@/components/BackupSettingsModal';
 import { tryAutoBackup } from '@/lib/backupManager';

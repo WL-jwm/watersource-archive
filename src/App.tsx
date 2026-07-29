@@ -27,7 +27,7 @@ const PageFallback = () => (
   <div className="flex items-center justify-center h-[60vh]">
     <div className="text-center">
       <div className="inline-block w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-3" />
-      <p className="text-sm text-gray-500">页面加载中...</p>
+      <p className="text-sm text-gray-500">Loading...</p>
     </div>
   </div>
 );
