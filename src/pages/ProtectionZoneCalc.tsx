@@ -26,6 +26,7 @@ import ZoneSchemeCompare from '@/components/protection-zone/ZoneSchemeCompare';
 import SensitivityPanel from '@/components/protection-zone/SensitivityPanel';
 import ZoneClipPanel from '@/components/protection-zone/ZoneClipPanel';
 import GisExportMenu from '@/components/protection-zone/GisExportMenu';
+import VertexPrintTable from '@/components/protection-zone/VertexPrintTable';
 
 
 function ProtectionZoneCalc() {
@@ -372,6 +373,9 @@ function ProtectionZoneCalc() {
           ))}
         </div>
       )}
+
+      {/* N1: 拐点坐标表（打印优化） */}
+      {zoneResults.length > 0 && <VertexPrintTable zoneResults={zoneResults} sources={sources} />}
 
       {/* T7: 参数敏感性分析面板（已拆分为子组件） */}
       <SensitivityPanel results={results} />
