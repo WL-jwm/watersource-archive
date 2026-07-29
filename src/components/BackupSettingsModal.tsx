@@ -17,6 +17,7 @@ import {
   type BackupSettings,
   type RestoreResult,
 } from '@/lib/backupManager';
+import { encryptAndDownload } from '@/lib/cryptoExport';
 
 interface BackupSettingsModalProps {
   open: boolean;
@@ -206,6 +207,38 @@ const BackupSettingsModal: React.FC<BackupSettingsModalProps> = ({ open, onClose
                 备份完成：{backupInfo.fileName}（{formatBackupSize(backupInfo.size)}）
               </div>
             )}
+
+            {/* N5: 加密备份 */}
+            <button
+              onClick={async () => {
+                const pwd = prompt('请输入加密密码：');
+                if (!pwd) return;
+                const confirmPwd = prompt('请再次输入密码确认：');
+                if (pwd !== confirmPwd) {
+                  alert('两次输入的密码不一致');
+                  return;
+                }
+                setBacking(true);
+                try {
+                  const { exportAllData } = await import('@/lib/backupManager');
+                  const data = await exportAllData();
+                  const result = await encryptAndDownload(data, pwd, `watersource-encrypted-backup_${new Date().toISOString().slice(0, 10)}`);
+                  setBackupInfo({ fileName: result.fileName, size: result.encryptedSize });
+                  setLastTime(new Date().toISOString());
+                } catch (err) {
+                  alert(`加密备份失败：${err instanceof Error ? err.message : String(err)}`);
+                } finally {
+                  setBacking(false);
+                }
+              }}
+              disabled={backing}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white rounded-md text-sm font-medium transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              {backing ? '加密中...' : '加密备份（AES-256）'}
+            </button>
 
             {/* 恢复 */}
             <div className="border-t border-gray-200 dark:border-gray-700 pt-3">

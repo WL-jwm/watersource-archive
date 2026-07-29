@@ -16,6 +16,7 @@ import DataImportPanel from '@/components/DataImportPanel';
 import DataSourceManager from '@/components/DataSourceManager';
 import SourceFormModal from '@/components/SourceFormModal';
 import CodeValidationPanel from '@/components/CodeValidationPanel';
+import CryptoExportModal from '@/components/CryptoExportModal';
 import AdvancedSearchPanel, { HighlightedText } from '@/components/AdvancedSearchPanel';
 import { useSearchFilter } from '@/hooks/useSearchFilter';
 import type { ImportResult } from '@/lib/dataImportEngine';
@@ -73,6 +74,7 @@ const WaterSourceManager: React.FC = () => {
   const [showFormModal, setShowFormModal] = useState(false);
   const [editTarget, setEditTarget] = useState<WaterSourceRecord | null>(null);
   const [showCodeValidation, setShowCodeValidation] = useState(false);
+  const [showCryptoModal, setShowCryptoModal] = useState(false);
   const pageSize = 30;
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const jsonInputRef = React.useRef<HTMLInputElement>(null);
@@ -403,6 +405,13 @@ const WaterSourceManager: React.FC = () => {
           </button>
 
           <button
+            onClick={() => setShowCryptoModal(true)}
+            className="text-xs px-3 py-1.5 rounded border border-teal-200 text-teal-600 hover:bg-teal-50"
+          >
+            加密导出
+          </button>
+
+          <button
             onClick={handleReset}
             className="text-xs px-3 py-1.5 rounded border border-red-200 text-red-600 hover:bg-red-50 ml-auto"
           >
@@ -567,6 +576,10 @@ const WaterSourceManager: React.FC = () => {
         open={showCodeValidation}
         sources={sources}
         onClose={() => setShowCodeValidation(false)}
+      />
+      <CryptoExportModal
+        open={showCryptoModal}
+        onClose={() => setShowCryptoModal(false)}
       />
     </div>
   );
