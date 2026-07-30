@@ -337,7 +337,7 @@ export async function generateZoneReport(
           zones: r.zones,
         };
       })
-      .filter(Boolean) as any[];
+      .filter((item): item is NonNullable<typeof item> => item !== null && item !== undefined);
     const vertexList = generateBatchVertices(batchItems, vertexCount);
     vertexData = new Map(vertexList.map((v) => [v.sourceId, v]));
   }

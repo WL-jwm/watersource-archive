@@ -153,7 +153,7 @@ function clipZone(
     }
 
     // 求交集
-    const intersection = turf.intersect(polygon as any, boundaryPoly as any);
+    const intersection = turf.intersect(polygon as unknown as Parameters<typeof turf.intersect>[0], boundaryPoly as unknown as Parameters<typeof turf.intersect>[1]);
 
     if (intersection) {
       // 统一为Polygon计算面积
@@ -168,7 +168,7 @@ function clipZone(
         // 取最大面
         const coords = intersection.geometry.coordinates as unknown as number[][][];
         const maxPoly = coords.reduce((a: number[][], b: number[][]) =>
-          turf.area(turf.polygon(b as any)) > turf.area(turf.polygon(a as any)) ? b : a,
+          turf.area(turf.polygon(b as unknown as number[][][])) > turf.area(turf.polygon(a as unknown as number[][][])) ? b : a,
         );
         clippedCoords = [maxPoly[0]] as unknown as number[][][];
       } else {

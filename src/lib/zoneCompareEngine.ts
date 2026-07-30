@@ -145,8 +145,8 @@ export function compareZoneSchemes(
 
   const paramChanges = paramKeys
     .map(({ key, label }) => {
-      const valA = (schemeA.params as any)[key];
-      const valB = (schemeB.params as any)[key];
+      const valA = (schemeA.params as unknown as Record<string, unknown>)[key];
+      const valB = (schemeB.params as unknown as Record<string, unknown>)[key];
       const strA = valA != null ? String(valA) : '—';
       const strB = valB != null ? String(valB) : '—';
       return {

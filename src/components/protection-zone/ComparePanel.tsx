@@ -100,7 +100,7 @@ function ComparePanel({ results }: { results: CalcResult[] }) {
                 >
                   <option value="-1">方案A</option>
                   {list.map((r, i) => (
-                    <option key={i} value={(r as any)._idx}>
+                    <option key={i} value={(r as CalcResult & { _idx: number })._idx}>
                       {r.params.gwType || r.params.swType || ''} ·{' '}
                       {new Date(r.calculatedAt).toLocaleString('zh-CN', {
                         month: '2-digit',
@@ -122,7 +122,7 @@ function ComparePanel({ results }: { results: CalcResult[] }) {
                 >
                   <option value="-1">方案B</option>
                   {list.map((r, i) => (
-                    <option key={i} value={(r as any)._idx}>
+                    <option key={i} value={(r as CalcResult & { _idx: number })._idx}>
                       {r.params.gwType || r.params.swType || ''} ·{' '}
                       {new Date(r.calculatedAt).toLocaleString('zh-CN', {
                         month: '2-digit',

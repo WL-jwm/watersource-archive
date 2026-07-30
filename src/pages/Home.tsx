@@ -1,7 +1,6 @@
 import { useToast } from '@/hooks/useToast';
 import { useConfirm } from '@/hooks/useConfirm';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/stores/appStore';
 import {
   getReportStats,
@@ -47,7 +46,6 @@ function getCityKnownSources(
 const Home: React.FC = () => {
   const toast = useToast();
   const confirm = useConfirm();
-  const navigate = useNavigate();
   const {
     reports,
     searchQuery,
@@ -195,7 +193,7 @@ const Home: React.FC = () => {
   const handleSourceClick = (reportId: string, sourceId: string) => {
     setSelectedReportId(reportId);
     setSelectedSourceId(sourceId);
-    navigate(`/report/${reportId}`);
+    window.location.hash = `#/report/${reportId}`;
   };
 
   // 有搜索词时使用平铺模式，无搜索词时使用城市分组模式

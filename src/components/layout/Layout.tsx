@@ -29,7 +29,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       const saved = localStorage.getItem('ws-dark-mode');
       if (saved !== null) return saved === 'true';
       return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    } catch {
+    } catch (err) {
+      console.warn('Failed to read dark mode preference:', err);
       return false;
     }
   });
@@ -88,8 +89,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
     try {
       localStorage.setItem('ws-dark-mode', String(darkMode));
-    } catch {
-      /* localStorage may be unavailable */
+    } catch (err) {
+      console.warn('Failed to save dark mode preference:', err);
     }
   }, [darkMode]);
 

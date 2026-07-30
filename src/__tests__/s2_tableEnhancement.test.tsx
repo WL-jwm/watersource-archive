@@ -7,7 +7,7 @@
  * 3. 批量选择 Set 操作验证
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import ResultCard from '@/components/protection-zone/ResultCard';
 import type { CalcResult } from '@/lib/zoneCalcEngine';
@@ -16,21 +16,11 @@ import type { CalcResult } from '@/lib/zoneCalcEngine';
 const mockResult: CalcResult = {
   sourceName: '测试水源地',
   params: {
-    sourceType: '地下水',
-    gwType: '孔隙水',
-    population: 10000,
-    wellYield: 5000,
-    waterLevel: 30,
+    sourceType: '地下水' as const,
+    gwType: '孔隙水' as const,
     aquiferThickness: 20,
-    hydraulicConductivity: 0.001,
-    porosity: 0.25,
-    gradient: 0.005,
-    distance: 1000,
-    slope: 0.01,
     riverWidth: 50,
     lakeArea: 0,
-    county: '测试县',
-    city: '石家庄市',
   },
   zones: [
     {
@@ -111,7 +101,7 @@ describe('S2.4 ResultCard 手动调整半径/面积', () => {
     fireEvent.click(radiusElement);
     const inputs = document.querySelectorAll('input[type="number"]');
     // 找到半径的 input（值应该为 50）
-    const radiusInput = Array.from(inputs).find(i => i.value === '50') as HTMLInputElement;
+    const radiusInput = Array.from(inputs).find(i => (i as HTMLInputElement).value === '50') as HTMLInputElement;
     expect(radiusInput).toBeTruthy();
     // 修改半径为 100
     fireEvent.change(radiusInput, { target: { value: '100' } });

@@ -117,7 +117,7 @@ export function toBatchGeoJSON(sources: SourceZoneVertices[]): GeoJSONFeatureCol
  */
 export function generateDBFBuffer(features: GeoJSONFeature[]): ArrayBuffer {
   // DBF III头结构
-  const fields = [
+  const fields: { name: string; type: string; size: number; decimal?: number }[] = [
     { name: 'NAME', type: 'C', size: 50 },
     { name: 'LEVEL', type: 'C', size: 20 },
     { name: 'METHOD', type: 'C', size: 30 },
@@ -148,7 +148,7 @@ export function generateDBFBuffer(features: GeoJSONFeature[]): ArrayBuffer {
     view.setUint8(offset + 11, field.type === 'C' ? 0x43 : 0x4e); // C 或 N
     // bytes 12-15: reserved (0)
     view.setUint8(offset + 16, field.size); // 字段长度
-    view.setUint8(offset + 17, (field as any).decimal || 0); // 小数位数
+    view.setUint8(offset + 17, field.decimal || 0); // 小数位数
     // bytes 18-31: reserved (0)
     offset += 32;
   }

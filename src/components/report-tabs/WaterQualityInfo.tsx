@@ -107,7 +107,7 @@ const WaterQualityInfo: React.FC<{ source: WaterSource }> = ({ source }) => {
           <span className="text-xs text-text-secondary">排序:</span>
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
+            onChange={(e) => setSortBy(e.target.value as 'default' | 'pi-desc' | 'name')}
             className="input w-auto text-xs py-1"
           >
             <option value="default">默认顺序</option>

@@ -66,8 +66,11 @@ const ZoneStatsPanel: React.FC<{
   });
 
   const cityZoneData = cityOrder
-    .map((city) => cityZoneMap.get(city))
-    .filter(Boolean) as any[];
+    .map((city) => {
+      const data = cityZoneMap.get(city);
+      return data ? { cityName: city, ...data } : undefined;
+    })
+    .filter((d): d is { cityName: string; count: number; primaryArea: number; secondaryArea: number; totalArea: number; sources: string[] } => d !== undefined);
   const maxCityZoneArea = Math.max(...cityZoneData.map((d) => d.totalArea), 1);
 
   const gwTypeMap = new Map<string, number>();

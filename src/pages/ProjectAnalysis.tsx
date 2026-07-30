@@ -448,7 +448,7 @@ const ProjectAnalysis: React.FC = () => {
                             zr.zones,
                           );
                         })
-                        .filter(Boolean) as any[];
+                        .filter((item): item is NonNullable<typeof item> => item !== null && item !== undefined);
                       const summary = analyzeBuffer(targets, zoneSources);
                       setBufferResult(summary);
                     }}
