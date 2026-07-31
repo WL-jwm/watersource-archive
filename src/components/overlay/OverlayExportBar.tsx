@@ -4,7 +4,7 @@
  * 支持 Excel 多 Sheet 导出、GeoJSON 导出
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import type { OverlayResult } from '@/lib/multiSourceOverlayEngine';
 import { useToast } from '@/hooks/useToast';
 
@@ -15,6 +15,7 @@ interface OverlayExportBarProps {
 
 const OverlayExportBar: React.FC<OverlayExportBarProps> = ({ result, onDelete }) => {
   const toast = useToast();
+  const [exportingWord, setExportingWord] = useState(false);
 
   const handleExportExcel = async () => {
     try {
@@ -141,6 +142,19 @@ const OverlayExportBar: React.FC<OverlayExportBarProps> = ({ result, onDelete })
     }
   };
 
+  const handleExportWord = async () => {
+    setExportingWord(true);
+    try {
+      const { generateOverlayReport } = await import('@/lib/overlayReportGenerator');
+      await generateOverlayReport(result);
+      toast.success('Word 报告导出成功');
+    } catch {
+      toast.error('Word 报告导出失败');
+    } finally {
+      setExportingWord(false);
+    }
+  };
+
   return (
     <div className="flex items-center gap-2">
       <button
@@ -164,6 +178,17 @@ const OverlayExportBar: React.FC<OverlayExportBarProps> = ({ result, onDelete })
             d="M8 12h8M8 16h5" />
         </svg>
         导出 GeoJSON
+      </button>
+      <button
+        onClick={handleExportWord}
+        disabled={exportingWord}
+        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        {exportingWord ? '生成中...' : '导出 Word'}
       </button>
       {onDelete && (
         <button
