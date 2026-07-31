@@ -26,7 +26,6 @@ import {
 } from 'docx';
 import { saveAs } from 'file-saver';
 import type { OverlayResult, OverlayLevelResult } from './multiSourceOverlayEngine';
-import { toast } from '@/stores/toastStore';
 
 // ===== 辅助：创建段落 =====
 

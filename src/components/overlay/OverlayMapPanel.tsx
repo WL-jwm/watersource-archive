@@ -60,8 +60,7 @@ const OverlayMapPanel: React.FC<OverlayMapPanelProps> = ({ result }) => {
     const layerGroup = layerGroupRef.current;
     layerGroup.clearLayers();
 
-    const bounds: L.LatLngBounds | null = null;
-    let validBounds = L.latLngBounds([]);
+    const validBounds = L.latLngBounds([]);
 
     result.levels.forEach((lv) => {
       const style = LEVEL_STYLES[lv.level] ?? LEVEL_STYLES['一级'];
@@ -139,7 +138,6 @@ const OverlayMapPanel: React.FC<OverlayMapPanelProps> = ({ result }) => {
       mapRef.current.fitBounds(validBounds, { padding: [30, 30] });
     }
 
-    void bounds;
   }, [result]);
 
   return (

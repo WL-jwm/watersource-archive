@@ -26,6 +26,7 @@ export default [
         IDBObjectStore: 'readonly',
         IDBCursor: 'readonly',
         IDBIndex: 'readonly',
+        GeoJSON: 'readonly',
       },
       parser: tsparser,
       parserOptions: {
