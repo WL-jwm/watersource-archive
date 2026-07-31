@@ -25,6 +25,7 @@ const pageImporters: Record<string, () => Promise<{ default: any }>> = {
   '/versions': () => import('@/pages/VersionHistory'),
   '/divisions': () => import('@/pages/DivisionOverview'),
   '/audit': () => import('@/pages/AuditLog'),
+  '/overlay': () => import('@/pages/MultiSourceOverlay'),
 };
 
 // 已经发起的 import Promise 缓存，避免重复下载

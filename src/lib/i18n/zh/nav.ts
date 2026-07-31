@@ -19,4 +19,6 @@ export const nav = {
   'nav.manageShort': '管理',
   'nav.zoneShort': '保护区',
   'nav.versionsShort': '版本',
+  'nav.overlay': '叠加分析',
+  'nav.overlayFull': '多水源地叠加分析',
 };

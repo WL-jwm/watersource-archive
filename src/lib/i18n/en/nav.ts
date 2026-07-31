@@ -19,4 +19,6 @@ export const nav = {
   'nav.manageShort': 'Manage',
   'nav.zoneShort': 'Zones',
   'nav.versionsShort': 'Versions',
+  'nav.overlay': 'Overlay',
+  'nav.overlayFull': 'Multi-Source Overlay',
 };

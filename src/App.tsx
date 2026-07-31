@@ -20,6 +20,7 @@ const ProtectionZoneCalc = lazy(getPageImporter('/zone-calc'));
 const ProjectAnalysis = lazy(getPageImporter('/analysis'));
 const VersionHistory = lazy(getPageImporter('/versions'));
 const AuditLog = lazy(getPageImporter('/audit'));
+const MultiSourceOverlay = lazy(getPageImporter('/overlay'));
 
 // ReportDetail 是动态路由 /report/:id，无法从路径直接预加载，保持独立 lazy
 // 用户从报告列表点击进入时，Home 页面已渲染，chunk 加载可接受
@@ -60,6 +61,7 @@ const App: React.FC = () => {
               <Route path="/report/:id" element={<ReportDetail />} />
               <Route path="/divisions" element={<DivisionOverview />} />
               <Route path="/audit" element={<AuditLog />} />
+          <Route path="/overlay" element={<MultiSourceOverlay />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

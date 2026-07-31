@@ -309,6 +309,23 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             {!sidebarCollapsed && t('nav.analysis')}
           </a>
           <a
+            href="#/overlay"
+              onMouseEnter={() => preloadPage('/overlay')}
+            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
+            title={t('nav.overlayFull')}
+          >
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 7h18M3 12h18M3 17h18"
+              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 3v18M17 3v18" />
+            </svg>
+            {!sidebarCollapsed && t('nav.overlay')}
+          </a>
+          <a
             href="#/audit"
               onMouseEnter={() => preloadPage('/audit')}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
