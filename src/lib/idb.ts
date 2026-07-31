@@ -53,6 +53,13 @@ export async function getDB(): Promise<IDBDatabase> {
         zoneStore.createIndex('sourceName', 'sourceName', { unique: false });
         zoneStore.createIndex('calculatedAt', 'calculatedAt', { unique: false });
       }
+
+      // 叠加分析结果表（S5）
+      if (!db.objectStoreNames.contains('overlay_analyses')) {
+        const overlayStore = db.createObjectStore('overlay_analyses', { keyPath: 'id' });
+        overlayStore.createIndex('createdAt', 'createdAt', { unique: false });
+        overlayStore.createIndex('analysisName', 'analysisName', { unique: false });
+      }
     };
 
     request.onsuccess = (event) => {
