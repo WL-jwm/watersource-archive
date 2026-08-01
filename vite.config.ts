@@ -50,28 +50,61 @@ export default defineConfig({
             return 'vendor-react';
           }
 
-          // 应用代码 — 按目录拆分
-          // P2-1: 数据文件通过 dynamic import 按需加载，Vite 自动拆分为独立 chunk
-          // 仅 hebeiDivisions.ts (26KB) 静态 import，打包入 index chunk
-          // hebeiWaterSources.ts / waterSourceGeoData.ts / hebeiTownships.ts / sampleData.ts 动态 import
+          // ===== 应用代码 — 按依赖关系精细拆分 =====
+          //
+          // S10.1: Modulepreload 消减
+          // 核心问题：calc-tools 是 src/lib/ 的 catch-all，包含导入 turf/xlsx/docx/leaflet 的文件
+          // 由于 waterSourceStore(index) → zoneCalcEngine(calc-tools) 形成静态依赖链
+          // 导致 calc-tools 被 modulepreload，连带所有 vendor chunk 预加载
+          //
+          // 修复策略：将导入 heavy vendor 的 lib 文件从 calc-tools 中分离
+          // calc-tools 仅保留不依赖 heavy vendor 的核心引擎/工具
+          //
+          // S10.1-fix: toastStore 移入 calc-tools 打破循环依赖
+          // report-export 文件（batchReportPackager/zoneReportGenerator 等）值导入 toast
+          // from toastStore(index chunk) → 形成循环依赖 → Rollup 在 index 中注入
+          // 对 report-export 的静态导入 → vendor-xlsx/vendor-docx 被 modulepreload
+          // 将 toastStore 移入 calc-tools 后：report-export → calc-tools（非循环）
 
-          // 计算引擎与导出工具
-          // P-Perf: 拆分为核心引擎(calc-tools)和报告导出工具(report-export)
-          // 报告导出工具仅在生成报告时按需加载
+          if (id.includes('src/stores/toastStore')) {
+            return 'calc-tools';
+          }
+
           if (id.includes('src/lib/')) {
+            // 报告导出工具 — 导入 xlsx/docx，仅在生成报告时按需加载
             if (id.includes('batchReportPackager') ||
                 id.includes('zoneReportGenerator') ||
                 id.includes('reportPdfExporter') ||
                 id.includes('zoneExcelExporter') ||
                 id.includes('dataExchange') ||
-                id.includes('zoneGISExporter')) {
+                id.includes('zoneGISExporter') ||
+                id.includes('dataImportEngine') ||    // imports xlsx
+                id.includes('overlayReportGenerator')  // imports docx
+            ) {
               return 'report-export';
             }
+
+            // 叠加分析引擎 — 导入 @turf/turf，仅在叠加分析页面加载
+            if (id.includes('multiSourceOverlayEngine') ||
+                id.includes('zoneClipEngine')
+            ) {
+              return 'overlay-engine';
+            }
+
+            // 地图绘制工具 — 导入 leaflet，仅在地图页面加载
+            if (id.includes('mapDrawTools')) {
+              return 'map-tools';
+            }
+
+            // 其余 src/lib/ 文件（zoneCalcEngine, idb, undoManager, auditTrail 等）
+            // 不依赖 heavy vendor，安全地留在 calc-tools
             return 'calc-tools';
           }
 
-          // 页面组件和store留在主chunk（index.js）
-          // src/pages/, src/stores/, src/components/ → 默认不return，归入index
+          // 页面组件和 store — 不返回，让 Vite 自动拆分
+          // Vite 会根据导入关系将仅被 lazy 页面使用的 store/component
+          // 自动分配到对应页面 chunk，而非强制归入 index
+          // src/pages/, src/stores/, src/components/ → Vite 默认拆分
         },
       },
     },
