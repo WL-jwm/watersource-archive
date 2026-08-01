@@ -1,16 +1,21 @@
 /**
- * 全局错误边界组件
+ * S9.1: 增强版全局错误边界组件
  *
- * 捕获子组件树中的运行时错误，展示友好的错误提示页面，
- * 避免整个应用白屏崩溃。支持一键刷新恢复。
+ * 增强：
+ * - 错误上报到 IDB（errorReporter）
+ * - ChunkLoadError 自动刷新恢复
+ * - 页面级边界支持（通过 fallback prop）
  */
 
 import React from 'react';
+import { reportError } from '@/lib/errorReporter';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
   /** 自定义错误回退渲染函数 */
   fallback?: (error: Error, reset: () => void) => React.ReactNode;
+  /** 是否为页面级边界（影响渲染样式） */
+  pageLevel?: boolean;
 }
 
 interface ErrorBoundaryState {
@@ -28,7 +33,25 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    console.error('[ErrorBoundary] 捕获到未处理错误:', error, errorInfo);
+    // 上报到 IDB
+    reportError(error, {
+      componentStack: errorInfo.componentStack ?? undefined,
+      source: 'boundary',
+      level: 'error',
+    });
+
+    // ChunkLoadError 自动刷新
+    const isChunkError =
+      error.name === 'ChunkLoadError' ||
+      error.message.includes('Failed to fetch dynamically imported module') ||
+      error.message.includes('Loading chunk');
+
+    if (isChunkError) {
+      // 延迟 1 秒后自动刷新，给用户一个视觉过渡
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
   }
 
   reset = (): void => {
@@ -47,8 +70,15 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
         error.message.includes('Failed to fetch dynamically imported module') ||
         error.message.includes('Loading chunk');
 
+      const minHeight = this.props.pageLevel ? '60vh' : '100vh';
+
       return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
+        <div
+          className="flex items-center justify-center bg-gray-50 px-4"
+          style={{ minHeight }}
+          role="alert"
+          aria-live="assertive"
+        >
           <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
             {/* 错误图标 */}
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center">
@@ -57,6 +87,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -73,7 +104,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
             <p className="text-sm text-gray-500 mb-4">
               {isChunkError
-                ? '部分资源文件加载失败，可能是网络问题或应用已更新。请刷新页面重试。'
+                ? '部分资源文件加载失败，正在自动刷新页面…'
                 : '应用遇到了意外错误。您可以尝试刷新页面，如果问题持续出现，请清除浏览器缓存后重试。'}
             </p>
 
@@ -96,13 +127,20 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
               >
                 刷新页面
               </button>
-              <button
-                onClick={this.reset}
-                className="px-4 py-2 border border-gray-300 text-gray-600 text-sm rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                尝试恢复
-              </button>
+              {!isChunkError && (
+                <button
+                  onClick={this.reset}
+                  className="px-4 py-2 border border-gray-300 text-gray-600 text-sm rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  尝试恢复
+                </button>
+              )}
             </div>
+
+            {/* 错误 ID（供排查引用） */}
+            <p className="mt-4 text-[10px] text-gray-300">
+              错误已记录 · {new Date().toLocaleString('zh-CN')}
+            </p>
           </div>
         </div>
       );

@@ -1,6 +1,8 @@
 import React, { Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import PageErrorBoundary from '@/components/PageErrorBoundary';
+import { installGlobalErrorHandlers } from '@/lib/errorReporter';
 import Layout from '@/components/layout/Layout';
 import { OfflineIndicator, SWUpdateToast, InstallPromptBanner } from '@/lib/pwaEnhanced';
 import { I18nProvider, LocaleSwitcher } from '@/lib/i18n';
@@ -36,6 +38,10 @@ const PageFallback = () => (
 );
 
 const App: React.FC = () => {
+  React.useEffect(() => {
+    installGlobalErrorHandlers();
+  }, []);
+
   return (
     <I18nProvider>
       <HashRouter>
@@ -51,17 +57,17 @@ const App: React.FC = () => {
           <Layout>
           <Suspense fallback={<PageFallback />}>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/map" element={<MapView />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/manage" element={<WaterSourceManager />} />
-              <Route path="/zone-calc" element={<ProtectionZoneCalc />} />
-              <Route path="/analysis" element={<ProjectAnalysis />} />
-              <Route path="/versions" element={<VersionHistory />} />
-              <Route path="/report/:id" element={<ReportDetail />} />
-              <Route path="/divisions" element={<DivisionOverview />} />
-              <Route path="/audit" element={<AuditLog />} />
-          <Route path="/overlay" element={<MultiSourceOverlay />} />
+              <Route path="/" element={<PageErrorBoundary pageName="首页"><Home /></PageErrorBoundary>} />
+              <Route path="/map" element={<PageErrorBoundary pageName="地图视图"><MapView /></PageErrorBoundary>} />
+              <Route path="/dashboard" element={<PageErrorBoundary pageName="仪表盘"><Dashboard /></PageErrorBoundary>} />
+              <Route path="/manage" element={<PageErrorBoundary pageName="水源地管理"><WaterSourceManager /></PageErrorBoundary>} />
+              <Route path="/zone-calc" element={<PageErrorBoundary pageName="保护区计算"><ProtectionZoneCalc /></PageErrorBoundary>} />
+              <Route path="/analysis" element={<PageErrorBoundary pageName="项目分析"><ProjectAnalysis /></PageErrorBoundary>} />
+              <Route path="/versions" element={<PageErrorBoundary pageName="版本历史"><VersionHistory /></PageErrorBoundary>} />
+              <Route path="/report/:id" element={<PageErrorBoundary pageName="报告详情"><ReportDetail /></PageErrorBoundary>} />
+              <Route path="/divisions" element={<PageErrorBoundary pageName="区划概览"><DivisionOverview /></PageErrorBoundary>} />
+              <Route path="/audit" element={<PageErrorBoundary pageName="审计日志"><AuditLog /></PageErrorBoundary>} />
+          <Route path="/overlay" element={<PageErrorBoundary pageName="叠加分析"><MultiSourceOverlay /></PageErrorBoundary>} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

@@ -11,7 +11,7 @@
  */
 
 const DB_NAME = 'watersource-archive';
-const DB_VERSION = 2;
+const DB_VERSION = 3; // S9.1: error_logs store
 
 let dbInstance: IDBDatabase | null = null;
 
@@ -59,6 +59,14 @@ export async function getDB(): Promise<IDBDatabase> {
         const overlayStore = db.createObjectStore('overlay_analyses', { keyPath: 'id' });
         overlayStore.createIndex('createdAt', 'createdAt', { unique: false });
         overlayStore.createIndex('analysisName', 'analysisName', { unique: false });
+      }
+
+      // 错误日志表（S9.1）
+      if (!db.objectStoreNames.contains('error_logs')) {
+        const errorStore = db.createObjectStore('error_logs', { keyPath: 'id' });
+        errorStore.createIndex('timestamp', 'timestamp', { unique: false });
+        errorStore.createIndex('level', 'level', { unique: false });
+        errorStore.createIndex('source', 'source', { unique: false });
       }
     };
 

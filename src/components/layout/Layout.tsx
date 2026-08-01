@@ -45,7 +45,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // N4: 自动备份检测（启动后延迟5秒检查）
   useEffect(() => {
     const timer = setTimeout(() => {
-      tryAutoBackup().catch(() => {});
+      tryAutoBackup().catch((e: unknown) => console.warn('[AutoBackup] 失败:', e));
     }, 5000);
     return () => clearTimeout(timer);
   }, []);
