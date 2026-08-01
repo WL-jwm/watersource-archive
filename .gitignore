@@ -16,3 +16,7 @@ s2_*.py
 s3_*.py
 split_*.py
 新手操作步骤清单.md
+
+# Playwright
+test-results/
+playwright-report/

@@ -18,6 +18,9 @@ const ConfirmDialog: React.FC = () => {
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirm-dialog-title"
       className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/40 animate-fadeIn"
       onClick={() => resolveConfirm(false)}
     >
@@ -28,7 +31,7 @@ const ConfirmDialog: React.FC = () => {
         {/* 标题栏 */}
         {confirm.title && (
           <div className="px-5 pt-5 pb-2">
-            <h3 className="text-base font-semibold text-gray-900">{confirm.title}</h3>
+            <h3 id="confirm-dialog-title" className="text-base font-semibold text-gray-900">{confirm.title}</h3>
           </div>
         )}
 

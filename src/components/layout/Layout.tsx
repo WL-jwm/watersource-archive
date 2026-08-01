@@ -713,6 +713,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <UndoRedoToolbar />
         </header>
 
+        {/* a11y: Skip to content link */}
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded focus:text-sm">跳到主要内容</a>
         {/* Content area */}
         <main id="main-content" className="flex-1 overflow-y-auto pb-14 md:pb-0">{children}</main>
       </div>
