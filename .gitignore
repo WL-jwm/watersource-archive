@@ -6,3 +6,13 @@ coverage/
 .env
 .DS_Store
 *.log
+
+# Temporary scripts
+analyze_i18n.py
+fix_*.py
+patch_*.py
+replace_*.py
+s2_*.py
+s3_*.py
+split_*.py
+新手操作步骤清单.md
