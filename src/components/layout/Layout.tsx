@@ -127,12 +127,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="flex items-center gap-2">
             <button
               onClick={handleInstall}
+          aria-label="安装应用"
               className="px-3 py-1 bg-white text-indigo-600 rounded font-medium text-xs hover:bg-indigo-50"
             >
               {t('action.install')}
             </button>
             <button
               onClick={() => setShowInstallBanner(false)}
+          aria-label="关闭安装提示"
               className="text-white/70 hover:text-white text-xs"
             >
               {t('action.close')}
@@ -151,6 +153,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       {/* Sidebar */}
       <aside
+        aria-label="主导航"
         className={`fixed lg:static inset-y-0 left-0 z-40 flex flex-col bg-surface border-r border-surface-border shadow-sidebar transition-all duration-300 ${
           sidebarCollapsed ? 'w-16' : 'w-[280px]'
         } ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
@@ -344,6 +347,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           {/* N4: 数据备份入口 */}
           <button
             onClick={() => setBackupModalOpen(true)}
+          aria-label="数据备份"
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
             title={t('nav.backup')}
           >
@@ -710,7 +714,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </header>
 
         {/* Content area */}
-        <main className="flex-1 overflow-y-auto pb-14 md:pb-0">{children}</main>
+        <main id="main-content" className="flex-1 overflow-y-auto pb-14 md:pb-0">{children}</main>
       </div>
 
       {/* 全局行政区划选择器浮动按钮 */}
