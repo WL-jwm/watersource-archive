@@ -22,6 +22,8 @@ import CryptoExportModal from '@/components/CryptoExportModal';
 import BatchEditModal from '@/components/BatchEditModal';
 import TagManager from '@/components/TagManager';
 import SyncPanel from '@/components/SyncPanel';
+import CustomFieldPanel from '@/components/CustomFieldPanel';
+import ExportTemplateDialog from '@/components/ExportTemplateDialog';
 import AdvancedSearchPanel, { HighlightedText } from '@/components/AdvancedSearchPanel';
 import { useSearchFilter } from '@/hooks/useSearchFilter';
 import type { ImportResult } from '@/lib/dataImportEngine';
@@ -88,6 +90,8 @@ const WaterSourceManager: React.FC = () => {
   const [batchEditOpen, setBatchEditOpen] = useState(false);
   const [tagMgrOpen, setTagMgrOpen] = useState(false);
   const [syncOpen, setSyncOpen] = useState(false);
+  const [customFieldOpen, setCustomFieldOpen] = useState(false);
+  const [exportTplOpen, setExportTplOpen] = useState(false);
   // S2.2: 排序
   const [sortField, setSortField] = useState<keyof WaterSourceRecord | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
@@ -552,8 +556,20 @@ const WaterSourceManager: React.FC = () => {
         }))}
       />
 
-      {/* S11.4: 数据同步入口 */}
-      <div className="flex justify-end">
+      {/* S11.4/S11.6/S11.10: 工具栏入口 */}
+      <div className="flex justify-end gap-2">
+        <button
+          onClick={() => setCustomFieldOpen(true)}
+          className="text-xs px-3 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
+        >
+          自定义字段
+        </button>
+        <button
+          onClick={() => setExportTplOpen(true)}
+          className="text-xs px-3 py-1 rounded bg-teal-600 text-white hover:bg-teal-700"
+        >
+          导出模板
+        </button>
         <button
           onClick={() => setSyncOpen(true)}
           className="text-xs px-3 py-1 rounded bg-cyan-600 text-white hover:bg-cyan-700"
@@ -806,6 +822,12 @@ const WaterSourceManager: React.FC = () => {
       )}
       {syncOpen && (
         <SyncPanel onClose={() => setSyncOpen(false)} />
+      )}
+      {customFieldOpen && (
+        <CustomFieldPanel onClose={() => setCustomFieldOpen(false)} />
+      )}
+      {exportTplOpen && (
+        <ExportTemplateDialog onClose={() => setExportTplOpen(false)} />
       )}
       <CryptoExportModal
         open={showCryptoModal}
