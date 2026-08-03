@@ -83,6 +83,13 @@ interface WaterSourceState {
   exportJSON: () => string;
   importJSON: (json: string, mode: 'merge' | 'replace') => Promise<number>;
 
+  // S11.1: 批量导入
+  batchImport: (
+    records: Partial<WaterSourceRecord>[],
+    strategy: 'skip' | 'overwrite' | 'rename',
+    onProgress?: (processed: number, total: number) => void,
+  ) => Promise<{ imported: number; skipped: number; updated: number; errors: string[] }>;
+
   zoneResults: ZoneCalcRecord[];
   saveZoneResult: (result: ZoneCalcRecord) => Promise<void>;
   deleteZoneResult: (id: string) => Promise<void>;
@@ -506,6 +513,124 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
   },
 
   getZoneResultBySourceId: (sourceId) => get().zoneResults.find((z) => z.sourceId === sourceId),
+
+  // S11.1: 批量导入
+  batchImport: async (records, strategy, onProgress) => {
+    const existing = get().sources;
+    const existingByName = new Map(existing.map((s) => [s.name + '|' + s.cityName, s]));
+    const existingById = new Map(existing.map((s) => [s.id, s]));
+
+    const toAdd: WaterSourceRecord[] = [];
+    const toUpdate: WaterSourceRecord[] = [];
+    const errors: string[] = [];
+    let skipped = 0;
+    let updated = 0;
+    let imported = 0;
+    const total = records.length;
+
+    for (let i = 0; i < records.length; i++) {
+      const rec = records[i];
+      const rowNum = i + 2;
+
+      // 校验必填字段
+      if (!rec.name || !rec.cityName || !rec.level || !rec.type) {
+        errors.push(`第${rowNum}行: 缺少必填字段`);
+        skipped++;
+        onProgress?.(i + 1, total);
+        continue;
+      }
+
+      // 生成 ID
+      const id = rec.id || genId(rec.cityName, rec.level, rec.name);
+      const record: WaterSourceRecord = {
+        id,
+        cityName: rec.cityName,
+        level: rec.level,
+        name: rec.name,
+        type: rec.type,
+        subType: rec.subType,
+        county: rec.county || '未知',
+        status: rec.status || '在用',
+        remark: rec.remark,
+        population: rec.population,
+        river: rec.river,
+        lng: rec.lng,
+        lat: rec.lat,
+        dataVersion: DATA_VERSION,
+      };
+
+      // 冲突检测
+      const conflictByKey = existingByName.get(record.name + '|' + record.cityName);
+      const conflictById = existingById.get(record.id);
+
+      if (conflictById || conflictByKey) {
+        const conflict = conflictById || conflictByKey!;
+        if (strategy === 'skip') {
+          skipped++;
+          onProgress?.(i + 1, total);
+          continue;
+        } else if (strategy === 'overwrite') {
+          toUpdate.push(record);
+          updated++;
+        } else if (strategy === 'rename') {
+          // 自动重命名
+          let suffix = 2;
+          let newName = record.name;
+          while (existingByName.has(newName + '|' + record.cityName) || toAdd.some((a) => a.name === newName && a.cityName === record.cityName)) {
+            newName = `${record.name}_${suffix}`;
+            suffix++;
+          }
+          record.name = newName;
+          record.id = genId(record.cityName, record.level, record.name);
+          toAdd.push(record);
+          imported++;
+        }
+      } else {
+        toAdd.push(record);
+        imported++;
+      }
+
+      onProgress?.(i + 1, total);
+    }
+
+    // 批量写入 IDB（每100条一批）
+    const BATCH_SIZE = 100;
+    for (let i = 0; i < toAdd.length; i += BATCH_SIZE) {
+      const batch = toAdd.slice(i, i + BATCH_SIZE);
+      await dbPutBatch('water_sources', batch);
+    }
+    for (const rec of toUpdate) {
+      await dbPut('water_sources', rec);
+    }
+
+    // 更新内存状态
+    set((s) => {
+      const sourceMap = new Map(s.sources.map((src) => [src.id, src]));
+      for (const rec of toUpdate) {
+        sourceMap.set(rec.id, rec);
+      }
+      const newSources = [...sourceMap.values(), ...toAdd];
+      return { sources: newSources };
+    });
+
+    // 审计日志 + 版本快照
+    if (imported > 0 || updated > 0) {
+      logAudit('import', 'water_source', `批量导入: 新增${imported}条, 更新${updated}条, 跳过${skipped}条`);
+      ensureVersionInit().then(() => {
+        recordChange({
+          versionId: '',
+          timestamp: new Date().toISOString(),
+          action: 'add',
+          recordId: 'batch',
+          recordName: `批量导入(${imported}新增,${updated}更新)`,
+          description: `批量导入操作: 新增${imported}条, 更新${updated}条, 跳过${skipped}条`,
+        });
+        checkAutoSnapshot(get().sources);
+      }).catch((err) => console.error('[batchImport] 版本记录失败:', err));
+    }
+
+    return { imported, skipped, updated, errors };
+  },
 
   resetToStatic: async () => {
     const oldSources = get().sources;
