@@ -19,6 +19,9 @@ import DataSourceManager from '@/components/DataSourceManager';
 import SourceFormModal from '@/components/SourceFormModal';
 import CodeValidationPanel from '@/components/CodeValidationPanel';
 import CryptoExportModal from '@/components/CryptoExportModal';
+import BatchEditModal from '@/components/BatchEditModal';
+import TagManager from '@/components/TagManager';
+import SyncPanel from '@/components/SyncPanel';
 import AdvancedSearchPanel, { HighlightedText } from '@/components/AdvancedSearchPanel';
 import { useSearchFilter } from '@/hooks/useSearchFilter';
 import type { ImportResult } from '@/lib/dataImportEngine';
@@ -81,6 +84,10 @@ const WaterSourceManager: React.FC = () => {
   const [showCryptoModal, setShowCryptoModal] = useState(false);
   // S2.1: 行多选
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  // S11: 批量编辑/标签/同步弹窗
+  const [batchEditOpen, setBatchEditOpen] = useState(false);
+  const [tagMgrOpen, setTagMgrOpen] = useState(false);
+  const [syncOpen, setSyncOpen] = useState(false);
   // S2.2: 排序
   const [sortField, setSortField] = useState<keyof WaterSourceRecord | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
@@ -545,6 +552,15 @@ const WaterSourceManager: React.FC = () => {
         }))}
       />
 
+      {/* S11.4: 数据同步入口 */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => setSyncOpen(true)}
+          className="text-xs px-3 py-1 rounded bg-cyan-600 text-white hover:bg-cyan-700"
+        >
+          数据同步
+        </button>
+      </div>
       {/* S2.1: 批量操作工具栏 */}
       {selectedIds.size > 0 && (
         <div className="rounded-lg p-3 bg-blue-50 border border-blue-200 flex items-center gap-3">
@@ -569,6 +585,18 @@ const WaterSourceManager: React.FC = () => {
               className="text-xs px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600"
             >
               批量删除
+            </button>
+            <button
+              onClick={() => setBatchEditOpen(true)}
+              className="text-xs px-3 py-1 rounded bg-amber-500 text-white hover:bg-amber-600"
+            >
+              批量编辑
+            </button>
+            <button
+              onClick={() => setTagMgrOpen(true)}
+              className="text-xs px-3 py-1 rounded bg-violet-500 text-white hover:bg-violet-600"
+            >
+              标签管理
             </button>
           </div>
           <button
@@ -764,6 +792,21 @@ const WaterSourceManager: React.FC = () => {
         sources={sources}
         onClose={() => setShowCodeValidation(false)}
       />
+      {batchEditOpen && (
+        <BatchEditModal
+          selectedIds={Array.from(selectedIds)}
+          onClose={() => setBatchEditOpen(false)}
+        />
+      )}
+      {tagMgrOpen && (
+        <TagManager
+          selectedIds={Array.from(selectedIds)}
+          onClose={() => setTagMgrOpen(false)}
+        />
+      )}
+      {syncOpen && (
+        <SyncPanel onClose={() => setSyncOpen(false)} />
+      )}
       <CryptoExportModal
         open={showCryptoModal}
         onClose={() => setShowCryptoModal(false)}

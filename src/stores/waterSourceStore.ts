@@ -43,6 +43,8 @@ export interface WaterSourceRecord {
   lng?: number;
   lat?: number;
   dataVersion?: number;
+  /** S11.7: 标签 ID 列表 */
+  tags?: string[];
 }
 
 export interface CityMeta {
