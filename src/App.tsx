@@ -24,6 +24,7 @@ const VersionHistory = lazy(getPageImporter('/versions'));
 const AuditLog = lazy(getPageImporter('/audit'));
 const Trash = lazy(getPageImporter('/trash'));
 const MultiSourceOverlay = lazy(getPageImporter('/overlay'));
+const Timeline = lazy(getPageImporter('/timeline'));
 
 // ReportDetail 是动态路由 /report/:id，无法从路径直接预加载，保持独立 lazy
 // 用户从报告列表点击进入时，Home 页面已渲染，chunk 加载可接受
@@ -70,6 +71,7 @@ const App: React.FC = () => {
               <Route path="/audit" element={<PageErrorBoundary pageName="审计日志"><AuditLog /></PageErrorBoundary>} />
           <Route path="/trash" element={<PageErrorBoundary pageName="回收站"><Trash /></PageErrorBoundary>} />
           <Route path="/overlay" element={<PageErrorBoundary pageName="叠加分析"><MultiSourceOverlay /></PageErrorBoundary>} />
+          <Route path="/timeline" element={<PageErrorBoundary pageName="活动时间线"><Timeline /></PageErrorBoundary>} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

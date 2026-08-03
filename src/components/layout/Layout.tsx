@@ -356,6 +356,18 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </svg>
             {!sidebarCollapsed && '回收站'}
           </a>
+          {/* S11.11: 活动时间线入口 */}
+          <a
+            href="#/timeline"
+              onMouseEnter={() => preloadPage('/timeline')}
+            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
+            title="活动时间线"
+          >
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {!sidebarCollapsed && '活动时间线'}
+          </a>
           {/* N4: 数据备份入口 */}
           <button
             onClick={() => setBackupModalOpen(true)}

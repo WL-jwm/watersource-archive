@@ -24,6 +24,7 @@ import TagManager from '@/components/TagManager';
 import SyncPanel from '@/components/SyncPanel';
 import CustomFieldPanel from '@/components/CustomFieldPanel';
 import ExportTemplateDialog from '@/components/ExportTemplateDialog';
+import BackupPanel from '@/components/BackupPanel';
 import AdvancedSearchPanel, { HighlightedText } from '@/components/AdvancedSearchPanel';
 import { useSearchFilter } from '@/hooks/useSearchFilter';
 import type { ImportResult } from '@/lib/dataImportEngine';
@@ -92,6 +93,7 @@ const WaterSourceManager: React.FC = () => {
   const [syncOpen, setSyncOpen] = useState(false);
   const [customFieldOpen, setCustomFieldOpen] = useState(false);
   const [exportTplOpen, setExportTplOpen] = useState(false);
+  const [backupOpen, setBackupOpen] = useState(false);
   // S2.2: 排序
   const [sortField, setSortField] = useState<keyof WaterSourceRecord | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
@@ -576,6 +578,12 @@ const WaterSourceManager: React.FC = () => {
         >
           数据同步
         </button>
+        <button
+          onClick={() => setBackupOpen(true)}
+          className="text-xs px-3 py-1 rounded bg-orange-600 text-white hover:bg-orange-700"
+        >
+          定时备份
+        </button>
       </div>
       {/* S2.1: 批量操作工具栏 */}
       {selectedIds.size > 0 && (
@@ -828,6 +836,9 @@ const WaterSourceManager: React.FC = () => {
       )}
       {exportTplOpen && (
         <ExportTemplateDialog onClose={() => setExportTplOpen(false)} />
+      )}
+      {backupOpen && (
+        <BackupPanel onClose={() => setBackupOpen(false)} />
       )}
       <CryptoExportModal
         open={showCryptoModal}
