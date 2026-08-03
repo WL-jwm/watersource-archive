@@ -22,6 +22,7 @@ const ProtectionZoneCalc = lazy(getPageImporter('/zone-calc'));
 const ProjectAnalysis = lazy(getPageImporter('/analysis'));
 const VersionHistory = lazy(getPageImporter('/versions'));
 const AuditLog = lazy(getPageImporter('/audit'));
+const Trash = lazy(getPageImporter('/trash'));
 const MultiSourceOverlay = lazy(getPageImporter('/overlay'));
 
 // ReportDetail 是动态路由 /report/:id，无法从路径直接预加载，保持独立 lazy
@@ -67,6 +68,7 @@ const App: React.FC = () => {
               <Route path="/report/:id" element={<PageErrorBoundary pageName="报告详情"><ReportDetail /></PageErrorBoundary>} />
               <Route path="/divisions" element={<PageErrorBoundary pageName="区划概览"><DivisionOverview /></PageErrorBoundary>} />
               <Route path="/audit" element={<PageErrorBoundary pageName="审计日志"><AuditLog /></PageErrorBoundary>} />
+          <Route path="/trash" element={<PageErrorBoundary pageName="回收站"><Trash /></PageErrorBoundary>} />
           <Route path="/overlay" element={<PageErrorBoundary pageName="叠加分析"><MultiSourceOverlay /></PageErrorBoundary>} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

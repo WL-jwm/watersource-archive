@@ -24,6 +24,7 @@ import {
   formatAction,
 } from '@/lib/dataVersionEngine';
 import type { VersionSummary, VersionDiff, ChangeLog } from '@/lib/dataVersionEngine';
+import DiffViewer from '@/components/version/DiffViewer';
 
 type ViewMode = 'list' | 'diff' | 'rollback';
 
@@ -257,109 +258,7 @@ const VersionHistory: React.FC = () => {
             </span>
           </div>
 
-          {diffResult && (
-            <div className="space-y-4">
-              {/* 汇总 */}
-              <div className="grid grid-cols-4 gap-3">
-                <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
-                  <div className="text-lg font-bold text-green-700">{diffResult.added.length}</div>
-                  <div className="text-xs text-green-600">新增</div>
-                </div>
-                <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-center">
-                  <div className="text-lg font-bold text-red-700">{diffResult.removed.length}</div>
-                  <div className="text-xs text-red-600">删除</div>
-                </div>
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-center">
-                  <div className="text-lg font-bold text-yellow-700">
-                    {diffResult.modified.length}
-                  </div>
-                  <div className="text-xs text-yellow-600">修改</div>
-                </div>
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                  <div className="text-lg font-bold text-gray-600">{diffResult.unchanged}</div>
-                  <div className="text-xs text-gray-500">无变化</div>
-                </div>
-              </div>
-
-              {/* 新增列表 */}
-              {diffResult.added.length > 0 && (
-                <div className="bg-white border border-green-200 rounded-lg">
-                  <div className="px-4 py-2 bg-green-50 border-b border-green-200 text-sm font-medium text-green-800">
-                    新增记录 ({diffResult.added.length})
-                  </div>
-                  <div className="divide-y divide-green-100">
-                    {diffResult.added.map((item) => (
-                      <div key={item.id} className="px-4 py-2 text-sm text-gray-700">
-                        <span className="text-green-600 mr-2">+</span>
-                        {item.name}
-                        <span className="text-xs text-gray-400 ml-2">
-                          {(item.data as Record<string, string>).type} /{' '}
-                          {(item.data as Record<string, string>).county}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* 删除列表 */}
-              {diffResult.removed.length > 0 && (
-                <div className="bg-white border border-red-200 rounded-lg">
-                  <div className="px-4 py-2 bg-red-50 border-b border-red-200 text-sm font-medium text-red-800">
-                    删除记录 ({diffResult.removed.length})
-                  </div>
-                  <div className="divide-y divide-red-100">
-                    {diffResult.removed.map((item) => (
-                      <div key={item.id} className="px-4 py-2 text-sm text-gray-700">
-                        <span className="text-red-600 mr-2">-</span>
-                        {item.name}
-                        <span className="text-xs text-gray-400 ml-2">
-                          {(item.data as Record<string, string>).status}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* 修改列表 */}
-              {diffResult.modified.length > 0 && (
-                <div className="bg-white border border-yellow-200 rounded-lg">
-                  <div className="px-4 py-2 bg-yellow-50 border-b border-yellow-200 text-sm font-medium text-yellow-800">
-                    修改记录 ({diffResult.modified.length})
-                  </div>
-                  <div className="divide-y divide-yellow-100">
-                    {diffResult.modified.map((item) => (
-                      <div key={item.id} className="px-4 py-2">
-                        <div className="text-sm font-medium text-gray-700 mb-1">{item.name}</div>
-                        <div className="space-y-1">
-                          {item.changes.map((c, i) => (
-                            <div key={i} className="text-xs flex gap-2">
-                              <span className="text-gray-500 w-16 shrink-0">{c.field}:</span>
-                              <span className="text-red-500 line-through">
-                                {String(c.oldValue ?? '(空)')}
-                              </span>
-                              <span className="text-gray-300">&rarr;</span>
-                              <span className="text-green-600">{String(c.newValue ?? '(空)')}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* 无差异 */}
-              {diffResult.added.length === 0 &&
-                diffResult.removed.length === 0 &&
-                diffResult.modified.length === 0 && (
-                  <div className="text-center py-8 text-gray-400 text-sm">
-                    当前数据与此版本完全一致，无差异
-                  </div>
-                )}
-            </div>
-          )}
+          {diffResult && <DiffViewer diff={diffResult} />}
 
           {!diffResult && (
             <div className="text-center py-8 text-gray-400 text-sm">加载对比数据中...</div>

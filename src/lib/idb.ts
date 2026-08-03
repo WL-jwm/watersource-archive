@@ -11,7 +11,7 @@
  */
 
 const DB_NAME = 'watersource-archive';
-const DB_VERSION = 3; // S9.1: error_logs store
+const DB_VERSION = 4; // S11.8: trash store
 
 let dbInstance: IDBDatabase | null = null;
 
@@ -67,6 +67,14 @@ export async function getDB(): Promise<IDBDatabase> {
         errorStore.createIndex('timestamp', 'timestamp', { unique: false });
         errorStore.createIndex('level', 'level', { unique: false });
         errorStore.createIndex('source', 'source', { unique: false });
+      }
+
+      // 回收站表（S11.8）
+      if (!db.objectStoreNames.contains('trash')) {
+        const trashStore = db.createObjectStore('trash', { keyPath: 'id' });
+        trashStore.createIndex('deletedAt', 'deletedAt', { unique: false });
+        trashStore.createIndex('originalId', 'originalId', { unique: false });
+        trashStore.createIndex('expiresAt', 'expiresAt', { unique: false });
       }
     };
 

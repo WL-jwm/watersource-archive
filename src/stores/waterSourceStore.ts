@@ -11,6 +11,7 @@
 
 import { create } from 'zustand';
 import { dbGetAll, dbPutBatch, dbPut, dbDelete, dbCount, dbClear } from '@/lib/idb';
+import { softDelete, restore, purge, purgeAll, listTrash, purgeExpired, getTrashStats, type TrashItem } from '@/lib/trashEngine';
 import { ensureVersionStores, recordChange, createSnapshot } from '@/lib/dataVersionEngine';
 import { CalcParams, ZoneResult } from '@/lib/zoneCalcEngine';
 import { undoManager } from '@/lib/undoManager';
@@ -89,6 +90,13 @@ interface WaterSourceState {
     strategy: 'skip' | 'overwrite' | 'rename',
     onProgress?: (processed: number, total: number) => void,
   ) => Promise<{ imported: number; skipped: number; updated: number; errors: string[] }>;
+
+  // S11.8: 回收站
+  restoreFromTrash: (trashId: string) => Promise<{ success: boolean; message: string }>;
+  purgeTrash: (trashId: string) => Promise<void>;
+  listTrashItems: () => Promise<TrashItem[]>;
+  clearTrash: () => Promise<number>;
+  getTrashCount: () => Promise<{ total: number; expiringSoon: number; expired: number }>;
 
   zoneResults: ZoneCalcRecord[];
   saveZoneResult: (result: ZoneCalcRecord) => Promise<void>;
@@ -359,7 +367,12 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
 
   deleteSource: async (id) => {
     const current = get().sources.find((s) => s.id === id);
+    if (!current) return;
+
+    // S11.8: 软删除 — 移入回收站而非物理删除
+    await softDelete(current, 'user');
     await dbDelete('water_sources', id);
+
     set((s) => {
       const newSources = s.sources.filter((s) => s.id !== id);
       if (current) {
@@ -370,7 +383,7 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
             action: 'delete',
             recordId: id,
             recordName: current.name,
-            description: `删除水源地 "${current.name}"`,
+            description: `删除水源地 "${current.name}"（已移入回收站）`,
           });
           checkAutoSnapshot(newSources);
         }).catch((err) => console.error('[waterSourceStore] 版本记录失败:', err));
@@ -381,7 +394,7 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
     if (current && !undoManager.isExecuting()) {
       invDeleteSource(current, (fn) => set(fn as (s: { sources: WaterSourceRecord[] }) => { sources: WaterSourceRecord[] }));
     }
-    logAudit('delete', 'water_source', `删除水源地${current?.name || id}`, { entityId: id, entityName: current?.name, before: current });
+    logAudit('delete', 'water_source', `删除水源地${current?.name || id}（移入回收站）`, { entityId: id, entityName: current?.name, before: current });
   },
 
   getByCity: (cityName) => get().sources.filter((s) => s.cityName === cityName),
@@ -630,6 +643,54 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
     }
 
     return { imported, skipped, updated, errors };
+  },
+
+  // S11.8: 回收站方法
+  restoreFromTrash: async (trashId: string) => {
+    try {
+      const record = await restore(trashId);
+      if (!record) {
+        return { success: false, message: '回收站中未找到该记录' };
+      }
+
+      // 检查 ID 是否冲突
+      const existing = get().sources.find((s) => s.id === record.id);
+      if (existing) {
+        // ID 冲突，生成新 ID
+        record.id = genId(record.cityName, record.level, record.name + '_恢复');
+      }
+
+      // 写回 water_sources
+      await dbPut('water_sources', record);
+
+      // 更新内存状态
+      set((s) => ({ sources: [...s.sources, record] }));
+
+      logAudit('restore', 'water_source', `从回收站恢复水源地"${record.name}"`, { entityId: record.id, entityName: record.name });
+      return { success: true, message: `已恢复"${record.name}"` };
+    } catch (err) {
+      console.error('[restoreFromTrash] 恢复失败:', err);
+      return { success: false, message: `恢复失败: ${(err as Error).message}` };
+    }
+  },
+
+  purgeTrash: async (trashId: string) => {
+    await purge(trashId);
+    logAudit('purge', 'trash', `彻底删除回收站记录 ${trashId}`);
+  },
+
+  listTrashItems: async () => {
+    return await listTrash();
+  },
+
+  clearTrash: async () => {
+    const count = await purgeAll();
+    logAudit('purge_all', 'trash', `清空回收站，删除${count}条记录`);
+    return count;
+  },
+
+  getTrashCount: async () => {
+    return await getTrashStats();
   },
 
   resetToStatic: async () => {

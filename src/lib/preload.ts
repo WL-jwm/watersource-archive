@@ -25,6 +25,7 @@ const pageImporters: Record<string, () => Promise<{ default: any }>> = {
   '/versions': () => import('@/pages/VersionHistory'),
   '/divisions': () => import('@/pages/DivisionOverview'),
   '/audit': () => import('@/pages/AuditLog'),
+  '/trash': () => import('@/pages/Trash'),
   '/overlay': () => import('@/pages/MultiSourceOverlay'),
 };
 

@@ -4,6 +4,7 @@ import { ZoneResult } from '@/lib/zoneCalcEngine';
 import { batchGenerateCodes, summarizeCodes } from '@/lib/waterSourceCoder';
 import CodeStatsPanel from '@/components/dashboard/CodeStatsPanel';
 import ZoneStatsPanel from '@/components/dashboard/ZoneStatsPanel';
+import DataQualityPanel from '@/components/dashboard/DataQualityPanel';
 import DataExchangeModal from '@/components/DataExchangeModal';
 
 const cityOrder = [
@@ -186,6 +187,9 @@ const Dashboard: React.FC = () => {
 
       {/* 编码规范化统计 */}
       <CodeStatsPanel loaded={loaded} sources={sources} />
+
+      {/* S11.3: 数据质量评分 */}
+      <DataQualityPanel sources={sources} />
 
       {/* 各市堆叠水平柱状图 */}
       <div className="rounded-lg p-4 md:p-6 bg-white border border-gray-200">

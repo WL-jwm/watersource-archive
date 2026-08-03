@@ -24,9 +24,13 @@ export type AuditAction =
   | 'calculate'
   | 'reset'
   | 'batch_calculate'
-  | 'batch_report';
+  | 'batch_report'
+  // S11.8: 回收站
+  | 'restore'
+  | 'purge'
+  | 'purge_all';
 
-export type AuditEntityType = 'water_source' | 'zone_result' | 'report' | 'system';
+export type AuditEntityType = 'water_source' | 'zone_result' | 'report' | 'system' | 'trash';
 
 export interface AuditLogEntry {
   /** 日志ID */
@@ -266,6 +270,9 @@ export function formatChangeSummary(entry: AuditLogEntry): string {
     reset: '重置',
     batch_calculate: '批量计算',
     batch_report: '批量报告',
+    restore: '恢复',
+    purge: '彻底删除',
+    purge_all: '清空回收站',
   };
 
   parts.push(`[${actionLabels[entry.action] || entry.action}]`);
