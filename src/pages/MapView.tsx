@@ -14,6 +14,8 @@ import 'leaflet/dist/leaflet.css';
 import { useWaterSourceStore, WaterSourceRecord } from '@/stores/waterSourceStore';
 import { MapDrawController, type DrawTool } from '@/lib/mapDrawTools';
 import MapToolbar from '@/components/MapToolbar';
+import SpatialQueryPanel from '@/components/map/SpatialQueryPanel';
+import type { QuerySource } from '@/lib/spatialQueryEngine';
 import MapFilters, { type FilterType, type SourceTypeFilter, type GeoSource } from '@/components/map/MapFilters';
 import MapLegend from '@/components/map/MapLegend';
 import { useZoneLayer } from '@/hooks/useZoneLayer';
@@ -56,6 +58,11 @@ const MapView: React.FC = () => {
   const [activeTool, setActiveTool] = useState<DrawTool>('none');
   const [featureCount, setFeatureCount] = useState(0);
   const [isDrawing, setIsDrawing] = useState(false);
+
+  // S12.9: 空间查询模式
+  const queryModeRef = useRef(false);
+  const [queryMode, setQueryMode] = useState(false);
+  const [queryPoint, setQueryPoint] = useState<{ lng: number; lat: number } | null>(null);
 
   const { exporting, exportMap } = useMapExport(mapRef, mapInstanceRef, tileLayerRef);
 
@@ -147,6 +154,13 @@ const MapView: React.FC = () => {
         }
       },
     );
+
+    // S12.9: 空间查询模式 - 地图点击取点
+    map.on('click', (e: L.LeafletMouseEvent) => {
+      if (queryModeRef.current) {
+        setQueryPoint({ lng: e.latlng.lng, lat: e.latlng.lat });
+      }
+    });
 
     setMapReady(true);
 
