@@ -240,7 +240,7 @@ describe('backupEngine', () => {
       await performBackup([makeRecord()]);
 
       // dbPut should be called at least twice (config + history)
-      expect(dbPut.mock.calls.length).toBeGreaterThanOrEqual(2);
+      expect(vi.mocked(dbPut).mock.calls.length).toBeGreaterThanOrEqual(2);
     });
 
     it('备份历史超出保留份数时自动清理', async () => {
