@@ -23,6 +23,7 @@ import {
   type SpatialFeature,
 } from '@/lib/spatialDataImportEngine';
 import { riskLevelColor } from '@/lib/riskMatrixEngine';
+import { useSpatialAnalysisStore, type SpatialAnalysisRecord } from '@/stores/spatialAnalysisStore';
 
 // ===== 数据构造 =====
 
@@ -31,7 +32,7 @@ interface Props {
   sensitiveTargets?: SensitiveTarget[];
 }
 
-type Tab = 'report' | 'batch' | 'import';
+type Tab = 'report' | 'batch' | 'import' | 'history';
 
 const SpatialAnalysisTools: React.FC<Props> = () => {
   const { loaded, sources: storeSources } = useWaterSourceStore();
@@ -54,11 +55,16 @@ const SpatialAnalysisTools: React.FC<Props> = () => {
   }, [storeSources]);
 
   const [tab, setTab] = useState<Tab>('report');
+  const { loadAnalyses } = useSpatialAnalysisStore();
+
+  // 初始化时加载历史记录
+  React.useEffect(() => { loadAnalyses(); }, [loadAnalyses]);
 
   const tabs: Array<{ id: Tab; label: string }> = [
     { id: 'report', label: '空间分析报告' },
     { id: 'batch', label: '多项目批量评估' },
     { id: 'import', label: '空间数据导入' },
+    { id: 'history', label: '历史记录' },
   ];
 
   return (
@@ -100,6 +106,9 @@ const SpatialAnalysisTools: React.FC<Props> = () => {
       {tab === 'import' && (
         <ImportTab />
       )}
+      {tab === 'history' && (
+        <HistoryTab />
+      )}
     </div>
   );
 };
@@ -110,6 +119,7 @@ const ReportTab: React.FC<{ sources: QuerySource[] }> = ({ sources }) => {
   const [lat, setLat] = useState('');
   const [name, setName] = useState('');
   const [report, setReport] = useState<SpatialReportInput | null>(null);
+  const { saveAnalysis } = useSpatialAnalysisStore();
 
   const runReport = () => {
     const lngV = parseFloat(lng);
@@ -123,7 +133,25 @@ const ReportTab: React.FC<{ sources: QuerySource[] }> = ({ sources }) => {
       lat: latV,
       sources,
     });
-    setReport({ projectName: name || '未命名项目', point: { lng: lngV, lat: latV }, query });
+    const input: SpatialReportInput = { projectName: name || '未命名项目', point: { lng: lngV, lat: latV }, query };
+    setReport(input);
+
+    // 自动保存到历史记录
+    const record: SpatialAnalysisRecord = {
+      id: `sa-${Date.now()}`,
+      name: `综合报告 - ${name || '未命名'}`,
+      createdAt: new Date().toISOString(),
+      analysisType: 'comprehensive',
+      projectPoint: { lng: lngV, lat: latV },
+      projectName: name || '未命名项目',
+      sourceCount: sources.length,
+      riskLevel: query.riskLabel,
+      insideAnyZone: query.insideAnyZone,
+      nearestSourceName: query.nearestSummary.split('(')[0]?.trim() || undefined,
+      sensitiveCount: query.sensitiveScreening?.totalCount,
+      reportInput: input,
+    };
+    saveAnalysis(record).catch(console.warn);
   };
 
   return (
@@ -247,6 +275,7 @@ const BatchTab: React.FC<{ sources: QuerySource[] }> = ({ sources }) => {
   );
   const [result, setResult] = useState<ReturnType<typeof assessProjectsBatch> | null>(null);
   const [error, setError] = useState('');
+  const { saveAnalysis } = useSpatialAnalysisStore();
 
   const runBatch = () => {
     const projects: AssessedProjectInput[] = [];
@@ -275,6 +304,20 @@ const BatchTab: React.FC<{ sources: QuerySource[] }> = ({ sources }) => {
     const r = assessProjectsBatch({ projects, zones });
     setResult(r);
     setError('');
+
+    // 自动保存到历史记录
+    const record: SpatialAnalysisRecord = {
+      id: `sa-batch-${Date.now()}`,
+      name: `批量评估 - ${projects.length} 个项目`,
+      createdAt: new Date().toISOString(),
+      analysisType: 'batch',
+      projectPoint: { lng: 0, lat: 0 },
+      sourceCount: sources.length,
+      riskLevel: r.riskCounts.red > 0 ? 'red' : r.riskCounts.yellow > 0 ? 'yellow' : 'green',
+      batchProjectCount: projects.length,
+      description: `红线${r.riskCounts.red}个/黄线${r.riskCounts.yellow}个/重叠${r.overlapCount}个/禁止${r.bannedCount}个`,
+    };
+    saveAnalysis(record).catch(console.warn);
   };
 
   const exportCsv = () => {
@@ -491,6 +534,182 @@ const ImportTab: React.FC = () => {
           </div>
         )}
       </div>
+    </div>
+  );
+};
+
+/* ===== 历史记录 Tab ===== */
+const HistoryTab: React.FC = () => {
+  const { analyses, loaded, deleteAnalysis, clearAnalyses, setCurrentAnalysis, currentAnalysisId } = useSpatialAnalysisStore();
+
+  if (!loaded) {
+    return <div className="text-sm text-text-tertiary text-center py-10">加载历史记录中...</div>;
+  }
+
+  return (
+    <div className="grid md:grid-cols-2 gap-6">
+      <div className="bg-surface border border-border rounded-lg p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-text-primary">分析历史记录</h2>
+          <button
+            onClick={() => { if (confirm('确认清空所有历史记录？')) clearAnalyses(); }}
+            className="text-xs text-red-600 hover:underline"
+          >
+            清空
+          </button>
+        </div>
+        <div className="text-xs text-text-tertiary">共 {analyses.length} 条记录</div>
+
+        {analyses.length === 0 ? (
+          <div className="text-sm text-text-tertiary text-center py-10 border border-dashed border-border rounded-lg">
+            暂无历史记录
+          </div>
+        ) : (
+          <div className="space-y-2 max-h-[600px] overflow-y-auto">
+            {analyses.map((a) => (
+              <div
+                key={a.id}
+                onClick={() => setCurrentAnalysis(a.id)}
+                className={`rounded-lg p-3 cursor-pointer transition-colors ${
+                  currentAnalysisId === a.id
+                    ? 'bg-accent-50 border border-accent-300'
+                    : 'bg-surface-tertiary hover:bg-surface-hover border border-transparent'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-text-primary">{a.name}</span>
+                  {a.riskLevel && (
+                    <span className={`px-1.5 py-0.5 rounded text-xs ${
+                      a.riskLevel === 'red' ? 'bg-red-100 text-red-700' :
+                      a.riskLevel === 'yellow' ? 'bg-amber-100 text-amber-700' :
+                      'bg-green-100 text-green-700'
+                    }`}>
+                      {a.riskLevel === 'red' ? '红线' : a.riskLevel === 'yellow' ? '黄线' : '绿线'}
+                    </span>
+                  )}
+                </div>
+                <div className="text-xs text-text-tertiary mt-1">
+                  {a.analysisType === 'comprehensive' ? '综合报告' : a.analysisType === 'batch' ? '批量评估' : '空间查询'}
+                  {' · '}{new Date(a.createdAt).toLocaleString()}
+                </div>
+                {a.description && (
+                  <div className="text-xs text-text-tertiary mt-1">{a.description}</div>
+                )}
+                <div className="flex items-center justify-between mt-2">
+                  <div className="text-xs text-text-tertiary">
+                    {a.projectName && `${a.projectName} · `}
+                    {a.sourceCount} 个水源地
+                    {a.batchProjectCount && ` · ${a.batchProjectCount} 个项目`}
+                  </div>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); deleteAnalysis(a.id); }}
+                    className="text-xs text-red-500 hover:underline"
+                  >
+                    删除
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* 当前分析详情 */}
+      <div className="bg-surface border border-border rounded-lg p-4 space-y-3">
+        <h2 className="text-sm font-semibold text-text-primary">详情</h2>
+        {!currentAnalysisId ? (
+          <div className="text-sm text-text-tertiary text-center py-20 border border-dashed border-border rounded-lg">
+            选择左侧历史记录查看详情
+          </div>
+        ) : (
+          <HistoryDetail />
+        )}
+      </div>
+    </div>
+  );
+};
+
+const HistoryDetail: React.FC = () => {
+  const { analyses, currentAnalysisId } = useSpatialAnalysisStore();
+  const record = analyses.find((a) => a.id === currentAnalysisId);
+  if (!record) {
+    return <div className="text-sm text-text-tertiary">记录未找到</div>;
+  }
+
+  return (
+    <div className="space-y-3">
+      <div>
+        <div className="text-xs text-text-tertiary">名称</div>
+        <div className="text-sm text-text-primary font-medium">{record.name}</div>
+      </div>
+      <div>
+        <div className="text-xs text-text-tertiary">类型</div>
+        <div className="text-sm text-text-secondary">
+          {record.analysisType === 'comprehensive' ? '综合报告' :
+           record.analysisType === 'batch' ? '批量评估' : '空间查询'}
+        </div>
+      </div>
+      <div>
+        <div className="text-xs text-text-tertiary">时间</div>
+        <div className="text-sm text-text-secondary">{new Date(record.createdAt).toLocaleString()}</div>
+      </div>
+      {record.projectName && (
+        <div>
+          <div className="text-xs text-text-tertiary">项目</div>
+          <div className="text-sm text-text-secondary">{record.projectName}</div>
+        </div>
+      )}
+      {record.projectPoint && (
+        <div>
+          <div className="text-xs text-text-tertiary">坐标</div>
+          <div className="text-sm text-text-secondary">
+            {record.projectPoint.lng.toFixed(4)}, {record.projectPoint.lat.toFixed(4)}
+          </div>
+        </div>
+      )}
+      <div className="grid grid-cols-2 gap-3">
+        {record.riskLevel && (
+          <div className="bg-surface-tertiary rounded p-2">
+            <div className="text-xs text-text-tertiary">风险等级</div>
+            <div className={`text-sm font-bold ${
+              record.riskLevel === 'red' ? 'text-red-600' :
+              record.riskLevel === 'yellow' ? 'text-amber-600' : 'text-green-600'
+            }`}>
+              {record.riskLevel === 'red' ? '红线' : record.riskLevel === 'yellow' ? '黄线' : '绿线'}
+            </div>
+          </div>
+        )}
+        {record.insideAnyZone !== undefined && (
+          <div className="bg-surface-tertiary rounded p-2">
+            <div className="text-xs text-text-tertiary">保护区内</div>
+            <div className="text-sm font-bold">{record.insideAnyZone ? '是' : '否'}</div>
+          </div>
+        )}
+        {record.nearestSourceName && (
+          <div className="bg-surface-tertiary rounded p-2">
+            <div className="text-xs text-text-tertiary">最近水源地</div>
+            <div className="text-sm font-medium">{record.nearestSourceName}</div>
+          </div>
+        )}
+        {record.sensitiveCount !== undefined && (
+          <div className="bg-surface-tertiary rounded p-2">
+            <div className="text-xs text-text-tertiary">敏感目标</div>
+            <div className="text-sm font-bold">{record.sensitiveCount}</div>
+          </div>
+        )}
+        {record.batchProjectCount !== undefined && (
+          <div className="bg-surface-tertiary rounded p-2">
+            <div className="text-xs text-text-tertiary">评估项目数</div>
+            <div className="text-sm font-bold">{record.batchProjectCount}</div>
+          </div>
+        )}
+      </div>
+      {record.description && (
+        <div>
+          <div className="text-xs text-text-tertiary">摘要</div>
+          <div className="text-sm text-text-secondary">{record.description}</div>
+        </div>
+      )}
     </div>
   );
 };

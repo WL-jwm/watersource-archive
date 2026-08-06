@@ -11,7 +11,7 @@
  */
 
 const DB_NAME = 'watersource-archive';
-const DB_VERSION = 4; // S11.8: trash store
+const DB_VERSION = 5; // S13.1: spatial_analyses store
 
 let dbInstance: IDBDatabase | null = null;
 
@@ -75,6 +75,14 @@ export async function getDB(): Promise<IDBDatabase> {
         trashStore.createIndex('deletedAt', 'deletedAt', { unique: false });
         trashStore.createIndex('originalId', 'originalId', { unique: false });
         trashStore.createIndex('expiresAt', 'expiresAt', { unique: false });
+      }
+
+      // 空间分析结果表（S13.1）
+      if (!db.objectStoreNames.contains('spatial_analyses')) {
+        const saStore = db.createObjectStore('spatial_analyses', { keyPath: 'id' });
+        saStore.createIndex('createdAt', 'createdAt', { unique: false });
+        saStore.createIndex('projectName', 'projectName', { unique: false });
+        saStore.createIndex('riskLevel', 'riskLevel', { unique: false });
       }
     };
 
