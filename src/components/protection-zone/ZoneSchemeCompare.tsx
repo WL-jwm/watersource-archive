@@ -16,7 +16,7 @@
 
 import { useToast } from '@/hooks/useToast';
 import React, { useState, useMemo, useEffect } from 'react';
-import { useWaterSourceStore, type ZoneCalcRecord } from '@/stores/waterSourceStore';
+import { type ZoneCalcRecord, useWaterSourceStore } from '@/stores/waterSourceStore';
 import { compareZoneSchemes, type ZoneComparisonResult } from '@/lib/zoneCompareEngine';
 
 const ZoneSchemeCompare: React.FC = () => {

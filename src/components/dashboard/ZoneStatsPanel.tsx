@@ -128,8 +128,8 @@ const ZoneStatsPanel: React.FC<{
             ))}
           </div>
           <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
-            <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm bg-blue-500"></span>一级</span>
-            <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm bg-green-500"></span>二级</span>
+            <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm bg-blue-500" />一级</span>
+            <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm bg-green-500" />二级</span>
           </div>
         </div>
 
@@ -143,7 +143,7 @@ const ZoneStatsPanel: React.FC<{
                   <span className="flex-1 truncate">{method}</span>
                   <div className="w-24 h-4 rounded overflow-hidden bg-gray-100">
                     <div className="h-full bg-accent-500 rounded"
-                      style={{ width: `${(count / allZones.length) * 100}%` }}></div>
+                      style={{ width: `${(count / allZones.length) * 100}%` }} />
                   </div>
                   <span className="w-6 text-right font-bold shrink-0">{count}</span>
                 </div>
@@ -160,7 +160,7 @@ const ZoneStatsPanel: React.FC<{
                   <span className="flex-1 truncate">{type}</span>
                   <div className="w-20 h-4 rounded overflow-hidden bg-gray-100">
                     <div className="h-full bg-violet-500 rounded"
-                      style={{ width: `${(count / zs.length) * 100}%` }}></div>
+                      style={{ width: `${(count / zs.length) * 100}%` }} />
                   </div>
                   <span className="w-6 text-right font-bold shrink-0">{count}</span>
                 </div>
@@ -190,7 +190,7 @@ const ZoneStatsPanel: React.FC<{
                   <span className="w-32 shrink-0 truncate">{zr.sourceName}</span>
                   <div className="flex-1 h-4 rounded overflow-hidden bg-gray-100">
                     <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded"
-                      style={{ width: `${(area / maxArea) * 100}%` }}></div>
+                      style={{ width: `${(area / maxArea) * 100}%` }} />
                   </div>
                   <span className="w-16 text-right font-bold shrink-0">{area.toFixed(3)} km²</span>
                 </div>
@@ -225,7 +225,7 @@ const ZoneStatsPanel: React.FC<{
                     <div className="rounded-full" style={{
                       width: 120, height: 120,
                       background: `conic-gradient(${gradient})`,
-                    }}></div>
+                    }} />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="rounded-full flex items-center justify-center text-center bg-white"
                         style={{ width: 70, height: 70 }}>
@@ -246,7 +246,7 @@ const ZoneStatsPanel: React.FC<{
                 const total = cityZoneData.reduce((s, x) => s + x.primaryArea, 0);
                 return (
                   <div key={d.cityName} className="flex items-center gap-2 text-xs">
-                    <span className="w-3 h-3 rounded-sm shrink-0" style={{ background: colors[i % colors.length] }}></span>
+                    <span className="w-3 h-3 rounded-sm shrink-0" style={{ background: colors[i % colors.length] }} />
                     <span className="flex-1 truncate">{d.cityName}</span>
                     <span className="font-bold">{d.primaryArea.toFixed(2)}</span>
                     <span className="text-gray-400 w-10 text-right">{((d.primaryArea / total) * 100).toFixed(1)}%</span>
@@ -281,7 +281,7 @@ const ZoneStatsPanel: React.FC<{
                     <div className="rounded-full" style={{
                       width: 120, height: 120,
                       background: `conic-gradient(${gradient})`,
-                    }}></div>
+                    }} />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="rounded-full flex items-center justify-center text-center bg-white"
                         style={{ width: 70, height: 70 }}>
@@ -302,7 +302,7 @@ const ZoneStatsPanel: React.FC<{
                 const total = cityZoneData.reduce((s, x) => s + x.secondaryArea, 0);
                 return (
                   <div key={d.cityName} className="flex items-center gap-2 text-xs">
-                    <span className="w-3 h-3 rounded-sm shrink-0" style={{ background: colors[i % colors.length] }}></span>
+                    <span className="w-3 h-3 rounded-sm shrink-0" style={{ background: colors[i % colors.length] }} />
                     <span className="flex-1 truncate">{d.cityName}</span>
                     <span className="font-bold">{d.secondaryArea.toFixed(2)}</span>
                     <span className="text-gray-400 w-10 text-right">{((d.secondaryArea / total) * 100).toFixed(1)}%</span>

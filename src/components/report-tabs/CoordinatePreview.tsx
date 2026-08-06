@@ -1,5 +1,6 @@
 import React from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CoordinatePreview: React.FC<{ points: any[]; zoneName: string }> = ({ points, zoneName }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);

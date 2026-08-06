@@ -97,6 +97,7 @@ export function preloadPage(path: string): void {
  *
  * @param path 路由路径
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getPageImporter(path: string): () => Promise<{ default: any }> {
   const importer = pageImporters[path];
   if (!importer) {
@@ -105,6 +106,7 @@ export function getPageImporter(path: string): () => Promise<{ default: any }> {
   // 如果已经预加载过，返回缓存的 Promise 包装为函数
   if (preloadCache.has(path)) {
     const cached = preloadCache.get(path)!;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return () => cached as Promise<{ default: any }>;
   }
   return importer;

@@ -7,8 +7,8 @@
  * 3. 批量选择 Set 操作验证
  */
 
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
 import ResultCard from '@/components/protection-zone/ResultCard';
 import type { CalcResult } from '@/lib/zoneCalcEngine';
 

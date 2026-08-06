@@ -1,5 +1,5 @@
 /* ===== S11.1: 导入模板引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   TEMPLATE_COLUMNS,
   detectFieldMapping,

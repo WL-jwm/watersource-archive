@@ -71,6 +71,7 @@ export async function loadAdminBoundaries(): Promise<Feature<MultiPolygon>[]> {
   if (!resp.ok) throw new Error('行政区划数据加载失败');
   const geojson = await resp.json();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   adminBoundariesCache = (geojson.features as unknown[]).map((f: any) => {
     // 统一为MultiPolygon格式
     if (f.geometry.type === 'Polygon') {

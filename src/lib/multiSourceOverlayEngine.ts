@@ -12,7 +12,7 @@
 
 import * as turf from '@turf/turf';
 import type { Feature, Polygon, MultiPolygon } from 'geojson';
-import { generateCircleVertices, generateRiverVertices, generateLakeVertices } from './zoneCoordGenerator';
+import { generateCircleVertices, generateLakeVertices, generateRiverVertices } from './zoneCoordGenerator';
 import type { ZoneResult } from './zoneCalcEngine';
 import type { WaterSourceRecord, ZoneCalcRecord } from '@/stores/waterSourceStore';
 

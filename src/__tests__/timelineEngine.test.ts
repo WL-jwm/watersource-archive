@@ -1,5 +1,5 @@
 /* ===== S11.11: 时间线引擎测试 ===== */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock dataVersionEngine
 vi.mock('@/lib/dataVersionEngine', () => ({

@@ -1,5 +1,5 @@
 /* ===== S12.4: 空间密度聚类引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   buildDensityGrid,
   nonEmptyCells,

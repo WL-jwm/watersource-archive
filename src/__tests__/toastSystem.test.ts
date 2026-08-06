@@ -7,8 +7,8 @@
  * 3. useConfirm Hook — Promise 化确认
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, renderHook } from '@testing-library/react';
 import { useToastStore, useToastStore as _store } from '@/stores/toastStore';
 import { useToast } from '@/hooks/useToast';
 import { useConfirm } from '@/hooks/useConfirm';

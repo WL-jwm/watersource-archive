@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { I18nProvider, useI18n, translations } from '@/lib/i18n';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, renderHook } from '@testing-library/react';
+import { I18nProvider, translations, useI18n } from '@/lib/i18n';
 
 function wrapper({ children }: { children: React.ReactNode }) {
   return <I18nProvider>{children}</I18nProvider>;

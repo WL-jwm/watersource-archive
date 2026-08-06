@@ -18,6 +18,7 @@ const WellsInfo: React.FC<{ source: WaterSource }> = ({ source }) => (
         {source.wells[0]?.casingMaterial || '-'} | 滤水管: {source.wells[0]?.screenMaterial || '-'}
       </div>
     </div>
+    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
     {source.wells.map((well: any) => (
       <div key={well.id} className="card p-4 lg:p-5 mb-4">
         <div className="flex items-center justify-between mb-4">

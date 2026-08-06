@@ -2,7 +2,7 @@
  * cryptoExport 加密导出模块测试
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock crypto.subtle if not available (jsdom doesn't have it)
 const mockSubtle = {

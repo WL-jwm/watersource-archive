@@ -23,7 +23,7 @@ import {
   type SpatialFeature,
 } from '@/lib/spatialDataImportEngine';
 import { riskLevelColor } from '@/lib/riskMatrixEngine';
-import { useSpatialAnalysisStore, type SpatialAnalysisRecord } from '@/stores/spatialAnalysisStore';
+import { type SpatialAnalysisRecord, useSpatialAnalysisStore } from '@/stores/spatialAnalysisStore';
 
 // ===== 数据构造 =====
 

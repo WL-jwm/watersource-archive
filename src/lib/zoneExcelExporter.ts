@@ -163,6 +163,7 @@ export function exportZoneExcel(
   XLSX.utils.book_append_sheet(wb, ws1, '汇总表');
 
   // ===== Sheet 2: 一级保护区明细 =====
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const primaryRows: Record<string, any>[] = [];
   for (const r of filtered) {
     const src = sourceMap.get(r.sourceId) || sourceNameMap.get(r.sourceName);
@@ -188,6 +189,7 @@ export function exportZoneExcel(
   XLSX.utils.book_append_sheet(wb, ws2, '一级保护区');
 
   // ===== Sheet 3: 二级保护区明细 =====
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const secondaryRows: Record<string, any>[] = [];
   for (const r of filtered) {
     const src = sourceMap.get(r.sourceId) || sourceNameMap.get(r.sourceName);
@@ -231,6 +233,7 @@ export function exportZoneExcel(
       sourceName: string;
       lng: number;
       lat: number;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       zones: any[];
     }>;
 

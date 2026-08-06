@@ -35,6 +35,7 @@ function getCityInfo(cityName: string) {
 // 获取某市已知水源地信息（从懒加载的数据中查找）
 function getCityKnownSources(
   cityName: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   wsCities: any[],
 ): { municipal: WaterSourceInfo[]; county: WaterSourceInfo[]; township: WaterSourceInfo[] } {
   const found = wsCities.find((c) => c.cityName === cityName);
@@ -61,6 +62,7 @@ const Home: React.FC = () => {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   // P2-1: 懒加载水源地静态数据
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [wsData, setWsData] = React.useState<{ cities: any[]; stats: any } | null>(null);
   React.useEffect(() => {
     import('@/data/hebeiWaterSources')
@@ -103,6 +105,7 @@ const Home: React.FC = () => {
 
     // 合并：有报告的市 + 有已知水源地的市
     const wsCities = wsData?.cities || [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const allCities = new Set([...reportCities, ...wsCities.map((c: any) => c.cityName)]);
 
     // 按标准顺序排列

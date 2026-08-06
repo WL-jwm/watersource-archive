@@ -8,7 +8,7 @@
  * 4. 安装到桌面提示（beforeinstallprompt）
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 // ===== 离线状态 Hook =====
 export function useOnlineStatus(): boolean {

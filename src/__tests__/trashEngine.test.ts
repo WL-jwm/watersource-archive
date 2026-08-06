@@ -1,7 +1,7 @@
 /* ===== S11.8: 回收站引擎测试 =====
  * 由于 trashEngine 依赖 IndexedDB，测试中使用 mock
  */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock idb 模块
 vi.mock('@/lib/idb', () => ({
@@ -15,7 +15,7 @@ vi.mock('@/lib/idb', () => ({
   dbClear: vi.fn(),
 }));
 
-import { dbPut, dbGet, dbDelete, dbGetAll } from '@/lib/idb';
+import { dbDelete, dbGet, dbGetAll, dbPut } from '@/lib/idb';
 import {
   softDelete,
   restore,

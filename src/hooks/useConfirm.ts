@@ -9,7 +9,7 @@
  */
 
 import { useCallback } from 'react';
-import { useToastStore, type ConfirmOptions } from '@/stores/toastStore';
+import { type ConfirmOptions, useToastStore } from '@/stores/toastStore';
 
 export function useConfirm() {
   const showConfirm = useToastStore((s) => s.showConfirm);

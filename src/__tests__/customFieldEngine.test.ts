@@ -1,5 +1,5 @@
 /* ===== S11.6: 自定义字段引擎测试 ===== */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock idb 模块
 vi.mock('@/lib/idb', () => ({

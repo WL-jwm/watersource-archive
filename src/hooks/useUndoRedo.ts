@@ -8,9 +8,8 @@
  * 4. 输入框/文本域中不拦截快捷键（避免与文本编辑冲突）
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { undoManager, type UndoState, type UndoCommand } from '@/lib/undoManager';
-import { formatRelativeTime } from '@/lib/undoManager';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { type UndoCommand, type UndoState, undoManager, formatRelativeTime } from '@/lib/undoManager';
 
 export interface UseUndoRedoReturn {
   /** 是否可撤销 */
@@ -117,4 +116,4 @@ export function useUndoRedo(): UseUndoRedoReturn {
   };
 }
 
-export { formatRelativeTime };
+export { formatRelativeTime } from '@/lib/undoManager';

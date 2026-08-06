@@ -205,9 +205,9 @@ export function summarizeCodes(codeMap: Map<string, StandardCode>): {
   byLevel: Array<{ level: string; count: number }>;
   codeCoverage: number;
 } {
-  let byCity: Record<string, number> = {};
-  let byType: Record<string, number> = {};
-  let byLevel: Record<string, number> = {};
+  const byCity: Record<string, number> = {};
+  const byType: Record<string, number> = {};
+  const byLevel: Record<string, number> = {};
 
   for (const [, code] of codeMap) {
     const city = code.parts.cityName;

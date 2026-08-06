@@ -133,7 +133,7 @@ const MapToolbar: React.FC<MapToolbarProps> = ({
       {/* 绘制中提示 */}
       {isDrawing && (
         <div className="ml-auto flex items-center gap-1.5 text-xs text-blue-600">
-          <span className="inline-block w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+          <span className="inline-block w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
           {activeTool === 'line' || activeTool === 'measure-distance'
             ? '点击添加节点，双击结束'
             : activeTool === 'polygon' || activeTool === 'measure-area'

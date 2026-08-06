@@ -8,9 +8,9 @@
  * 通过 store.getState() 读取最新状态，避免闭包过期
  */
 
-import { undoManager, genCommandId, type UndoCommand, type CommandSource } from './undoManager';
+import { genCommandId, type CommandSource, type UndoCommand, undoManager } from './undoManager';
 import type { WaterSourceRecord, ZoneCalcRecord } from '@/stores/waterSourceStore';
-import { dbPut, dbDelete, dbPutBatch, dbClear, dbGetAll } from '@/lib/idb';
+import { dbClear, dbDelete, dbGetAll, dbPut, dbPutBatch } from '@/lib/idb';
 
 // ===== 水源地操作 =====
 

@@ -13,7 +13,7 @@ import {
   type SyncPackage,
   type SyncPreview,
 } from '@/lib/syncEngine';
-import { dbPut, dbDelete } from '@/lib/idb';
+import { dbDelete, dbPut } from '@/lib/idb';
 import type { MergeStrategy } from '@/lib/mergeStrategy';
 
 type SyncStep = 'idle' | 'exporting' | 'importing' | 'preview' | 'applying' | 'done';

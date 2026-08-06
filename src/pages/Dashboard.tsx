@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import { useWaterSourceStore, ZoneCalcRecord } from '@/stores/waterSourceStore';
+import { ZoneCalcRecord, useWaterSourceStore } from '@/stores/waterSourceStore';
 import { ZoneResult } from '@/lib/zoneCalcEngine';
 import { batchGenerateCodes, summarizeCodes } from '@/lib/waterSourceCoder';
 import CodeStatsPanel from '@/components/dashboard/CodeStatsPanel';
@@ -229,9 +229,9 @@ const Dashboard: React.FC = () => {
           ))}
         </div>
         <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
-          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm" style={{ background: '#2F5496' }}></span>市级</span>
-          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm" style={{ background: '#548235' }}></span>县级</span>
-          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm" style={{ background: '#BF8F00' }}></span>乡镇级</span>
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm" style={{ background: '#2F5496' }} />市级</span>
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm" style={{ background: '#548235' }} />县级</span>
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm" style={{ background: '#BF8F00' }} />乡镇级</span>
         </div>
       </div>
 
@@ -248,7 +248,7 @@ const Dashboard: React.FC = () => {
                   height: 140,
                   background: `conic-gradient(#0EA5E9 0% ${(totalSurface / totalAll) * 100}%, #8B5CF6 ${(totalSurface / totalAll) * 100}% 100%)`,
                 }}
-              ></div>
+               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="rounded-full flex items-center justify-center text-center bg-white" style={{ width: 80, height: 80 }}>
                   <div>
@@ -261,14 +261,14 @@ const Dashboard: React.FC = () => {
             <div className="space-y-3">
               <div>
                 <div className="flex items-center gap-2 text-sm">
-                  <span className="w-3 h-3 rounded-sm shrink-0 bg-sky-500"></span>地表水
+                  <span className="w-3 h-3 rounded-sm shrink-0 bg-sky-500" />地表水
                 </div>
                 <div className="ml-5 text-lg font-bold text-sky-600">{totalSurface}</div>
                 <div className="ml-5 text-xs text-gray-500">{((totalSurface / totalAll) * 100).toFixed(1)}%</div>
               </div>
               <div>
                 <div className="flex items-center gap-2 text-sm">
-                  <span className="w-3 h-3 rounded-sm shrink-0 bg-violet-500"></span>地下水
+                  <span className="w-3 h-3 rounded-sm shrink-0 bg-violet-500" />地下水
                 </div>
                 <div className="ml-5 text-lg font-bold text-violet-600">{totalGround}</div>
                 <div className="ml-5 text-xs text-gray-500">{((totalGround / totalAll) * 100).toFixed(1)}%</div>
@@ -297,7 +297,7 @@ const Dashboard: React.FC = () => {
                       <div
                         className={`h-full rounded ${isAbove ? 'bg-red-500' : 'bg-gray-400'}`}
                         style={{ width: `${Math.min(100, (dn / maxD) * 100)}%` }}
-                      ></div>
+                       />
                     </div>
                     <span className={`w-12 text-right font-bold shrink-0 ${isAbove ? 'text-red-600' : ''}`}>
                       {d.density}
@@ -315,7 +315,7 @@ const Dashboard: React.FC = () => {
       {/* ====== 保护区统计 ====== */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="h-px flex-1 bg-gray-200"></div>
+          <div className="h-px flex-1 bg-gray-200" />
           <span className="text-sm font-semibold text-gray-600 flex items-center gap-1.5">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -324,7 +324,7 @@ const Dashboard: React.FC = () => {
             </svg>
             保护区统计
           </span>
-          <div className="h-px flex-1 bg-gray-200"></div>
+          <div className="h-px flex-1 bg-gray-200" />
         </div>
         <ZoneStatsPanel zoneResults={zoneResults} sources={sources} />
       </div>

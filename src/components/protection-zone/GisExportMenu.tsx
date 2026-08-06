@@ -89,7 +89,7 @@ const GisExportMenu: React.FC<GisExportMenuProps> = ({ zoneResults, sources }) =
         >
           <span className="text-purple-500">●</span> Shapefile（.shp/.shx/.dbf ZIP）
         </button>
-        <div className="border-t border-purple-100 my-1"></div>
+        <div className="border-t border-purple-100 my-1" />
         <div className="px-3 py-1.5 text-[9px] text-gray-400 leading-tight">
           导出所有已保存计算结果的保护区坐标
           <br />

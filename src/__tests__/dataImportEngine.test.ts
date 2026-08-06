@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { importFromText, importFromFile } from '../lib/dataImportEngine';
+import { describe, expect, it } from 'vitest';
+import { importFromFile, importFromText } from '../lib/dataImportEngine';
 
 // ===== 模拟 File 对象 =====
 function createMockFile(content: string, name: string, type: string): File {

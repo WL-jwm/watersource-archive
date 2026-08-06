@@ -11,7 +11,7 @@
  * 7. 边界值与异常输入
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   decimalToDMS,
   decimalToDMSParts,

@@ -3,7 +3,7 @@
  * 基于 IndexedDB 存储
  */
 
-import { getDB, dbGetAll, dbPut, dbDelete, dbClear } from './idb';
+import { dbClear, dbDelete, dbGetAll, dbPut, getDB } from './idb';
 
 // ===== 类型定义 =====
 

@@ -4,7 +4,7 @@
 
 import React, { useMemo } from 'react';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
-import { scoreAll, getScoreColor } from '@/lib/dataQualityEngine';
+import { getScoreColor, scoreAll } from '@/lib/dataQualityEngine';
 
 interface DataQualityPanelProps {
   sources: WaterSourceRecord[];

@@ -10,9 +10,9 @@
  */
 
 import { create } from 'zustand';
-import { dbGetAll, dbPutBatch, dbPut, dbDelete, dbCount, dbClear } from '@/lib/idb';
-import { softDelete, restore, purge, purgeAll, listTrash, purgeExpired, getTrashStats, type TrashItem } from '@/lib/trashEngine';
-import { ensureVersionStores, recordChange, createSnapshot } from '@/lib/dataVersionEngine';
+import { dbClear, dbCount, dbDelete, dbGetAll, dbPut, dbPutBatch } from '@/lib/idb';
+import { getTrashStats, listTrash, purge, purgeAll, purgeExpired, restore, softDelete, type TrashItem } from '@/lib/trashEngine';
+import { createSnapshot, ensureVersionStores, recordChange } from '@/lib/dataVersionEngine';
 import { CalcParams, ZoneResult } from '@/lib/zoneCalcEngine';
 import { undoManager } from '@/lib/undoManager';
 import { logAudit } from '@/lib/auditTrail';
@@ -148,11 +148,15 @@ function genId(cityName: string, level: string, name: string): string {
 type HebeiWaterSourceEntry = {
   cityName: string;
   cityCode: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   municipal: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   county: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   township?: any[];
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function loadStaticData(): Promise<{ sources: HebeiWaterSourceEntry[]; geo: any[] }> {
   const [{ hebeiWaterSources }, { waterSourceGeo }] = await Promise.all([
     import('@/data/hebeiWaterSources'),
@@ -163,6 +167,7 @@ async function loadStaticData(): Promise<{ sources: HebeiWaterSourceEntry[]; geo
 
 function buildRecordsFromStatic(
   data: HebeiWaterSourceEntry[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   geoData: any[],
 ): { sources: WaterSourceRecord[]; metas: CityMeta[] } {
   const sources: WaterSourceRecord[] = [];
@@ -180,6 +185,7 @@ function buildRecordsFromStatic(
   for (const city of data) {
     metas.push({ cityName: city.cityName, cityCode: city.cityCode });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const levels: Array<{ level: 'municipal' | 'county' | 'township'; data: Array<any> }> = [
       { level: 'municipal', data: city.municipal },
       { level: 'county', data: city.county },

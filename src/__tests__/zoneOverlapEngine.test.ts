@@ -1,5 +1,5 @@
 /* ===== S12.2: 保护区占用精算引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   calculateZoneOverlap,
   calculateBatchZoneOverlap,

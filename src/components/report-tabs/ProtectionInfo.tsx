@@ -41,6 +41,7 @@ const ProtectionInfo: React.FC<{ source: WaterSource }> = ({ source }) => (
       </div>
     </div>
 
+    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
     {source.protectionZones.map((zone: any) => (
       <div
         key={zone.id}
@@ -95,6 +96,7 @@ const ProtectionInfo: React.FC<{ source: WaterSource }> = ({ source }) => (
                     </tr>
                   </thead>
                   <tbody>
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {zone.boundaryPoints.map((pt: any, idx: number) => (
                       <tr key={idx}>
                         <td className="text-center font-mono font-medium">{pt.pointNumber}</td>

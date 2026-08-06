@@ -1,10 +1,10 @@
 import React, { Suspense, lazy } from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PageErrorBoundary from '@/components/PageErrorBoundary';
 import { installGlobalErrorHandlers } from '@/lib/errorReporter';
 import Layout from '@/components/layout/Layout';
-import { OfflineIndicator, SWUpdateToast, InstallPromptBanner } from '@/lib/pwaEnhanced';
+import { InstallPromptBanner, OfflineIndicator, SWUpdateToast } from '@/lib/pwaEnhanced';
 import { I18nProvider, LocaleSwitcher } from '@/lib/i18n';
 import ToastContainer from '@/components/ToastContainer';
 import ConfirmDialog from '@/components/ConfirmDialog';

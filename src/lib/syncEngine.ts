@@ -3,7 +3,7 @@
  * 加密数据包（.wsync 格式）
  */
 
-import { encryptData, decryptData } from './cryptoExport';
+import { decryptData, encryptData } from './cryptoExport';
 import { detectConflicts, type ConflictReport } from './conflictDetector';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 

@@ -2,7 +2,7 @@
  * A2: 多井干扰保护区计算引擎测试
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   calcWellFieldZones,
   generateWellFieldVertices,

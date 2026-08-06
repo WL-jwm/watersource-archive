@@ -2,8 +2,8 @@
  * P3-20: 空间分析模块单元测试
  * 覆盖: Haversine距离 + 保护区涉及判断
  */
-import { describe, it, expect } from 'vitest';
-import { haversineDistance, checkProjectAgainstZones } from '@/lib/spatialAnalysis';
+import { describe, expect, it } from 'vitest';
+import { checkProjectAgainstZones, haversineDistance } from '@/lib/spatialAnalysis';
 import { WaterSourceRecord, ZoneCalcRecord } from '@/stores/waterSourceStore';
 
 // ===== Haversine距离（返回米）=====

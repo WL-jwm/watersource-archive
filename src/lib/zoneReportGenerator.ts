@@ -184,6 +184,7 @@ const thinBorder = {
 };
 
 function headerCell(text: string, width?: number): TableCell {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const opts: any = {
     children: [
       new Paragraph({
@@ -204,6 +205,7 @@ function dataCell(
   width?: number,
   align?: (typeof AlignmentType)[keyof typeof AlignmentType],
 ): TableCell {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const opts: any = {
     children: [
       new Paragraph({

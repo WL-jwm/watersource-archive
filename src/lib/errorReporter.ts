@@ -5,7 +5,7 @@
  * 供"错误日志"页面查询展示。
  */
 
-import { dbPut, dbGetAll, dbClear, dbCount, getDB } from './idb';
+import { dbClear, dbCount, dbGetAll, dbPut, getDB } from './idb';
 
 const ERROR_LOG_STORE = 'error_logs';
 const MAX_LOGS = 200; // 最多保留 200 条错误日志

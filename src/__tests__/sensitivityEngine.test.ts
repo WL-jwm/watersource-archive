@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { analyzeSensitivity, formatSensitivityText, toChartData } from '@/lib/sensitivityEngine';
 import type { CalcParams } from '@/lib/zoneCalcEngine';
 

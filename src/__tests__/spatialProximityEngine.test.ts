@@ -1,5 +1,5 @@
 /* ===== S12.1: 空间邻近检索引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   querySpatialProximity,
   bearingDegrees,

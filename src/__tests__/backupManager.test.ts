@@ -2,7 +2,7 @@
  * backupManager 全量数据备份管理器测试
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock IDB
 vi.mock('@/lib/idb', () => ({
@@ -32,7 +32,7 @@ import {
   formatDaysSince,
   tryAutoBackup,
 } from '@/lib/backupManager';
-import { dbGetAll, dbPut, dbPutBatch, dbClear, dbGet } from '@/lib/idb';
+import { dbClear, dbGet, dbGetAll, dbPut, dbPutBatch } from '@/lib/idb';
 
 describe('backupManager', () => {
   beforeEach(() => {

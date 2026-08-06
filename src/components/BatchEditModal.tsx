@@ -3,7 +3,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
-import { useWaterSourceStore, type WaterSourceRecord } from '@/stores/waterSourceStore';
+import { type WaterSourceRecord, useWaterSourceStore } from '@/stores/waterSourceStore';
 import { useToast } from '@/hooks/useToast';
 import { logAudit } from '@/lib/auditTrail';
 import {

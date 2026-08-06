@@ -1,5 +1,5 @@
 /* ===== S11.4: 同步引擎测试 ===== */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock cryptoExport
 vi.mock('@/lib/cryptoExport', () => ({
@@ -7,7 +7,7 @@ vi.mock('@/lib/cryptoExport', () => ({
   decryptData: vi.fn(),
 }));
 
-import { encryptData, decryptData } from '@/lib/cryptoExport';
+import { decryptData, encryptData } from '@/lib/cryptoExport';
 import {
   extractIncrementalChanges,
   createSyncPackage,

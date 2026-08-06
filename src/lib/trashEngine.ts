@@ -3,7 +3,7 @@
  * 30 天过期，到期自动清除
  */
 
-import { dbPut, dbGet, dbDelete, dbGetAll } from './idb';
+import { dbDelete, dbGet, dbGetAll, dbPut } from './idb';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 
 // ===== 常量 =====

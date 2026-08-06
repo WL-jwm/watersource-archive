@@ -1,5 +1,5 @@
 /* ===== S11.3: 数据质量评分引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   scoreCompleteness,
   scoreAll,

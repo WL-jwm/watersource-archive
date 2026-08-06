@@ -2,7 +2,7 @@
  * P3-20: 保护区计算引擎单元测试
  * 覆盖: 经验值法(地下水/河流/湖库) + 解析法 + 参数推断 + 批量计算
  */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   calcProtectionZones,
   calcBatch,

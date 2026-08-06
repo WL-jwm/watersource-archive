@@ -136,6 +136,7 @@ const CryptoExportModal: React.FC<CryptoExportModalProps> = ({ open, onClose }) 
       }
 
       // 判断是全量备份还是水源地数据
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const parsedObj = parsed as Record<string, any>;
       const isFullBackup = !!parsedObj?.meta?.backupVersion;
       const isSourceData = !!parsedObj?.sources;

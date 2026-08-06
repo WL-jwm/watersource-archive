@@ -7,7 +7,7 @@
 import { buildRiskMatrix, riskLevelLabel, type RiskLevel, type RiskMatrixResult } from './riskMatrixEngine';
 import { screenSensitiveTargets, type SensitiveScreeningResult, type SensitiveTarget } from './sensitiveScreeningEngine';
 import { analyzeUpstreamBatch, type UpstreamAnalysisBatchResult, type WaterSource } from './upstreamAnalysisEngine';
-import { querySpatialProximity, type SpatialProximityResponse, type ProximitySource } from './spatialProximityEngine';
+import { querySpatialProximity, type ProximitySource, type SpatialProximityResponse } from './spatialProximityEngine';
 
 // ===== 输入类型 =====
 

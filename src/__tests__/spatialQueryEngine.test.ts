@@ -1,5 +1,5 @@
 /* ===== S12.9: 综合空间查询引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   querySpatialContext,
   isQueryPointSafe,

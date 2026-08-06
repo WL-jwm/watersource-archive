@@ -9,7 +9,7 @@
  */
 
 import { create } from 'zustand';
-import { dbGetAll, dbPut, dbPutBatch, dbDelete, dbClear } from '@/lib/idb';
+import { dbClear, dbDelete, dbGetAll, dbPut, dbPutBatch } from '@/lib/idb';
 import {
   type DataSourceMeta,
   type DataSourceType,

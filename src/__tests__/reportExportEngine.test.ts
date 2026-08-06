@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { reportToHtml } from '../lib/reportExportEngine';
 import type { SpatialReport } from '../lib/spatialAnalysisReportEngine';
 

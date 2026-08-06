@@ -1,5 +1,5 @@
 /* ===== S11.10: 导出模板引擎测试 ===== */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock idb
 vi.mock('@/lib/idb', () => ({

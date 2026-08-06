@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { validateWaterSources, quickValidate, checkDuplicates } from '../lib/dataValidator';
+import { describe, expect, it } from 'vitest';
+import { checkDuplicates, quickValidate, validateWaterSources } from '../lib/dataValidator';
 import type { WaterSourceInfo } from '@/types';
 
 const validSource: WaterSourceInfo = {

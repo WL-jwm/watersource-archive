@@ -1,6 +1,6 @@
 /* ===== 行政区划总览页面 ===== */
 import React, { useState, useMemo } from 'react';
-import { hebeiDivisions, getAllDistricts, getDistrictTypeLabel } from '@/data/hebeiDivisions';
+import { getAllDistricts, getDistrictTypeLabel, hebeiDivisions } from '@/data/hebeiDivisions';
 
 import { useDivisionStore } from '@/stores/divisionStore';
 import type { DistrictDivision } from '@/types/division';

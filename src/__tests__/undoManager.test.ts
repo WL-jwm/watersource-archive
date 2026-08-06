@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { undoManager, type UndoCommand, genCommandId, getCommandSourceLabel, getCommandSourceColor, formatRelativeTime } from '@/lib/undoManager';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { formatRelativeTime, genCommandId, getCommandSourceColor, getCommandSourceLabel, type UndoCommand, undoManager } from '@/lib/undoManager';
 
 // ===== 测试工具 =====
 

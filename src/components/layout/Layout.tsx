@@ -22,6 +22,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [isOnline, setIsOnline] = React.useState(navigator.onLine);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [installPrompt, setInstallPrompt] = React.useState<any>(null);
   const [showInstallBanner, setShowInstallBanner] = React.useState(false);
   const [darkMode, setDarkMode] = React.useState(() => {

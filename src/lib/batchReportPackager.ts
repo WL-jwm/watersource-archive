@@ -28,7 +28,7 @@ import {
   ShadingType,
 } from 'docx';
 import type { ZoneCalcRecord, WaterSourceRecord } from '@/stores/waterSourceStore';
-import { generateZoneReport, type ReportConfig, type ReportChapter } from './zoneReportGenerator';
+import { generateZoneReport, type ReportChapter, type ReportConfig } from './zoneReportGenerator';
 import { generatePdfReport } from './reportPdfExporter';
 import { toast } from '@/stores/toastStore';
 

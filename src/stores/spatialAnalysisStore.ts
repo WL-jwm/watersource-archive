@@ -6,7 +6,7 @@
  */
 
 import { create } from 'zustand';
-import { dbGetAll, dbPut, dbDelete, dbClear } from '@/lib/idb';
+import { dbClear, dbDelete, dbGetAll, dbPut } from '@/lib/idb';
 import type { SpatialReportInput } from '@/lib/spatialAnalysisReportEngine';
 
 // ===== 记录类型 =====

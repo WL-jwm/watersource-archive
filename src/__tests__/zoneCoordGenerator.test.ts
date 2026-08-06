@@ -2,7 +2,7 @@
  * P3-20: 拐点坐标生成器单元测试
  * 覆盖: 圆形拐点生成 + 河流型矩形拐点 + KML/Leaflet/Excel格式输出
  */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   generateCircleVertices,
   generateRiverVertices,

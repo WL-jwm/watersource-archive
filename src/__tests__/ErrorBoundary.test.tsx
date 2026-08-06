@@ -2,7 +2,7 @@
  * ErrorBoundary 组件渲染测试
  */
 
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';

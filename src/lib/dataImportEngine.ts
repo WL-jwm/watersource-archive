@@ -390,7 +390,7 @@ function parseRow(
   }
 
   // remark 处理：如果有多列映射到 remark，合并
-  let remark = fieldValues.remark || '';
+  const remark = fieldValues.remark || '';
 
   return {
     name: name,

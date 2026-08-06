@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { useToastStore, type ToastType } from '@/stores/toastStore';
+import { type ToastType, useToastStore } from '@/stores/toastStore';
 
 const ICON_MAP: Record<ToastType, string> = {
   success: '✓',

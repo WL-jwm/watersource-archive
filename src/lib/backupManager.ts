@@ -8,8 +8,8 @@
  * 4. 自动备份：达到阈值时触发文件下载
  */
 
-import { dbGetAll, dbPut, dbPutBatch, dbClear, dbGet } from '@/lib/idb';
-import { exportAuditLogs, clearAuditLogs, logAudit } from '@/lib/auditTrail';
+import { dbClear, dbGet, dbGetAll, dbPut, dbPutBatch } from '@/lib/idb';
+import { clearAuditLogs, exportAuditLogs, logAudit } from '@/lib/auditTrail';
 
 // ===== 类型定义 =====
 

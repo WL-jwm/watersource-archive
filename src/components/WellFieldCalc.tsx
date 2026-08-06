@@ -115,7 +115,7 @@ const WellFieldCalc: React.FC = () => {
                 <th className="px-1 py-1 text-left text-gray-500">经度</th>
                 <th className="px-1 py-1 text-left text-gray-500">纬度</th>
                 <th className="px-1 py-1 text-left text-gray-500">取水量(m³/d)</th>
-                <th className="px-1 py-1"></th>
+                <th className="px-1 py-1" />
               </tr>
             </thead>
             <tbody>

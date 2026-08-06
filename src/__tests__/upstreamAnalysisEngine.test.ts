@@ -1,5 +1,5 @@
 /* ===== S12.7: 汇水上游关系分析引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   isUpstreamDirection,
   bearingToCompassLabel,

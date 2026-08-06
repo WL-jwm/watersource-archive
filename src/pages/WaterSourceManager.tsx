@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/useToast';
 import { useConfirm } from '@/hooks/useConfirm';
 import React, { useEffect, useState, useCallback } from 'react';
 // F3: XLSX 改为动态导入，减小首屏体积(426KB)
-import { useWaterSourceStore, WaterSourceRecord } from '@/stores/waterSourceStore';
+import { WaterSourceRecord, useWaterSourceStore } from '@/stores/waterSourceStore';
 import DataImportPanel from '@/components/DataImportPanel';
 import DataSourceManager from '@/components/DataSourceManager';
 import SourceFormModal from '@/components/SourceFormModal';

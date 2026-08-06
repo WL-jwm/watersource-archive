@@ -1,5 +1,5 @@
 /* ===== S12.5: 敏感目标空间筛查引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   screenSensitiveTargets,
   batchScreenSensitiveTargets,

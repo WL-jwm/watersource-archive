@@ -155,6 +155,7 @@ const WaterQualityInfo: React.FC<{ source: WaterSource }> = ({ source }) => {
               </tr>
             </thead>
             <tbody>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               {filteredItems.map((item: any, idx: number) => {
                 const piColor =
                   item.standardIndex === 0

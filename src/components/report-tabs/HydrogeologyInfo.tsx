@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatArea, getTotalZoneArea, getTotalZonePoints, getClassColor } from '@/utils/helpers';
+import { formatArea, getClassColor, getTotalZoneArea, getTotalZonePoints } from '@/utils/helpers';
 import type { WaterSource } from '@/types';
 
 const HydrogeologyInfo: React.FC<{ source: WaterSource }> = ({ source }) => {

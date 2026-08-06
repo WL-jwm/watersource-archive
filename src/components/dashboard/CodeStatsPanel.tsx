@@ -1,5 +1,5 @@
 import React from 'react';
-import { batchGenerateCodes, summarizeCodes, formatCodeForDisplay } from '@/lib/waterSourceCoder';
+import { batchGenerateCodes, formatCodeForDisplay, summarizeCodes } from '@/lib/waterSourceCoder';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 
 const CodeStatsPanel: React.FC<{ loaded: boolean; sources: WaterSourceRecord[] }> = ({ loaded, sources }) => {

@@ -2,7 +2,7 @@
  * B3: 保护区合规性检查测试
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { runComplianceCheck } from '@/lib/complianceChecker';
 import type { ZoneCalcRecord, WaterSourceRecord } from '@/stores/waterSourceStore';
 import type { ZoneResult } from '@/lib/zoneCalcEngine';

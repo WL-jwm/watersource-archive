@@ -10,7 +10,7 @@
  * 6. 汇总报告生成
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   groupByCity,
   generateBatchReportsV2,

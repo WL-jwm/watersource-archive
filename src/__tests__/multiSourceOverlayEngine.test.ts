@@ -5,7 +5,7 @@
  * 覆盖 P1 用例：自定义顶点数/方位角/坐标精度/渐进union/对称性/守恒律/混合类型等
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as turf from '@turf/turf';
 import {
   generateCircleVertices,

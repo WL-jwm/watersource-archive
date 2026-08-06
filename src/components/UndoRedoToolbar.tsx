@@ -8,7 +8,7 @@
  */
 
 import React, { useState } from 'react';
-import { useUndoRedo, formatRelativeTime } from '@/hooks/useUndoRedo';
+import { formatRelativeTime, useUndoRedo } from '@/hooks/useUndoRedo';
 import {
   getCommandSourceLabel,
   getCommandSourceColor,

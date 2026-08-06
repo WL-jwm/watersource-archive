@@ -8,8 +8,8 @@
  * - 一键填入到 PreciseCalcPanel
  */
 
-import { useState, useMemo } from 'react';
-import { useWaterSourceStore, type WaterSourceRecord } from '@/stores/waterSourceStore';
+import { useMemo, useState } from 'react';
+import { type WaterSourceRecord, useWaterSourceStore } from '@/stores/waterSourceStore';
 import {
   recommendParams,
   validateParams,

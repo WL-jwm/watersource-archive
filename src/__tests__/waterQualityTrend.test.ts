@@ -2,8 +2,8 @@
  * A3: 水质趋势分析测试
  */
 
-import { describe, it, expect } from 'vitest';
-import { analyzeTrend, GW_STANDARD_III, type WaterQualityHistory } from '@/lib/waterQualityTrend';
+import { describe, expect, it } from 'vitest';
+import { GW_STANDARD_III, analyzeTrend, type WaterQualityHistory } from '@/lib/waterQualityTrend';
 
 function makeHistory(
   sourceName: string,

@@ -1,6 +1,6 @@
 /* ===== S11.2: 冲突检测引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
-import { detectConflicts, getConflictTypeLabel, getConflictTypeColor } from '@/lib/conflictDetector';
+import { describe, expect, it } from 'vitest';
+import { detectConflicts, getConflictTypeColor, getConflictTypeLabel } from '@/lib/conflictDetector';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 
 // 测试数据工厂

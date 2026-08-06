@@ -1,5 +1,5 @@
 /* ===== S11.12: 定时备份引擎测试 ===== */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock idb
 vi.mock('@/lib/idb', () => ({

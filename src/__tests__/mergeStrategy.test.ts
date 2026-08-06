@@ -1,6 +1,6 @@
 /* ===== S11.2: 合并策略测试 ===== */
-import { describe, it, expect } from 'vitest';
-import { createMergePlan, getStrategyLabel, getStrategyDescription } from '@/lib/mergeStrategy';
+import { describe, expect, it } from 'vitest';
+import { createMergePlan, getStrategyDescription, getStrategyLabel } from '@/lib/mergeStrategy';
 import { detectConflicts } from '@/lib/conflictDetector';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 

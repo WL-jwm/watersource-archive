@@ -1,5 +1,5 @@
 /* ===== S12.6: 空间关联矩阵引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   buildRelationMatrix,
   summarizeRelations,

@@ -2,8 +2,8 @@
  * SourceFormModal 组件渲染测试
  */
 
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import SourceFormModal from '@/components/SourceFormModal';
 
@@ -16,7 +16,7 @@ describe('SourceFormModal', () => {
   });
 
   it('新增模式应显示"新增水源地"标题和空表单', () => {
-    render(<SourceFormModal open={true} source={null} onClose={vi.fn()} onSubmit={vi.fn()} />);
+    render(<SourceFormModal open source={null} onClose={vi.fn()} onSubmit={vi.fn()} />);
     expect(screen.getByText('新增水源地')).toBeInTheDocument();
     expect(screen.getByText('确认新增')).toBeInTheDocument();
   });
@@ -35,7 +35,7 @@ describe('SourceFormModal', () => {
       updatedAt: Date.now(),
     };
     render(
-      <SourceFormModal open={true} source={mockSource} onClose={vi.fn()} onSubmit={vi.fn()} />,
+      <SourceFormModal open source={mockSource} onClose={vi.fn()} onSubmit={vi.fn()} />,
     );
     expect(screen.getByText('编辑水源地')).toBeInTheDocument();
     expect(screen.getByText('保存修改')).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('SourceFormModal', () => {
   });
 
   it('名称为空时提交应显示验证错误', async () => {
-    render(<SourceFormModal open={true} source={null} onClose={vi.fn()} onSubmit={vi.fn()} />);
+    render(<SourceFormModal open source={null} onClose={vi.fn()} onSubmit={vi.fn()} />);
     // 清空名称输入框
     const nameInput = screen.getByPlaceholderText('如：黄壁庄水库水源地');
     fireEvent.change(nameInput, { target: { value: '' } });
@@ -58,14 +58,14 @@ describe('SourceFormModal', () => {
 
   it('点击关闭按钮应调用 onClose', () => {
     const onClose = vi.fn();
-    render(<SourceFormModal open={true} source={null} onClose={onClose} onSubmit={vi.fn()} />);
+    render(<SourceFormModal open source={null} onClose={onClose} onSubmit={vi.fn()} />);
     fireEvent.click(screen.getByLabelText('关闭'));
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   it('点击取消按钮应调用 onClose', () => {
     const onClose = vi.fn();
-    render(<SourceFormModal open={true} source={null} onClose={onClose} onSubmit={vi.fn()} />);
+    render(<SourceFormModal open source={null} onClose={onClose} onSubmit={vi.fn()} />);
     fireEvent.click(screen.getByRole('button', { name: '取消' }));
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -73,7 +73,7 @@ describe('SourceFormModal', () => {
   it('有效数据提交应调用 onSubmit', async () => {
     const onSubmit = vi.fn().mockResolvedValue(undefined);
     const onClose = vi.fn();
-    render(<SourceFormModal open={true} source={null} onClose={onClose} onSubmit={onSubmit} />);
+    render(<SourceFormModal open source={null} onClose={onClose} onSubmit={onSubmit} />);
     // 填写表单
     fireEvent.change(screen.getByPlaceholderText('如：黄壁庄水库水源地'), {
       target: { value: '新水源地' },

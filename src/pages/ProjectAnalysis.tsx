@@ -10,7 +10,7 @@
 
 import { useToast } from '@/hooks/useToast';
 import React, { useState, useMemo } from 'react';
-import { useWaterSourceStore, WaterSourceRecord, ZoneCalcRecord } from '@/stores/waterSourceStore';
+import { WaterSourceRecord, ZoneCalcRecord, useWaterSourceStore } from '@/stores/waterSourceStore';
 import {
   checkProjectAgainstZones,
   haversineDistance,

@@ -1,5 +1,5 @@
 /* ===== S11.9: 批量编辑引擎测试 ===== */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   createBatchEditPlan,
   applyBatchEdit,

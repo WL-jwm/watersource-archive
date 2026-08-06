@@ -10,7 +10,7 @@
  * 6. 高亮匹配文本渲染
  */
 
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { type UseSearchFilterReturn } from '@/hooks/useSearchFilter';
 import { getHighlightSegments } from '@/lib/searchFilterEngine';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';

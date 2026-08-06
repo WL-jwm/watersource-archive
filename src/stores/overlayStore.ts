@@ -5,7 +5,7 @@
  */
 
 import { create } from 'zustand';
-import { dbGetAll, dbPut, dbDelete, dbClear } from '@/lib/idb';
+import { dbClear, dbDelete, dbGetAll, dbPut } from '@/lib/idb';
 import {
   runOverlayAnalysis,
   type OverlayResult,

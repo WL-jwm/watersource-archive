@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { analyzeBuffer, SENSITIVE_TARGET_TEMPLATES } from '@/lib/bufferAnalysisEngine';
+import { describe, expect, it } from 'vitest';
+import { SENSITIVE_TARGET_TEMPLATES, analyzeBuffer } from '@/lib/bufferAnalysisEngine';
 import type { SensitiveTarget } from '@/lib/bufferAnalysisEngine';
 import type { SourceZoneVertices } from '@/lib/zoneCoordGenerator';
 

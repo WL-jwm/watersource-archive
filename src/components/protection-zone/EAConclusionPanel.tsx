@@ -5,9 +5,9 @@
  * 展示5维度检查结果+总体结论+置信度
  */
 
-import { useState, useMemo } from 'react';
-import { useWaterSourceStore, type ZoneCalcRecord } from '@/stores/waterSourceStore';
-import { generateEAConclusion, formatConclusionText, type EAFinalConclusion, type EASeverity } from '@/lib/eaConclusionEngine';
+import { useMemo, useState } from 'react';
+import { type ZoneCalcRecord, useWaterSourceStore } from '@/stores/waterSourceStore';
+import { formatConclusionText, generateEAConclusion, type EAFinalConclusion, type EASeverity } from '@/lib/eaConclusionEngine';
 
 interface Props {
   zoneResults: ZoneCalcRecord[];
