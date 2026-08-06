@@ -368,6 +368,18 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </svg>
             {!sidebarCollapsed && '活动时间线'}
           </a>
+          {/* S12 Batch5: 空间分析工具箱入口 */}
+          <a
+            href="#/sptools"
+              onMouseEnter={() => preloadPage('/sptools')}
+            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
+            title="空间分析工具箱"
+          >
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1h7zm9 0a1 1 0 011 1v14a1 1 0 01-1 1h-4a1 1 0 01-1-1V5a1 1 0 011-1h4z" />
+            </svg>
+            {!sidebarCollapsed && '空间分析工具箱'}
+          </a>
           {/* N4: 数据备份入口 */}
           <button
             onClick={() => setBackupModalOpen(true)}

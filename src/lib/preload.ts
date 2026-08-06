@@ -28,6 +28,7 @@ const pageImporters: Record<string, () => Promise<{ default: any }>> = {
   '/trash': () => import('@/pages/Trash'),
   '/overlay': () => import('@/pages/MultiSourceOverlay'),
   '/timeline': () => import('@/pages/Timeline'),
+  '/sptools': () => import('@/pages/SpatialAnalysisTools'),
 };
 
 // 已经发起的 import Promise 缓存，避免重复下载
