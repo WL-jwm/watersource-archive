@@ -68,10 +68,12 @@ export default defineConfig({
                 id.includes('zoneReportGenerator') ||
                 id.includes('reportPdfExporter') ||
                 id.includes('zoneExcelExporter') ||
-                id.includes('dataExchange') ||
+                id.includes('dataExchange') ||          // imports xlsx
                 id.includes('zoneGISExporter') ||
-                id.includes('dataImportEngine') ||    // imports xlsx
-                id.includes('overlayReportGenerator')  // imports docx
+                id.includes('dataImportEngine') ||      // imports xlsx
+                id.includes('overlayReportGenerator') ||// imports docx
+                id.includes('importTemplate') ||        // imports xlsx
+                id.includes('exportTemplateEngine')     // imports xlsx
             ) {
               return 'report-export';
             }
@@ -101,5 +103,14 @@ export default defineConfig({
       },
     },
     chunkSizeWarningLimit: 1000,
+    // 禁用自动 modulepreload，避免 vendor-xlsx(423KB) 被预加载到每个页面
+    // 改用手动在 index.html 中 preload 关键 chunk
+    // 选择性 modulepreload：排除 vendor-xlsx(423KB) 避免被预加载到每个页面
+    // 其他 chunk（vendor-react、calc-tools）保持正常 preload 确保首屏性能
+    modulePreload: {
+      resolveDependencies: (_filename, deps) => {
+        return deps.filter((dep) => !dep.includes('vendor-xlsx'));
+      },
+    },
   },
 });
