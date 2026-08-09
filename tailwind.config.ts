@@ -53,7 +53,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Noto Sans SC"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
+        sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"PingFang SC"', '"Microsoft YaHei"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       fontSize: {
