@@ -29,7 +29,7 @@ import WaterQualityTrendPanel from '@/components/WaterQualityTrendPanel';
 // ===== 主页面 =====
 
 const ProjectAnalysis: React.FC = () => {
-  const { loaded, sources, zoneResults, loadZoneResults } = useWaterSourceStore();
+  const { loaded, sources, zoneResults, initDB, loadZoneResults } = useWaterSourceStore();
 
   const toast = useToast();
   const [projectName, setProjectName] = useState('');

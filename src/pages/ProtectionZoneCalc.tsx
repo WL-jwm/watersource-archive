@@ -32,7 +32,7 @@ import MapFigureExport from '@/components/protection-zone/MapFigureExport';
 
 
 function ProtectionZoneCalc() {
-  const { loaded, sources, zoneResults, saveZoneResult, loadZoneResults } =
+  const { loaded, sources, zoneResults, initDB, saveZoneResult, loadZoneResults } =
     useWaterSourceStore();
   const confirm = useConfirm();
   const [results, setResults] = useState<CalcResult[]>([]);
@@ -73,6 +73,10 @@ function ProtectionZoneCalc() {
   }, []);
 
   // 加载时恢复历史计算结果
+  useEffect(() => {
+    initDB();
+  }, []);
+
   useEffect(() => {
     if (loaded && zoneResults.length === 0) {
       loadZoneResults().then(() => {

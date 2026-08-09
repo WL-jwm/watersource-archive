@@ -38,10 +38,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [backupModalOpen, setBackupModalOpen] = React.useState(false);
   const { t } = useI18n();
 
-  // 全局IDB初始化（应用启动时仅执行一次）
-  useEffect(() => {
-    initDB();
-  }, []);
+  // P0优化：数据初始化延迟到需要数据的页面首次访问时触发
+  // 不再在Layout中主动调用initDB()，避免首屏加载442KB数据
+  // 由WaterSourceManager/MapView/ProjectAnalysis等页面首次访问时触发
 
   // N4: 自动备份检测（启动后延迟5秒检查）
   useEffect(() => {

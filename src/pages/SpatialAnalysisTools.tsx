@@ -35,7 +35,7 @@ interface Props {
 type Tab = 'report' | 'batch' | 'import' | 'history';
 
 const SpatialAnalysisTools: React.FC<Props> = () => {
-  const { loaded, sources: storeSources } = useWaterSourceStore();
+  const { loaded, initDB, sources: storeSources } = useWaterSourceStore();
 
   // 从 store 构造查询源（带坐标的水源地）
   const querySources = useMemo<QuerySource[]>(() => {
@@ -58,6 +58,7 @@ const SpatialAnalysisTools: React.FC<Props> = () => {
   const { loadAnalyses } = useSpatialAnalysisStore();
 
   // 初始化时加载历史记录
+  React.useEffect(() => { initDB(); }, []);
   React.useEffect(() => { loadAnalyses(); }, [loadAnalyses]);
 
   const tabs: Array<{ id: Tab; label: string }> = [

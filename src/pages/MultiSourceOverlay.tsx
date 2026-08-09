@@ -29,7 +29,7 @@ const MultiSourceOverlay: React.FC = () => {
     loaded,
     setCurrentAnalysis,
   } = useOverlayStore();
-  const { sources, zoneResults } = useWaterSourceStore();
+  const { sources, zoneResults, initDB } = useWaterSourceStore();
   const toast = useToast();
   const confirm = useConfirm();
 
@@ -38,6 +38,10 @@ const MultiSourceOverlay: React.FC = () => {
   const [analysisName, setAnalysisName] = useState('');
 
   // 初始加载已保存的分析结果
+  useEffect(() => {
+    initDB();
+  }, []);
+
   useEffect(() => {
     if (!loaded) {
       loadAnalyses();

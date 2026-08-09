@@ -40,12 +40,10 @@ const cityArea: Record<string, number> = {
 };
 
 const Dashboard: React.FC = () => {
-  const { loaded, sources, zoneResults, initDB, loadZoneResults } = useWaterSourceStore();
-  const wsStats = useWaterSourceStore((s) => s.getStats());
-
-  useEffect(() => {
-    initDB();
-  }, []);
+  const { loaded, sources, zoneResults, loadZoneResults } = useWaterSourceStore();
+  // P0优化：不再在Dashboard中触发initDB，数据加载延迟到
+  // WaterSourceManager/MapView等数据页面首次访问时触发
+  // 数据未加载时展示骨架屏，加载后自动更新
   useEffect(() => {
     if (loaded && zoneResults.length === 0) loadZoneResults();
   }, [loaded]);
@@ -117,6 +115,10 @@ const Dashboard: React.FC = () => {
     const merged = [...store.sources.map((s) => toUpdate.find((u) => u.id === s.id) || s), ...toAdd];
     useWaterSourceStore.setState({ sources: merged });
   };
+
+  if (!loaded) {
+    return <DashboardSkeleton />;
+  }
 
   return (
     <div className="p-4 md:p-6 space-y-6">
@@ -399,5 +401,55 @@ const Dashboard: React.FC = () => {
     </div>
   );
 };
+
+
+const DashboardSkeleton: React.FC = () => (
+  <div className="p-4 md:p-6 space-y-6">
+    <div className="flex items-center justify-between">
+      <div>
+        <div className="h-8 w-64 bg-gray-200 rounded animate-pulse" />
+        <div className="h-4 w-48 bg-gray-100 rounded mt-2 animate-pulse" />
+      </div>
+      <div className="h-8 w-24 bg-gray-200 rounded animate-pulse" />
+    </div>
+
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      {[1, 2, 3, 4].map((i) => (
+        <div key={i} className="rounded-lg p-4 bg-white border border-gray-200">
+          <div className="h-3 w-16 bg-gray-200 rounded animate-pulse" />
+          <div className="h-8 w-20 bg-gray-200 rounded mt-3 animate-pulse" />
+          <div className="h-3 w-24 bg-gray-100 rounded mt-3 animate-pulse" />
+        </div>
+      ))}
+    </div>
+
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+      {[1, 2, 3, 4].map((i) => (
+        <div key={i} className="rounded-lg p-4 bg-white border border-gray-200">
+          <div className="h-3 w-20 bg-gray-200 rounded animate-pulse" />
+          <div className="h-8 w-16 bg-gray-200 rounded mt-3 animate-pulse" />
+          <div className="h-3 w-28 bg-gray-100 rounded mt-3 animate-pulse" />
+        </div>
+      ))}
+    </div>
+
+    <div className="rounded-lg p-6 bg-white border border-gray-200">
+      <div className="h-5 w-48 bg-gray-200 rounded animate-pulse mb-4" />
+      <div className="space-y-3">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div key={i} className="flex items-center gap-2">
+            <div className="h-3 w-12 bg-gray-200 rounded animate-pulse" />
+            <div className="flex-1 h-4 bg-gray-100 rounded animate-pulse" />
+            <div className="h-3 w-8 bg-gray-200 rounded animate-pulse" />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div className="text-center text-sm text-gray-400 py-8">
+      数据加载中，首次加载可能需要 1-2 秒...
+    </div>
+  </div>
+);
 
 export default Dashboard;
