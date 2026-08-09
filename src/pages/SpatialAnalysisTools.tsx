@@ -24,6 +24,12 @@ import {
 } from '@/lib/spatialDataImportEngine';
 import { riskLevelColor } from '@/lib/riskMatrixEngine';
 import { type SpatialAnalysisRecord, useSpatialAnalysisStore } from '@/stores/spatialAnalysisStore';
+import { useLoading, LoadingButton } from '@/lib/useLoading';
+import {
+  previewHtmlReport,
+  downloadPdfReport,
+  downloadDocxReport,
+} from '@/lib/reportExportEngine';
 
 // ===== 数据构造 =====
 
@@ -212,6 +218,9 @@ const ReportTab: React.FC<{ sources: QuerySource[] }> = ({ sources }) => {
 const ReportPreview: React.FC<{ input: SpatialReportInput }> = ({ input }) => {
   const report = useMemo(() => buildSpatialReport(input), [input]);
   const [showAll, setShowAll] = useState(false);
+  const { loading: htmlLoading, run: runHtmlPreview } = useLoading();
+  const { loading: pdfLoading, run: runPdfDownload } = useLoading();
+  const { loading: docxLoading, run: runDocxDownload } = useLoading();
 
   const visible = showAll ? report.sections : report.sections.slice(0, 4);
 
@@ -261,6 +270,34 @@ const ReportPreview: React.FC<{ input: SpatialReportInput }> = ({ input }) => {
         </div>
       ))}
 
+      {/* 导出按钮 */}
+      <div className="flex flex-wrap gap-2 pt-2 border-t border-border">
+        <LoadingButton
+          onClick={runHtmlPreview(() => previewHtmlReport(report))}
+          loading={htmlLoading}
+          loadingText="预览中..."
+          className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
+        >
+          HTML 预览
+        </LoadingButton>
+        <LoadingButton
+          onClick={runPdfDownload(() => downloadPdfReport(report))}
+          loading={pdfLoading}
+          loadingText="生成 PDF 中..."
+          className="px-3 py-1.5 text-xs font-medium text-white bg-red-600 hover:bg-red-700 rounded-md"
+        >
+          下载 PDF
+        </LoadingButton>
+        <LoadingButton
+          onClick={runDocxDownload(() => downloadDocxReport(report))}
+          loading={docxLoading}
+          loadingText="生成 Word 中..."
+          className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 hover:bg-green-700 rounded-md"
+        >
+          下载 Word
+        </LoadingButton>
+      </div>
+
       <div className="bg-amber-50 border border-amber-200 rounded p-3">
         <div className="text-xs font-semibold text-amber-700 mb-1">综合结论</div>
         <div className="text-sm text-amber-800 leading-relaxed">{report.conclusion}</div>
@@ -277,6 +314,7 @@ const BatchTab: React.FC<{ sources: QuerySource[] }> = ({ sources }) => {
   const [result, setResult] = useState<ReturnType<typeof assessProjectsBatch> | null>(null);
   const [error, setError] = useState('');
   const { saveAnalysis } = useSpatialAnalysisStore();
+  const { loading: csvLoading, run: runCsvExport } = useLoading();
 
   const runBatch = () => {
     const projects: AssessedProjectInput[] = [];
@@ -355,11 +393,11 @@ const BatchTab: React.FC<{ sources: QuerySource[] }> = ({ sources }) => {
             执行批量评估
           </button>
           <button
-            onClick={exportCsv}
+            onClick={runCsvExport(exportCsv)}
             disabled={!result}
             className="px-4 py-2 border border-border rounded-md text-sm hover:bg-surface-tertiary disabled:opacity-40"
           >
-            导出CSV
+            {csvLoading ? '导出中...' : '导出CSV'}
           </button>
         </div>
       </div>
