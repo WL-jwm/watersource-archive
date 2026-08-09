@@ -8,7 +8,7 @@ import { InstallPromptBanner, OfflineIndicator, SWUpdateToast } from '@/lib/pwaE
 import { I18nProvider, LocaleSwitcher } from '@/lib/i18n';
 import ToastContainer from '@/components/ToastContainer';
 import ConfirmDialog from '@/components/ConfirmDialog';
-import { getPageImporter } from '@/lib/preload';
+import { getPageImporter, preloadHighFreqPages } from '@/lib/preload';
 
 // F3: 路由级懒加载 — 按页面拆分 chunk，减小首屏加载体积
 // 方案A: lazy 的 import 函数与 preloadPage 共享，预加载后点击零延迟
@@ -43,6 +43,11 @@ const PageFallback = () => (
 const App: React.FC = () => {
   React.useEffect(() => {
     installGlobalErrorHandlers();
+  }, []);
+
+  // P2: 应用启动后空闲时预加载高频页面 chunk
+  React.useEffect(() => {
+    preloadHighFreqPages();
   }, []);
 
   return (

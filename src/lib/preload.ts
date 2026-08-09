@@ -98,6 +98,40 @@ export function preloadPage(path: string): void {
  * @param path 路由路径
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+/**
+ * 高频页面路径列表（按访问频率降序）
+ * 在应用启动后空闲时自动预加载，提升页面切换体验
+ */
+const HIGH_FREQ_PAGES = ['/sources', '/calc', '/map', '/analysis', '/overlay'];
+
+/**
+ * 预加载高频页面
+ *
+ * 在应用启动后，浏览器空闲时分批预加载 Top 5 高频页面 chunk。
+ * 使用 requestIdleCallback 确保不阻塞首屏渲染和用户交互。
+ * 每次 idle 只加载一个页面，避免占用过多带宽。
+ *
+ * 调用时机：App 初始化 useEffect
+ */
+export function preloadHighFreqPages(): void {
+  let index = 0;
+
+  const scheduleNext = () => {
+    if (index >= HIGH_FREQ_PAGES.length) return;
+
+    ric(() => {
+      // 每帧空闲时预加载一个页面
+      preloadPage(HIGH_FREQ_PAGES[index]);
+      index++;
+
+      // 安排下一个页面的预加载
+      scheduleNext();
+    });
+  };
+
+  scheduleNext();
+}
+
 export function getPageImporter(path: string): () => Promise<{ default: any }> {
   const importer = pageImporters[path];
   if (!importer) {
