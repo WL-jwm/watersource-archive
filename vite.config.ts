@@ -38,7 +38,13 @@ export default defineConfig({
             if (id.includes('@turf')) {
               return 'vendor-turf';
             }
-            // 其余node_modules归入vendor-react（zustand依赖react，拆分会致循环依赖）
+            if (id.includes('jspdf')) {
+              return 'vendor-jspdf';
+            }
+            if (id.includes('jszip')) {
+              return 'vendor-jszip';
+            }
+            // 其余node_modules归入vendor-react
             return 'vendor-react';
           }
 
@@ -109,7 +115,7 @@ export default defineConfig({
     // 其他 chunk（vendor-react、calc-tools）保持正常 preload 确保首屏性能
     modulePreload: {
       resolveDependencies: (_filename, deps) => {
-        return deps.filter((dep) => !dep.includes('vendor-xlsx'));
+        return deps.filter((dep) => !dep.includes('vendor-xlsx') && !dep.includes('vendor-jspdf') && !dep.includes('vendor-jszip'));
       },
     },
   },
