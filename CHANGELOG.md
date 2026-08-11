@@ -14,12 +14,20 @@
 - **P4.8**: IDB 二次访问缓存优化 — `initDB` 增加已加载短路（`loaded && sources.length > 0` 直接复用内存，避免多页面重复全量读取）；二次访问 `water_sources`/`cities` 并行读取
 - **P4.9**: papaparse 独立分 chunk — 仅被数据导入（report-export 按需页）使用的 papaparse 从 `vendor-react` 拆出为独立 `vendor-papaparse`（19.49KB，gzip 7.24KB），并从首屏 modulepreload 排除；vendor-react 457KB→437.53KB（gzip 155→148.30KB）
 
-- **P5**: calc-tools 按需拆分 — 对 38 个“纯懒加载引用”（不被首屏可达）的 src/lib 文件不强制归 calc-tools，return undefined 让 Vite 按动态 import 边界自动归入对应懒加载页 chunk；calc-tools 166KB→55.20KB（gzip 19.54KB，首屏 -110KB/-67%）；依赖分析基于 main.tsx 静态可达集 + 反向引用图
+### 测试
+- 单元测试 1220/1220 通过（71 文件，+16），tsc 0 错误，ESLint 0 问题
 
+
+## [P5.0.0] - 2026-08-11
+
+### 首屏 chunk 深度拆分（P5）
+
+- **P5**: calc-tools 按需拆分 — 对 38 个“纯懒加载引用”（不被首屏可达）的 src/lib 文件不强制归 calc-tools，return undefined 让 Vite 按动态 import 边界自动归入对应懒加载页 chunk；calc-tools 166KB→55.20KB（gzip 19.54KB，首屏 -110KB/-67%）；依赖分析基于 main.tsx 静态可达集 + 反向引用图
 - **P5.1**: file-saver 独立分 chunk — file-saver 原被归入 vendor-xlsx（432KB），审计日志/备份等“仅存文件”场景会连带加载整个 Excel 库；拆出独立 vendor-filesaver（2.98KB，gzip 1.46KB）并从 modulepreload 排除；AuditLog 页连带加载 432KB→2.98KB，vendor-xlsx 432→429KB 且仅被真正用 xlsx 的 chunk 依赖
 
 ### 测试
-- 单元测试 1220/1220 通过（71 文件，+16），tsc 0 错误，ESLint 0 问题
+- 单元测试 1220/1220 通过（71 文件），tsc 0 错误，ESLint 0 问题
+
 
 ## [S14.0.0] - 2026-08-06
 
