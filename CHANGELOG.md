@@ -14,6 +14,8 @@
 - **P4.8**: IDB 二次访问缓存优化 — `initDB` 增加已加载短路（`loaded && sources.length > 0` 直接复用内存，避免多页面重复全量读取）；二次访问 `water_sources`/`cities` 并行读取
 - **P4.9**: papaparse 独立分 chunk — 仅被数据导入（report-export 按需页）使用的 papaparse 从 `vendor-react` 拆出为独立 `vendor-papaparse`（19.49KB，gzip 7.24KB），并从首屏 modulepreload 排除；vendor-react 457KB→437.53KB（gzip 155→148.30KB）
 
+- **P5**: calc-tools 按需拆分 — 对 38 个“纯懒加载引用”（不被首屏可达）的 src/lib 文件不强制归 calc-tools，return undefined 让 Vite 按动态 import 边界自动归入对应懒加载页 chunk；calc-tools 166KB→55.20KB（gzip 19.54KB，首屏 -110KB/-67%）；依赖分析基于 main.tsx 静态可达集 + 反向引用图
+
 ### 测试
 - 单元测试 1220/1220 通过（71 文件，+16），tsc 0 错误，ESLint 0 问题
 

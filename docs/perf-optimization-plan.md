@@ -20,10 +20,9 @@
 
 | 指标 | 当前值 |
 |------|--------|
-| 构建时间 | 6.35s |
-| 初始 modulepreload | 0.60MB（vendor-react + calc-tools） |
+| 构建时间 | 6.21s |
+| 初始 modulepreload | 0.49MB（vendor-react 437.53KB + calc-tools 55.20KB，P5 拆分后 calc-tools 由 166KB 降至 55KB） |
 | 单元测试 | 1220/1220 |
-| 单元测试 | 1210/1210 |
 
 ---
 

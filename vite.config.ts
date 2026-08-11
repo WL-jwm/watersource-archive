@@ -103,6 +103,16 @@ export default defineConfig({
 
             // 其余 src/lib/ 文件（zoneCalcEngine, idb, undoManager, auditTrail 等）
             // 不依赖 heavy vendor，安全地留在 calc-tools
+            // 按需释放：纯懒加载引用（不被首屏可达）的 lib 文件不强制归 calc-tools，
+            // return undefined 让 Vite 按动态 import 边界自动归入对应懒加载页 chunk，
+            // 减小首屏 calc-tools（P5：calc-tools 按需拆分）
+            // 依赖分析（main.tsx 静态可达 + 反向引用图）：以下文件无任何首屏引用者
+            const ondemandLibs = ['backupEngine','batchEditEngine','bufferAnalysisEngine','complianceChecker','conflictDetector','coordTransform','customFieldEngine','dataQualityEngine','dataSourceRegistry','dataValidator','eaConclusionEngine','homeCitySources','mergeStrategy','multiProjectAssessmentEngine','paramRecommenderV2','reportExportEngine','riskMatrixEngine','searchFilterEngine','sensitiveScreeningEngine','sensitivityEngine','spatialAnalysis','spatialAnalysisReportEngine','spatialDataImportEngine','spatialDensityEngine','spatialProximityEngine','spatialQueryEngine','spatialRelationMatrixEngine','syncEngine','tagEngine','timelineEngine','upstreamAnalysisEngine','useLoading','waterQualityTrend','waterSourceCoder','wellFieldCalcEngine','zoneCompareEngine','zoneCoordGenerator','zoneOverlapEngine'];
+            const lf = id.split('/').pop()!.replace(/\.tsx?$/, '');
+            if (ondemandLibs.includes(lf)) {
+              return undefined;
+            }
+
             return 'calc-tools';
           }
 
