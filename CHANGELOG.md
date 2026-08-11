@@ -1,5 +1,18 @@
 # 变更日志
 
+## [P4.0.0] - 2026-08-11
+
+### 按需数据切分（P4）
+
+- **P4.1**: 全省水源地数据按城市切分 — 新增 `src/data/cities/` 13 个独立 chunk（每城市含水源地信息 + geo 坐标），`cityDataRegistry` 动态 import 加载
+- **P4.2**: store 初始化策略改造 — `initDB` 首次只加载默认城市（石家庄），数据页首屏数据加载 208KB→18.56KB（-91%），其余城市空闲后台补齐
+- **P4.3**: `preloadRemainingCities` — 后台逐个加载未加载城市，保证全量数据语义（搜索/地图/空间分析不受影响）
+- **P4.4**: 数据完整性测试 — 新增 `cityDataRegistry.test.ts`（6 tests），验证切分合并后与全量静态数据一致
+- **P4.5**: 存量代码清理 — 移除不再使用的 `loadStaticData`，修复 `importJSON` 中 unreachable code
+
+### 测试
+- 单元测试 1210/1210 通过（69 文件，+6），tsc 0 错误，ESLint 0 问题，build 6.35s
+
 ## [S14.0.0] - 2026-08-06
 
 ### 平台工程化（S14）

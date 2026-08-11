@@ -11,7 +11,8 @@
 
 import { create } from 'zustand';
 import { dbClear, dbCount, dbDelete, dbGetAll, dbPut, dbPutBatch } from '@/lib/idb';
-import { getTrashStats, listTrash, purge, purgeAll, purgeExpired, restore, softDelete, type TrashItem } from '@/lib/trashEngine';
+import { DEFAULT_CITY, CITY_LIST, loadCityData, type CityDataModule } from '@/data/cityDataRegistry';
+import { getTrashStats, listTrash, purge, purgeAll, restore, softDelete, type TrashItem } from '@/lib/trashEngine';
 import { createSnapshot, ensureVersionStores, recordChange } from '@/lib/dataVersionEngine';
 import { CalcParams, ZoneResult } from '@/lib/zoneCalcEngine';
 import { undoManager } from '@/lib/undoManager';
@@ -62,6 +63,8 @@ interface WaterSourceState {
 
   initDB: () => Promise<void>;
   reloadFromDB: () => Promise<void>;
+  /** 按城市切分：后台补齐尚未加载的城市数据 */
+  preloadRemainingCities: () => Promise<void>;
 
   addSource: (source: Omit<WaterSourceRecord, 'id'>) => Promise<string>;
   updateSource: (id: string, updates: Partial<WaterSourceRecord>) => Promise<void>;
@@ -156,15 +159,6 @@ type HebeiWaterSourceEntry = {
   township?: any[];
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function loadStaticData(): Promise<{ sources: HebeiWaterSourceEntry[]; geo: any[] }> {
-  const [{ hebeiWaterSources }, { waterSourceGeo }] = await Promise.all([
-    import('@/data/hebeiWaterSources'),
-    import('@/data/waterSourceGeoData'),
-  ]);
-  return { sources: hebeiWaterSources, geo: waterSourceGeo };
-}
-
 function buildRecordsFromStatic(
   data: HebeiWaterSourceEntry[],
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -220,6 +214,20 @@ function buildRecordsFromStatic(
   return { sources, metas };
 }
 
+/**
+ * 构建单个城市的水源地记录（按城市切分加载）
+ */
+function buildCityRecords(cityData: CityDataModule): {
+  sources: WaterSourceRecord[];
+  metas: CityMeta[];
+} {
+  return buildRecordsFromStatic(
+    [cityData.cityWaterSources as unknown as HebeiWaterSourceEntry],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    cityData.cityGeo as unknown as any[],
+  );
+}
+
 let versionStoresInitialized = false;
 async function ensureVersionInit(): Promise<void> {
   if (versionStoresInitialized) return;
@@ -268,34 +276,57 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
       }
 
       if (count === 0 || count < 500) {
+        // ===== 按城市切分初始化：首次只加载默认城市，后台补齐其余 =====
         if (count > 0) {
           await dbClear('water_sources');
           await dbClear('cities');
           await dbClear('app_meta');
         }
-        const { sources: staticData, geo } = await loadStaticData();
-        const { sources, metas } = buildRecordsFromStatic(staticData, geo);
-        await dbPutBatch('water_sources', sources);
-        await dbPutBatch('cities', metas);
+
+        // 仅加载默认城市（如石家庄），大幅降低首屏网络传输
+        const defData = await loadCityData(DEFAULT_CITY);
+        const { sources: defSources, metas: defMetas } = buildCityRecords(defData);
+        await dbPutBatch('water_sources', defSources);
+        await dbPutBatch('cities', defMetas);
         await dbPut('app_meta', { key: 'data_version', value: DATA_VERSION });
-        set({ sources, cityMetas: metas, loaded: true, initializing: false });
+        set({ sources: defSources, cityMetas: defMetas, loaded: true, initializing: false });
         await ensureVersionInit();
-        await createSnapshot(
-          sources.map((s) => ({ ...s })),
-          {
-            type: 'auto',
-            name: '初始数据',
-            description: `从静态数据初始化，共 ${sources.length} 条记录`,
-          },
-        );
+
+        // 后台空闲补齐其余城市，保证全量数据语义（搜索/地图/空间分析不受影响）
+        void get().preloadRemainingCities();
       } else {
         const sources = await dbGetAll<WaterSourceRecord>('water_sources');
         const metas = await dbGetAll<CityMeta>('cities');
         set({ sources, cityMetas: metas, loaded: true, initializing: false });
+        // 若已有数据不全（如旧版本部分初始化），后台补齐
+        const loadedCities = new Set(sources.map((s) => s.cityName));
+        const missing = CITY_LIST.filter((c) => !loadedCities.has(c));
+        if (missing.length > 0) {
+          void get().preloadRemainingCities();
+        }
       }
       await ensureVersionInit();
     } catch (e) {
       set({ error: (e as Error).message || String(e), initializing: false, loaded: true });
+    }
+  },
+
+  preloadRemainingCities: async () => {
+    const loadedCities = new Set(get().sources.map((s) => s.cityName));
+    const missing = CITY_LIST.filter((c) => !loadedCities.has(c));
+    for (const cityName of missing) {
+      try {
+        const data = await loadCityData(cityName);
+        const { sources, metas } = buildCityRecords(data);
+        await dbPutBatch('water_sources', sources);
+        await dbPutBatch('cities', metas);
+        set((s) => ({
+          sources: [...s.sources, ...sources],
+          cityMetas: [...s.cityMetas, ...metas],
+        }));
+      } catch (e) {
+        console.warn(`[waterSourceStore] 城市 ${cityName} 数据补齐失败:`, e);
+      }
     }
   },
 
@@ -494,8 +525,8 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
     if (newItems.length > 0 && !undoManager.isExecuting()) {
       invImportMerge(newItems, (fn) => set(fn as (s: { sources: WaterSourceRecord[] }) => { sources: WaterSourceRecord[] }));
     }
+    logAudit('import', 'water_source', '合并导入记录', { source: 'import' });
     return newItems.length;
-      logAudit('import', 'water_source', `${mode === 'replace' ? '替换导入' : '合并导入'}记录`, { source: 'import' });
 },
 
   saveZoneResult: async (record) => {
@@ -585,7 +616,6 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
       const conflictById = existingById.get(record.id);
 
       if (conflictById || conflictByKey) {
-        const conflict = conflictById || conflictByKey!;
         if (strategy === 'skip') {
           skipped++;
           onProgress?.(i + 1, total);
