@@ -2,19 +2,17 @@ import { useToast } from '@/hooks/useToast';
 import { useConfirm } from '@/hooks/useConfirm';
 import React from 'react';
 import { useAppStore } from '@/stores/appStore';
+import { useWaterSourceStore } from '@/stores/waterSourceStore';
+import { getCityKnownSources } from '@/lib/homeCitySources';
 import {
   getReportStats,
-  formatNumber,
-  formatYield,
   searchReports,
   downloadJSON,
   readJSONFile,
 } from '@/utils/helpers';
 import { hebeiDivisions } from '@/data/hebeiDivisions';
-import type { WaterSource, WaterSourceInfo } from '@/types';
 import WaterSourceItem from '@/components/home/WaterSourceItem';
 import ReportCard from '@/components/home/ReportCard';
-import SourceCard from '@/components/home/SourceCard';
 
 // 从region字段提取市名
 function extractCityName(region: string): string {
@@ -26,24 +24,7 @@ function extractCityName(region: string): string {
   return '其他';
 }
 
-// 获取市信息（含行政区划统计）
-function getCityInfo(cityName: string) {
-  const city = hebeiDivisions.cities.find((c) => c.name === cityName);
-  return city || null;
-}
-
 // 获取某市已知水源地信息（从懒加载的数据中查找）
-function getCityKnownSources(
-  cityName: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  wsCities: any[],
-): { municipal: WaterSourceInfo[]; county: WaterSourceInfo[]; township: WaterSourceInfo[] } {
-  const found = wsCities.find((c) => c.cityName === cityName);
-  return found
-    ? { municipal: found.municipal, county: found.county, township: found.township || [] }
-    : { municipal: [], county: [], township: [] };
-}
-
 const Home: React.FC = () => {
   const toast = useToast();
   const confirm = useConfirm();
@@ -61,29 +42,29 @@ const Home: React.FC = () => {
   const [showAllSources, setShowAllSources] = React.useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  // P2-1: 懒加载水源地静态数据
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [wsData, setWsData] = React.useState<{ cities: any[]; stats: any } | null>(null);
+  // P4: 复用 waterSourceStore 数据源（按城市切分 + 空闲后台补齐），
+  // 避免 Home 单独加载 79KB 全量静态数据
+  const { sources, getStats, initDB } = useWaterSourceStore();
+  // 空闲时触发初始化，不阻塞首屏渲染；只加载默认城市，其余后台补齐
   React.useEffect(() => {
-    import('@/data/hebeiWaterSources')
-      .then((m) => {
-        setWsData({ cities: m.hebeiWaterSources, stats: m.getHebeiWaterSourceStats() });
-      })
-      .catch((err) => console.error('[Home] 加载水源地数据失败:', err));
-  }, []);
+    const ric =
+      typeof requestIdleCallback === 'function'
+        ? requestIdleCallback
+        : (cb: () => void) => setTimeout(cb, 100);
+    const id = ric(() => {
+      initDB();
+    });
+    return () => {
+      if (typeof id === 'number' && typeof cancelIdleCallback === 'function') {
+        cancelIdleCallback(id);
+      }
+    };
+  }, [initDB]);
 
   const filteredReports = searchReports(reports, searchQuery);
   const stats = getReportStats(reports);
-  const wsStats = wsData?.stats ?? {
-    totalCities: 0,
-    totalMunicipal: 0,
-    totalCounty: 0,
-    totalTownship: 0,
-    total: 0,
-    totalSurface: 0,
-    totalGround: 0,
-    surfaceRatio: '0%',
-  };
+  // P4: 从 store 获取全省统计（与全站数据源统一）
+  const wsStats = getStats();
 
   const toggleCity = (cityName: string) => {
     setExpandedCities((prev) => {
@@ -104,9 +85,8 @@ const Home: React.FC = () => {
     }
 
     // 合并：有报告的市 + 有已知水源地的市
-    const wsCities = wsData?.cities || [];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const allCities = new Set([...reportCities, ...wsCities.map((c: any) => c.cityName)]);
+    // P4: 从 store 的扁平 sources 提取城市名
+    const allCities = new Set([...reportCities, ...sources.map((s) => s.cityName)]);
 
     // 按标准顺序排列
     const orderedCities = hebeiDivisions.cities.map((c) => c.name);
@@ -121,13 +101,13 @@ const Home: React.FC = () => {
 
     const groups = sortedCities.map((cityName) => {
       const cityReports = filteredReports.filter((r) => extractCityName(r.region) === cityName);
-      const knownSources = getCityKnownSources(cityName, wsCities);
+      const knownSources = getCityKnownSources(cityName, sources);
       // 统计报告中的水源地/井数/面积
-      let sources = 0,
+      let srcCount = 0,
         wells = 0,
         area = 0;
       for (const r of cityReports) {
-        sources += r.waterSources.length;
+        srcCount += r.waterSources.length;
         for (const ws of r.waterSources) {
           wells += ws.wells?.length || 0;
           area += ws.protectionZones?.reduce((s, pz) => s + (pz.area || 0), 0) || 0;
@@ -142,12 +122,12 @@ const Home: React.FC = () => {
         knownTownship: knownSources.township,
         knownTotal:
           knownSources.municipal.length + knownSources.county.length + knownSources.township.length,
-        reportStats: { reports: cityReports.length, sources, wells, area },
+        reportStats: { reports: cityReports.length, sources: srcCount, wells, area },
       };
     });
 
     return groups;
-  }, [filteredReports, wsData]);
+  }, [filteredReports, sources]);
 
   const handleExport = () => {
     downloadJSON(
@@ -403,7 +383,6 @@ const Home: React.FC = () => {
               knownTotal,
               reports: cityReports,
             } = group;
-            const cityInfo = getCityInfo(cityName);
             const isExpanded =
               expandedCities.has(cityName) || (cityReports.length > 0 && cityReports.length <= 3);
             const surfaceCount = [...knownMunicipal, ...knownCounty, ...knownTownship].filter(

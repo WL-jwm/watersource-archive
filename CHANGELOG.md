@@ -9,9 +9,10 @@
 - **P4.3**: `preloadRemainingCities` — 后台逐个加载未加载城市，保证全量数据语义（搜索/地图/空间分析不受影响）
 - **P4.4**: 数据完整性测试 — 新增 `cityDataRegistry.test.ts`（6 tests），验证切分合并后与全量静态数据一致
 - **P4.5**: 存量代码清理 — 移除不再使用的 `loadStaticData`，修复 `importJSON` 中 unreachable code
+- **P4.6**: Home 页数据源统一 — Home 改为复用 `waterSourceStore`（sources + getStats），空闲 `requestIdleCallback` 触发 `initDB`，不再单独加载 79KB+129KB 全量静态数据；新增 `homeCitySources` 转换工具（扁平记录→按级别分组）
 
 ### 测试
-- 单元测试 1210/1210 通过（69 文件，+6），tsc 0 错误，ESLint 0 问题，build 6.35s
+- 单元测试 1217/1217 通过（70 文件，+13），tsc 0 错误，ESLint 0 问题，build 6.64s
 
 ## [S14.0.0] - 2026-08-06
 
