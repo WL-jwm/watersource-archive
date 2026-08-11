@@ -12,7 +12,7 @@
 | P1 | 系统字体栈（去 Google Fonts） | 消除远程字体加载 |
 | P2 | 高频页面空闲预加载 | 页面切换零延迟 |
 | P3 | vendor-react 瘦身（拆 jspdf/jszip） | modulepreload 1.03MB→0.60MB |
-| P4 | **按需数据切分**（按城市拆分） | 数据页首屏数据 208KB→18.56KB（-91%）；Home 复用 store；dataSourceRegistry 按城市加载，构建产物移除 208KB 全量数据 chunk |
+| P4 | **按需数据切分**（按城市拆分） | 数据页首屏数据 208KB→18.56KB（-91%）；Home 复用 store；dataSourceRegistry 按城市加载，构建产物移除 208KB 全量数据 chunk；initDB 已加载短路 + 并行读取（二次访问缓存优化） |
 
 ---
 

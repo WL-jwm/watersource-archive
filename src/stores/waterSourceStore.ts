@@ -265,6 +265,8 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
   error: null,
 
   initDB: async () => {
+    // P5: 二次访问缓存优化 — 已加载完成则直接复用内存数据，避免重复全量读取
+    if (get().loaded && get().sources.length > 0) return;
     if (get().initializing) return;
     set({ initializing: true, error: null });
     try {
@@ -295,8 +297,11 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
         // 后台空闲补齐其余城市，保证全量数据语义（搜索/地图/空间分析不受影响）
         void get().preloadRemainingCities();
       } else {
-        const sources = await dbGetAll<WaterSourceRecord>('water_sources');
-        const metas = await dbGetAll<CityMeta>('cities');
+        // P5: 二次访问并行读取 water_sources 与 cities，减少首屏等待
+        const [sources, metas] = await Promise.all([
+          dbGetAll<WaterSourceRecord>('water_sources'),
+          dbGetAll<CityMeta>('cities'),
+        ]);
         set({ sources, cityMetas: metas, loaded: true, initializing: false });
         // 若已有数据不全（如旧版本部分初始化），后台补齐
         const loadedCities = new Set(sources.map((s) => s.cityName));
