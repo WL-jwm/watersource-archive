@@ -26,8 +26,13 @@ export default defineConfig({
             if (id.includes('leaflet')) {
               return 'vendor-leaflet';
             }
-            if (id.includes('xlsx') || id.includes('file-saver')) {
+            if (id.includes('xlsx')) {
               return 'vendor-xlsx';
+            }
+            // file-saver：仅用于浏览器端保存文件（saveAs），被多个仅存文件场景使用
+            // （AuditLog/backupEngine 等），独立小 chunk 避免连带加载 432KB vendor-xlsx
+            if (id.includes('file-saver')) {
+              return 'vendor-filesaver';
             }
             if (id.includes('docx')) {
               return 'vendor-docx';
@@ -130,7 +135,7 @@ export default defineConfig({
     // 其他 chunk（vendor-react、calc-tools）保持正常 preload 确保首屏性能
     modulePreload: {
       resolveDependencies: (_filename, deps) => {
-        return deps.filter((dep) => !dep.includes('vendor-xlsx') && !dep.includes('vendor-jspdf') && !dep.includes('vendor-jszip') && !dep.includes('vendor-papaparse'));
+        return deps.filter((dep) => !dep.includes('vendor-xlsx') && !dep.includes('vendor-filesaver') && !dep.includes('vendor-jspdf') && !dep.includes('vendor-jszip') && !dep.includes('vendor-papaparse'));
       },
     },
   },
