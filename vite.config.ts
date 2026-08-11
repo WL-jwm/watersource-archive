@@ -44,6 +44,11 @@ export default defineConfig({
             if (id.includes('jszip')) {
               return 'vendor-jszip';
             }
+            // papaparse：仅被数据导入（report-export 按需页）使用，
+            // 独立分 chunk 避免打入首屏 vendor-react
+            if (id.includes('papaparse')) {
+              return 'vendor-papaparse';
+            }
             // 其余node_modules归入vendor-react
             return 'vendor-react';
           }
@@ -115,7 +120,7 @@ export default defineConfig({
     // 其他 chunk（vendor-react、calc-tools）保持正常 preload 确保首屏性能
     modulePreload: {
       resolveDependencies: (_filename, deps) => {
-        return deps.filter((dep) => !dep.includes('vendor-xlsx') && !dep.includes('vendor-jspdf') && !dep.includes('vendor-jszip'));
+        return deps.filter((dep) => !dep.includes('vendor-xlsx') && !dep.includes('vendor-jspdf') && !dep.includes('vendor-jszip') && !dep.includes('vendor-papaparse'));
       },
     },
   },
