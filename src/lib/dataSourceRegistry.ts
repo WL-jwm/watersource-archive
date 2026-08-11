@@ -19,6 +19,7 @@
  */
 
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
+import { CITY_LIST, loadCityData } from '@/data/cityDataRegistry';
 
 // ===== 核心类型定义 =====
 
@@ -126,24 +127,28 @@ class StaticDataSourceAdapter implements DataSourceAdapter {
     const start = performance.now();
     const warnings: string[] = [];
 
-    // 动态导入静态数据模块
-    const [{ hebeiWaterSources }, { waterSourceGeo }] = await Promise.all([
-      import('@/data/hebeiWaterSources'),
-      import('@/data/waterSourceGeoData'),
-    ]);
-
-    // 构建 geo 索引
-    const geoIndex = new Map<string, { lng: number; lat: number }>();
-    for (const g of waterSourceGeo) {
-      if (g?.city && g?.name && typeof g.lng === 'number' && typeof g.lat === 'number') {
-        geoIndex.set(`${g.city}_${g.name}`, { lng: g.lng, lat: g.lat });
-      }
-    }
-
+    // P4: 按城市切分动态加载，避免一次性导入全量 hebeiWaterSources + waterSourceGeoData
     const records: WaterSourceRecord[] = [];
     const DATA_VERSION = 1;
 
-    for (const city of hebeiWaterSources) {
+    for (const cityName of CITY_LIST) {
+      let mod;
+      try {
+        mod = await loadCityData(cityName);
+      } catch (e) {
+        warnings.push(`城市 ${cityName} 数据加载失败: ${(e as Error).message}`);
+        continue;
+      }
+
+      const city = mod.cityWaterSources;
+      // 构建该城市的 geo 索引
+      const geoIndex = new Map<string, { lng: number; lat: number }>();
+      for (const g of mod.cityGeo) {
+        if (g?.city && g?.name && typeof g.lng === 'number' && typeof g.lat === 'number') {
+          geoIndex.set(`${g.city}_${g.name}`, { lng: g.lng, lat: g.lat });
+        }
+      }
+
       const levels: Array<{
         level: 'municipal' | 'county' | 'township';
         data: Array<Record<string, unknown>>;
@@ -488,7 +493,7 @@ class URLDataSourceAdapter implements DataSourceAdapter {
 class ManualDataSourceAdapter implements DataSourceAdapter {
   readonly type: DataSourceType = 'manual';
 
-  async load(meta: DataSourceMeta): Promise<DataSourceLoadResult> {
+  async load(_meta: DataSourceMeta): Promise<DataSourceLoadResult> {
     const start = performance.now();
     // 手动数据源的记录已在 IDB 中，不需要额外加载
     // 返回空数组，合并引擎会跳过它但保留 IDB 中已有的记录

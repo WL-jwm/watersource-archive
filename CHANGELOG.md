@@ -10,9 +10,10 @@
 - **P4.4**: 数据完整性测试 — 新增 `cityDataRegistry.test.ts`（6 tests），验证切分合并后与全量静态数据一致
 - **P4.5**: 存量代码清理 — 移除不再使用的 `loadStaticData`，修复 `importJSON` 中 unreachable code
 - **P4.6**: Home 页数据源统一 — Home 改为复用 `waterSourceStore`（sources + getStats），空闲 `requestIdleCallback` 触发 `initDB`，不再单独加载 79KB+129KB 全量静态数据；新增 `homeCitySources` 转换工具（扁平记录→按级别分组）
+- **P4.7**: dataSourceRegistry 按需改造 — `StaticDataSourceAdapter` 改用 `cityDataRegistry` 按城市动态加载，消除全量 `hebeiWaterSources`+`waterSourceGeoData` 打包（构建产物移除 208KB 两个大 chunk）
 
 ### 测试
-- 单元测试 1217/1217 通过（70 文件，+13），tsc 0 错误，ESLint 0 问题，build 6.64s
+- 单元测试 1217/1217 通过（70 文件，+13），tsc 0 错误，ESLint 0 问题，build 6.25s
 
 ## [S14.0.0] - 2026-08-06
 
