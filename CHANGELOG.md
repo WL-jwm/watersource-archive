@@ -25,6 +25,21 @@
 - **P5**: calc-tools 按需拆分 — 对 38 个“纯懒加载引用”（不被首屏可达）的 src/lib 文件不强制归 calc-tools，return undefined 让 Vite 按动态 import 边界自动归入对应懒加载页 chunk；calc-tools 166KB→55.20KB（gzip 19.54KB，首屏 -110KB/-67%）；依赖分析基于 main.tsx 静态可达集 + 反向引用图
 - **P5.1**: file-saver 独立分 chunk — file-saver 原被归入 vendor-xlsx（432KB），审计日志/备份等“仅存文件”场景会连带加载整个 Excel 库；拆出独立 vendor-filesaver（2.98KB，gzip 1.46KB）并从 modulepreload 排除；AuditLog 页连带加载 432KB→2.98KB，vendor-xlsx 432→429KB 且仅被真正用 xlsx 的 chunk 依赖
 
+### 优化效果汇总
+
+本次首屏 chunk 深度拆分（P4.9 / P5 / P5.1）的累计效果（实测构建产物）：
+
+| 指标 | 优化前 | 优化后 | 变化 |
+|------|--------|--------|------|
+| 首屏 JS（raw） | ~723KB | 586.19KB | **-137KB（-19%）** |
+| 首屏 JS（gzip 传输） | ~234KB | 185.93KB | **-48KB（-21%）** |
+| vendor-react | 457KB | 427.32KB | 拆出 papaparse（19KB） |
+| calc-tools | 166KB | 58.41KB | **-108KB（-65%）** |
+
+- **首屏** 仅保留 vendor-react（react 生态核心，不可再拆）+ calc-tools 两个 chunk，且 calc-tools 已大幅瘦身
+- **按需化**：papaparse（19.03KB）、file-saver（2.91KB）拆为独立小 chunk，不进首屏、仅在使用页加载
+- **连带加载消除**：AuditLog/备份等“仅存文件”页不再连带 419KB vendor-xlsx（该页 432KB→2.91KB，-99%）；vendor-xlsx 仅被真正用 xlsx 的 chunk 依赖
+
 ### 测试
 - 单元测试 1220/1220 通过（71 文件），tsc 0 错误，ESLint 0 问题
 
