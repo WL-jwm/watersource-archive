@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { useAppStore } from '@/stores/appStore';
 import { useWaterSourceStore } from '@/stores/waterSourceStore';
 import { getReportStats } from '@/utils/helpers';
@@ -7,17 +7,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const {
     reports,
     selectedReportId,
-    selectedSourceId,
-    activeTab,
     sidebarCollapsed,
     toggleSidebar,
     setSelectedReportId,
-    setSelectedSourceId,
-    setActiveTab,
     searchQuery,
     setSearchQuery,
   } = useAppStore();
-  const { initDB, loaded, sources } = useWaterSourceStore();
+  const { loaded, sources } = useWaterSourceStore();
   const stats = getReportStats(reports);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [searchOpen, setSearchOpen] = React.useState(false);
@@ -75,7 +71,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const handleInstall = async () => {
     if (!installPrompt) return;
     installPrompt.prompt();
-    const { outcome } = await installPrompt.userChoice;
+    await installPrompt.userChoice;
     setInstallPrompt(null);
     setShowInstallBanner(false);
   };
@@ -93,15 +89,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       console.warn('Failed to save dark mode preference:', err);
     }
   }, [darkMode]);
-
-  const tabs: { id: typeof activeTab; label: string }[] = [
-    { id: 'basic', label: '基本信息' },
-    { id: 'wells', label: '水井信息' },
-    { id: 'hydrogeology', label: '水文地质' },
-    { id: 'waterquality', label: '水质监测' },
-    { id: 'protection', label: '保护区划分' },
-    { id: 'pollution', label: '污染源' },
-  ];
 
   const selectedReport = reports.find((r) => r.id === selectedReportId);
 
@@ -760,7 +747,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       {/* G2: 移动端底部导航栏 */}
       <MobileBottomNav />
       {/* N4: 备份设置弹窗 */}
-      <BackupSettingsModal open={backupModalOpen} onClose={() => setBackupModalOpen(false)} />
+      <Suspense fallback={null}>
+        <BackupSettingsModal open={backupModalOpen} onClose={() => setBackupModalOpen(false)} />
+      </Suspense>
     </div>
   );
 };
@@ -772,7 +761,7 @@ import { MobileBottomNav } from '@/lib/mobileEnhanced';
 import { preloadPage } from '@/lib/preload';
 import { useI18n } from '@/lib/i18n';
 import BackupBanner from '@/components/BackupBanner';
-import BackupSettingsModal from '@/components/BackupSettingsModal';
+const BackupSettingsModal = lazy(() => import('@/components/BackupSettingsModal'));
 import { tryAutoBackup } from '@/lib/backupManager';
 
 export default Layout;

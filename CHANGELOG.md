@@ -56,6 +56,17 @@
 ### 测试
 - 单元测试 1227/1227 通过（72 文件，+7），tsc 0 错误，ESLint 0 问题
 
+
+## [P7.0.0] - 2026-08-11
+
+### index.js 入口瘦身（P7）
+
+- **P7**: 复查 index chunk 构成 — 确认 hebeiWaterSources（196KB）仅被 `import type` 引用、已 tree-shake，不在首屏（排除误判）；hebeiDivisions（38KB）为首屏区划选择器功能依赖保留；将 BackupSettingsModal（弹窗，初始关闭）lazy 化，index.js 100.5KB→90.66KB（gzip 24→21.87KB），弹窗独立为 8.08KB 按需 chunk（gzip 3.03KB）
+- 顺带清理 Layout.tsx 既存 7 个 unused vars（ESLint 清零）
+
+### 测试
+- 单元测试 1227/1227 通过（72 文件），tsc 0 错误，ESLint 0 问题
+
 ## [S14.0.0] - 2026-08-06
 
 ### 平台工程化（S14）
