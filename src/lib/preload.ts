@@ -31,6 +31,9 @@ const pageImporters: Record<string, () => Promise<{ default: any }>> = {
   '/sptools': () => import('@/pages/SpatialAnalysisTools'),
 };
 
+/** 已注册的全部路由路径（供测试与配置校验，防止高频列表出现无效路径） */
+export const PAGE_KEYS: string[] = Object.keys(pageImporters);
+
 // 已经发起的 import Promise 缓存，避免重复下载
 const preloadCache = new Map<string, Promise<unknown>>();
 
@@ -97,12 +100,12 @@ export function preloadPage(path: string): void {
  *
  * @param path 路由路径
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 /**
- * 高频页面路径列表（按访问频率降序）
- * 在应用启动后空闲时自动预加载，提升页面切换体验
+ * 高频页面路径列表（按访问频率降序，均为 PAGE_KEYS 中的真实路由）
+ * 在应用启动后空闲时自动预加载，提升页面切换体验。
+ * 注意：路径必须与 App.tsx 路由一致，否则会被 preloadPage 跳过。
  */
-const HIGH_FREQ_PAGES = ['/sources', '/calc', '/map', '/analysis', '/overlay'];
+export const HIGH_FREQ_PAGES: string[] = ['/manage', '/zone-calc', '/map', '/analysis', '/overlay'];
 
 /**
  * 预加载高频页面
@@ -132,6 +135,7 @@ export function preloadHighFreqPages(): void {
   scheduleNext();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getPageImporter(path: string): () => Promise<{ default: any }> {
   const importer = pageImporters[path];
   if (!importer) {

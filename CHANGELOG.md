@@ -45,6 +45,17 @@
 - 单元测试 1220/1220 通过（71 文件），tsc 0 错误，ESLint 0 问题
 
 
+
+## [P6.0.0] - 2026-08-11
+
+### 高频页面预加载修复（P6）
+
+- **P6**: 修正 `HIGH_FREQ_PAGES` 无效路径 — 高频列表原含 `/sources`、`/calc` 两个非真实路由（App.tsx 中不存在），会被 `preloadPage` 静默跳过，导致高频预加载实际只覆盖 3 个页面；修正为真实高频路由 `['/manage','/zone-calc','/map','/analysis','/overlay']`，并导出 `PAGE_KEYS` 供测试锁定防复发
+- 新增 `preload.test.ts`（7 tests）：校验 PAGE_KEYS 覆盖全部静态路由、HIGH_FREQ_PAGES 均为有效路径、未注册路径安全跳过
+
+### 测试
+- 单元测试 1227/1227 通过（72 文件，+7），tsc 0 错误，ESLint 0 问题
+
 ## [S14.0.0] - 2026-08-06
 
 ### 平台工程化（S14）
