@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/gen-sw-precache.cjs",
     "preview": "vite preview",
     "test": "vitest run",
     "lint": "eslint src --ext .ts,.tsx",

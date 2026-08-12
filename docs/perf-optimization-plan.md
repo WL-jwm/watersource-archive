@@ -13,6 +13,7 @@
 | P2 | 高频页面空闲预加载 | 页面切换零延迟 |
 | P3 | vendor-react 瘦身（拆 jspdf/jszip） | modulepreload 1.03MB→0.60MB |
 | P4 | **按需数据切分**（按城市拆分） | 数据页首屏数据 208KB→18.56KB（-91%）；Home 复用 store；dataSourceRegistry 按城市加载，构建产物移除 208KB 全量数据 chunk；initDB 已加载短路 + 并行读取（二次访问缓存优化）；papaparse 独立分 chunk（vendor-react 457→437.53KB） |
+| P5 | **首屏 chunk 深度拆分** | calc-tools 166KB→55.20KB（-65%，38 个懒加载引擎/工具按需释放）；file-saver 独立分 chunk（审计日志等“仅存文件”页连带 432KB→2.91KB）；SW 预缓存首屏资源（scripts/gen-sw-precache.cjs 构建自动注入） |
 
 ---
 
@@ -250,3 +251,26 @@ time npx vite build 2>&1 | tail -3
 # 5. 全量回归
 npx vitest run && npx tsc --noEmit
 ```
+
+
+---
+
+## 下一步规划（2026-08-11）
+
+### 已完成
+
+**P5.2 Service Worker 预缓存首屏资源**（本次落地）
+- 现状问题：`public/sw.js` 的 `PRECACHE_URLS` 只缓存 html/manifest/data，未预缓存任何 JS/CSS 构建产物，二次访问仍需走网络。
+- 方案：新增 `scripts/gen-sw-precache.cjs`，在 `vite build` 后扫描 `dist/index.html`，将首屏资源（index/vendor-react/calc-tools JS + CSS）自动注入 `dist/sw.js` 的预缓存清单；`public/sw.js` 保持纯净模板，每次构建自动注入最新 hash。
+- 效果：首次安装后台预缓存首屏核心 JS/CSS，二次访问近乎零网络加载、支持离线；懒加载 chunk 仍由 runtime 缓存策略按需缓存。
+- 验证：1220/1220 测试，tsc 0，build 通过。
+
+### 待办（按优先级）
+
+| 优先级 | 优化项 | 预期收益 | 工作量 | 状态 |
+|--------|--------|---------|-------|------|
+| P6 | 高频页面 chunk 预加载 | 页面切换体验 | 低 | 待实施（数据层已预加载，扩展为页面 chunk） |
+| P7 | index.js 入口瘦身复查 | 首屏再降 | 中 | 待实施（静态可达分析） |
+| — | 字体优化 | 无 | — | 不适用（无自定义字体） |
+| — | 图片优化 | 无 | — | 不适用（无大图资源） |
+

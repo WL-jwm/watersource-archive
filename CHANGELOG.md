@@ -24,6 +24,7 @@
 
 - **P5**: calc-tools 按需拆分 — 对 38 个“纯懒加载引用”（不被首屏可达）的 src/lib 文件不强制归 calc-tools，return undefined 让 Vite 按动态 import 边界自动归入对应懒加载页 chunk；calc-tools 166KB→55.20KB（gzip 19.54KB，首屏 -110KB/-67%）；依赖分析基于 main.tsx 静态可达集 + 反向引用图
 - **P5.1**: file-saver 独立分 chunk — file-saver 原被归入 vendor-xlsx（432KB），审计日志/备份等“仅存文件”场景会连带加载整个 Excel 库；拆出独立 vendor-filesaver（2.98KB，gzip 1.46KB）并从 modulepreload 排除；AuditLog 页连带加载 432KB→2.98KB，vendor-xlsx 432→429KB 且仅被真正用 xlsx 的 chunk 依赖
+- **P5.2**: Service Worker 预缓存首屏资源 — 新增 `scripts/gen-sw-precache.cjs`，`vite build` 后扫描 index.html 将首屏 JS/CSS（index/vendor-react/calc-tools + CSS）自动注入 `dist/sw.js` 预缓存清单；`public/sw.js` 保持纯净模板，每次构建注入最新 hash；二次访问近乎零网络加载、支持离线，懒加载 chunk 仍走 runtime 缓存
 
 ### 优化效果汇总
 
