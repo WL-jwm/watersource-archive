@@ -17,7 +17,17 @@ let dbInstance: IDBDatabase | null = null;
 
 /** 获取/创建数据库连接 */
 export async function getDB(): Promise<IDBDatabase> {
-  if (dbInstance) return dbInstance;
+  if (dbInstance) {
+    // 连接可能被外部（如 dataVersionEngine.ensureVersionStores）调用 close() 关闭。
+    // onclose 事件是异步派发的，close() 后立即调用 getDB 仍会拿到旧连接，
+    // 故用 transaction() 同步校验：连接处于 closing 状态时同步抛错，据此重建。
+    try {
+      dbInstance.transaction('app_meta', 'readonly');
+      return dbInstance;
+    } catch {
+      dbInstance = null; // 连接已关闭，走下方重建逻辑
+    }
+  }
 
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -38,7 +48,7 @@ export async function getDB(): Promise<IDBDatabase> {
 
       // 城市元数据表
       if (!db.objectStoreNames.contains('cities')) {
-        const cityStore = db.createObjectStore('cities', { keyPath: 'cityName' });
+        db.createObjectStore('cities', { keyPath: 'cityName' });
       }
 
       // 应用元数据表
@@ -88,6 +98,12 @@ export async function getDB(): Promise<IDBDatabase> {
 
     request.onsuccess = (event) => {
       dbInstance = (event.target as IDBOpenDBRequest).result;
+      // 连接可能被外部（如 dataVersionEngine.ensureVersionStores）调用 close() 关闭，
+      // 此时清空缓存，下次 getDB 自动重新打开，避免后续操作使用已关闭连接
+      // 报 "database connection is closing"
+      dbInstance.onclose = () => {
+        dbInstance = null;
+      };
       resolve(dbInstance);
     };
 
@@ -100,7 +116,7 @@ export async function getDB(): Promise<IDBDatabase> {
 // ===== 通用操作 =====
 
 /** 获取一个 ObjectStore 的读写事务 */
-async function getStore<T>(
+async function getStore(
   storeName: string,
   mode: 'readonly' | 'readwrite' = 'readonly',
 ): Promise<IDBObjectStore> {
@@ -111,7 +127,7 @@ async function getStore<T>(
 
 /** 通用 getAll */
 export async function dbGetAll<T>(storeName: string): Promise<T[]> {
-  const store = await getStore<T>(storeName);
+  const store = await getStore(storeName);
   return new Promise((resolve, reject) => {
     const req = store.getAll();
     req.onsuccess = () => resolve(req.result);
@@ -121,7 +137,7 @@ export async function dbGetAll<T>(storeName: string): Promise<T[]> {
 
 /** 通用 get by key */
 export async function dbGet<T>(storeName: string, key: IDBValidKey): Promise<T | undefined> {
-  const store = await getStore<T>(storeName);
+  const store = await getStore(storeName);
   return new Promise((resolve, reject) => {
     const req = store.get(key);
     req.onsuccess = () => resolve(req.result);
@@ -131,7 +147,7 @@ export async function dbGet<T>(storeName: string, key: IDBValidKey): Promise<T |
 
 /** 通用 put (insert or update) */
 export async function dbPut<T>(storeName: string, value: T): Promise<void> {
-  const store = await getStore<T>(storeName, 'readwrite');
+  const store = await getStore(storeName, 'readwrite');
   return new Promise((resolve, reject) => {
     const req = store.put(value);
     req.onsuccess = () => resolve();

@@ -143,7 +143,7 @@ const Dashboard: React.FC = () => {
       {/* 顶部统计卡片 */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
-          { label: '水源地总数', value: totalAll, sub: '13个地级市', color: 'text-blue-800' },
+          { label: '水源地总数', value: totalAll, sub: `${cityData.length}个地级市`, color: 'text-blue-800' },
           {
             label: '市级',
             value: totalMunicipal,

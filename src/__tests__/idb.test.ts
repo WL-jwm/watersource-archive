@@ -146,8 +146,9 @@ describe('idb - IndexedDB封装', () => {
       return tx;
     });
     await dbPutBatch('water_sources', data);
-    // 250 条 / batch_size=100 = 3 次事务
-    expect(mockDB.transaction).toHaveBeenCalledTimes(3);
+    // 250 条 / batch_size=100 = 3 次写入事务；
+    // getDB 新增连接有效性校验（transaction()）会额外调用，故断言 >= 3
+    expect(mockDB.transaction.mock.calls.length).toBeGreaterThanOrEqual(3);
   });
 
   it('T09-closeDB关闭数据库连接', async () => {
