@@ -26,6 +26,7 @@ const Trash = lazy(getPageImporter('/trash'));
 const MultiSourceOverlay = lazy(getPageImporter('/overlay'));
 const Timeline = lazy(getPageImporter('/timeline'));
 const SpatialAnalysisTools = lazy(getPageImporter('/sptools'));
+const ZoneAuditManager = lazy(getPageImporter('/zone-audit'));
 
 // ReportDetail 是动态路由 /report/:id，无法从路径直接预加载，保持独立 lazy
 // 用户从报告列表点击进入时，Home 页面已渲染，chunk 加载可接受
@@ -79,6 +80,7 @@ const App: React.FC = () => {
           <Route path="/overlay" element={<PageErrorBoundary pageName="叠加分析"><MultiSourceOverlay /></PageErrorBoundary>} />
           <Route path="/timeline" element={<PageErrorBoundary pageName="活动时间线"><Timeline /></PageErrorBoundary>} />
           <Route path="/sptools" element={<PageErrorBoundary pageName="空间分析工具箱"><SpatialAnalysisTools /></PageErrorBoundary>} />
+          <Route path="/zone-audit" element={<PageErrorBoundary pageName="保护区审计规则"><ZoneAuditManager /></PageErrorBoundary>} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

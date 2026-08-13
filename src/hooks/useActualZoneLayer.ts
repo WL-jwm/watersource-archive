@@ -12,7 +12,8 @@
 
 import { useEffect, type RefObject } from 'react';
 import L from 'leaflet';
-import { auditZoneStatus, type ZoneAuditStatus } from '../data/zoneAuditMeta';
+import { auditZoneStatusWithRules, type ZoneAuditStatus } from '../data/zoneAuditMeta';
+import { useZoneAuditStore } from '../data/zoneAuditStore';
 
 /** 单个保护区边界要素 */
 export interface ZoneBoundary {
@@ -87,6 +88,8 @@ export function useActualZoneLayer(
   selectedCity: string,
   mapReady: boolean,
 ) {
+  const auditRules = useZoneAuditStore((s) => s.rules);
+
   useEffect(() => {
     if (!mapInstanceRef.current || !layerRef.current) return;
     const lg = layerRef.current;
@@ -104,7 +107,7 @@ export function useActualZoneLayer(
         if (cancelled) continue;
         for (const b of bounds) {
           if (cancelled) return;
-          const audit = auditZoneStatus(city, b.name);
+          const audit = auditZoneStatusWithRules(auditRules, city, b.name);
           const isAudit = audit !== null;
           const style = isAudit ? AUDIT_STYLE[audit] : (LEVEL_STYLE[b.level] ?? DEFAULT_STYLE);
           const latlngs = b.ring.map((p) => [p[1], p[0]] as [number, number]);
@@ -136,5 +139,5 @@ export function useActualZoneLayer(
     return () => {
       cancelled = true;
     };
-  }, [enabled, selectedCity, mapReady, mapInstanceRef, layerRef]);
+  }, [enabled, selectedCity, mapReady, mapInstanceRef, layerRef, auditRules]);
 }

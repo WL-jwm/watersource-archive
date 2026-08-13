@@ -1,5 +1,18 @@
 # 变更日志
 
+## [P8.2.0] - 2026-08-13
+
+### 保护区审计规则 可视化管理（P8.1 深化）
+
+- **zoneAuditStore**：新增审计规则 Store（Zustand + localStorage 持久化），生效规则集可由用户维护；首次使用以内置默认规则初始化，提供新增/编辑/删除/恢复默认
+- **审计规则管理页**：新增 src/pages/ZoneAuditManager.tsx（路由 /zone-audit），表格展示规则 + 统计卡片（规则总数/已取消/已调整）+ 新增/编辑弹窗 + 删除/恢复默认（带确认）
+- **动态规则接入**：useActualZoneLayer 改为从 store 读取生效规则集（auditZoneStatusWithRules 纯函数），规则修改后地图图层即时生效，无需改代码；zoneAuditMeta.auditZoneStatus 委托该纯函数保持兼容
+- **路由与入口**：App.tsx 注册 /zone-audit 路由、Layout 侧边栏新增"保护区审计规则"入口、preload.ts 注册路由供预加载与 PAGE_KEYS 校验
+- **新增测试**：zoneAuditStore.test.ts（7 tests）验证默认加载/持久化/CRUD/恢复默认/动态匹配；zoneAuditMeta.test.ts 保持通过
+
+### 测试
+- 单元测试全量通过，tsc 0 错误，ESLint 0 问题
+
 ## [P8.1.0] - 2026-08-13
 
 ### 实际保护区边界 审计标记（已取消/已调整）

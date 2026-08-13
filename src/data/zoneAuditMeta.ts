@@ -100,15 +100,27 @@ export const ZONE_AUDIT_RULES: ZoneAuditRule[] = [
 ];
 
 /**
- * 判断给定城市+名称的保护区要素是否命中审计规则。
+ * 基于给定的规则集判断保护区要素是否命中审计规则（纯函数，供动态规则集使用）。
  * @returns 命中则返回状态，否则返回 null
  */
-export function auditZoneStatus(city: string, name: string): ZoneAuditStatus | null {
-  for (const rule of ZONE_AUDIT_RULES) {
+export function auditZoneStatusWithRules(
+  rules: ZoneAuditRule[],
+  city: string,
+  name: string,
+): ZoneAuditStatus | null {
+  for (const rule of rules) {
     if (rule.city !== city) continue;
     if (rule.keywords.some((k) => name.includes(k))) return rule.status;
   }
   return null;
+}
+
+/**
+ * 使用内置默认规则集判断保护区要素是否命中审计规则。
+ * @returns 命中则返回状态，否则返回 null
+ */
+export function auditZoneStatus(city: string, name: string): ZoneAuditStatus | null {
+  return auditZoneStatusWithRules(ZONE_AUDIT_RULES, city, name);
 }
 
 /** 官方新增/调整但 KMZ 缺失的保护区（KMZ 中无几何数据，供提示与规划参考） */
