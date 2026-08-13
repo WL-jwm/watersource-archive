@@ -57,6 +57,8 @@ export interface CityMeta {
 interface WaterSourceState {
   loaded: boolean;
   initializing: boolean;
+  /** 正在后台补齐其余城市数据 */
+  preloadingCities: boolean;
   sources: WaterSourceRecord[];
   cityMetas: CityMeta[];
   error: string | null;
@@ -263,6 +265,7 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
   cityMetas: [],
   zoneResults: [],
   error: null,
+  preloadingCities: false,
 
   initDB: async () => {
     // P5: 二次访问缓存优化 — 已加载完成则直接复用内存数据，避免重复全量读取
@@ -317,21 +320,28 @@ export const useWaterSourceStore = create<WaterSourceState>((set, get) => ({
   },
 
   preloadRemainingCities: async () => {
+    if (get().preloadingCities) return; // 防重入
     const loadedCities = new Set(get().sources.map((s) => s.cityName));
     const missing = CITY_LIST.filter((c) => !loadedCities.has(c));
-    for (const cityName of missing) {
-      try {
-        const data = await loadCityData(cityName);
-        const { sources, metas } = buildCityRecords(data);
-        await dbPutBatch('water_sources', sources);
-        await dbPutBatch('cities', metas);
-        set((s) => ({
-          sources: [...s.sources, ...sources],
-          cityMetas: [...s.cityMetas, ...metas],
-        }));
-      } catch (e) {
-        console.warn(`[waterSourceStore] 城市 ${cityName} 数据补齐失败:`, e);
+    if (missing.length === 0) return;
+    set({ preloadingCities: true });
+    try {
+      for (const cityName of missing) {
+        try {
+          const data = await loadCityData(cityName);
+          const { sources, metas } = buildCityRecords(data);
+          await dbPutBatch('water_sources', sources);
+          await dbPutBatch('cities', metas);
+          set((s) => ({
+            sources: [...s.sources, ...sources],
+            cityMetas: [...s.cityMetas, ...metas],
+          }));
+        } catch (e) {
+          console.warn(`[waterSourceStore] 城市 ${cityName} 数据补齐失败:`, e);
+        }
       }
+    } finally {
+      set({ preloadingCities: false });
     }
   },
 

@@ -1,8 +1,12 @@
 import React from 'react';
-import { batchGenerateCodes, formatCodeForDisplay, summarizeCodes } from '@/lib/waterSourceCoder';
+import { batchGenerateCodes, summarizeCodes } from '@/lib/waterSourceCoder';
 import type { WaterSourceRecord } from '@/stores/waterSourceStore';
 
-const CodeStatsPanel: React.FC<{ loaded: boolean; sources: WaterSourceRecord[] }> = ({ loaded, sources }) => {
+const CodeStatsPanel: React.FC<{
+  loaded: boolean;
+  sources: WaterSourceRecord[];
+  preloading?: boolean;
+}> = ({ loaded, sources, preloading = false }) => {
   if (!loaded) return null;
 
   const codeMap = batchGenerateCodes(sources);
@@ -16,6 +20,12 @@ const CodeStatsPanel: React.FC<{ loaded: boolean; sources: WaterSourceRecord[] }
           SD + 行政区划(6) + 类型(1) + 级别(1) + 序号(3)
         </span>
       </div>
+      {preloading && (
+        <div className="mb-3 flex items-center gap-2 text-xs text-blue-600 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2">
+          <span className="inline-block w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          正在加载其余城市数据，当前为部分统计…
+        </div>
+      )}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
         <div className="bg-blue-50 rounded-lg p-2 text-center">
           <div className="text-lg font-bold text-blue-600">{codeStats.total}</div>

@@ -1,7 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import { ZoneCalcRecord, useWaterSourceStore } from '@/stores/waterSourceStore';
-import { ZoneResult } from '@/lib/zoneCalcEngine';
-import { batchGenerateCodes, summarizeCodes } from '@/lib/waterSourceCoder';
+import { useWaterSourceStore } from '@/stores/waterSourceStore';
 import CodeStatsPanel from '@/components/dashboard/CodeStatsPanel';
 import ZoneStatsPanel from '@/components/dashboard/ZoneStatsPanel';
 import DataQualityPanel from '@/components/dashboard/DataQualityPanel';
@@ -40,13 +38,20 @@ const cityArea: Record<string, number> = {
 };
 
 const Dashboard: React.FC = () => {
-  const { loaded, sources, zoneResults, loadZoneResults } = useWaterSourceStore();
-  // P0优化：不再在Dashboard中触发initDB，数据加载延迟到
-  // WaterSourceManager/MapView等数据页面首次访问时触发
-  // 数据未加载时展示骨架屏，加载后自动更新
+  const { loaded, sources, zoneResults, loadZoneResults, preloadingCities } = useWaterSourceStore();
+  // P6: 进入统计页主动触发数据加载 + 补齐其余城市，
+  // 避免只显示默认城市（石家庄）的不完整统计；补齐中由 preloadingCities 提示
+  useEffect(() => {
+    const store = useWaterSourceStore.getState();
+    if (!loaded) {
+      void store.initDB();
+    } else {
+      void store.preloadRemainingCities();
+    }
+  }, [loaded]);
   useEffect(() => {
     if (loaded && zoneResults.length === 0) loadZoneResults();
-  }, [loaded]);
+  }, [loaded, loadZoneResults, zoneResults.length]);
 
   const cityData = useMemo(() => {
     if (!loaded) return [];
@@ -188,7 +193,7 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* 编码规范化统计 */}
-      <CodeStatsPanel loaded={loaded} sources={sources} />
+      <CodeStatsPanel loaded={loaded} sources={sources} preloading={preloadingCities} />
 
       {/* S11.3: 数据质量评分 */}
       <DataQualityPanel sources={sources} />
