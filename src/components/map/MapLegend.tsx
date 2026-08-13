@@ -86,6 +86,20 @@ const MapLegend: React.FC<MapLegendProps> = ({ collapsed, showZones, showActualZ
                 />
                 <span className="text-xs text-text-secondary">准保护区</span>
               </div>
+              <div className="flex items-center gap-2">
+                <span
+                  className="inline-block w-3 h-3 rounded-full border-2"
+                  style={{ borderColor: '#9CA3AF', backgroundColor: '#9CA3AF66' }}
+                />
+                <span className="text-xs text-text-secondary">已取消（过期）</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span
+                  className="inline-block w-3 h-3 rounded-full border-2"
+                  style={{ borderColor: '#EA580C', backgroundColor: '#EA580C40', borderStyle: 'dashed' }}
+                />
+                <span className="text-xs text-text-secondary">已调整（需核验）</span>
+              </div>
             </>
           )}
           {showZones && (

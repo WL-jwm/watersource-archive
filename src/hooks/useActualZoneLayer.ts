@@ -12,6 +12,7 @@
 
 import { useEffect, type RefObject } from 'react';
 import L from 'leaflet';
+import { auditZoneStatus, type ZoneAuditStatus } from '../data/zoneAuditMeta';
 
 /** 单个保护区边界要素 */
 export interface ZoneBoundary {
@@ -49,6 +50,18 @@ const LEVEL_STYLE: Record<string, { color: string; fill: string }> = {
   缓冲区: { color: '#F59E0B', fill: '#F59E0B' },
 };
 const DEFAULT_STYLE = { color: '#6B7280', fill: '#6B7280' };
+
+/** 审计状态样式：已取消灰 / 已调整橙，区别于正常蓝绿色系 */
+const AUDIT_STYLE: Record<ZoneAuditStatus, { color: string; fill: string; dash: string }> = {
+  cancelled: { color: '#9CA3AF', fill: '#9CA3AF', dash: '' },
+  adjusted: { color: '#EA580C', fill: '#EA580C', dash: '8,6' },
+};
+
+/** 审计状态提示文案 */
+const AUDIT_TIP: Record<ZoneAuditStatus, { label: string; badge: string }> = {
+  cancelled: { label: '已取消', badge: '#DC2626' },
+  adjusted: { label: '已调整', badge: '#EA580C' },
+};
 
 /** 城市数据缓存 */
 const cache = new Map<string, ZoneBoundary[]>();
@@ -91,18 +104,28 @@ export function useActualZoneLayer(
         if (cancelled) continue;
         for (const b of bounds) {
           if (cancelled) return;
-          const style = LEVEL_STYLE[b.level] ?? DEFAULT_STYLE;
+          const audit = auditZoneStatus(city, b.name);
+          const isAudit = audit !== null;
+          const style = isAudit ? AUDIT_STYLE[audit] : (LEVEL_STYLE[b.level] ?? DEFAULT_STYLE);
           const latlngs = b.ring.map((p) => [p[1], p[0]] as [number, number]);
           const poly = L.polygon(latlngs, {
             color: style.color,
-            weight: 2,
+            weight: isAudit ? 3 : 2,
             fillColor: style.fill,
-            fillOpacity: 0.25,
+            fillOpacity: isAudit ? 0.4 : 0.25,
+            dashArray: audit !== null ? AUDIT_STYLE[audit].dash : undefined,
           });
+          const auditTip = isAudit
+            ? `<div style="margin-top:6px;padding:6px 8px;border-radius:4px;background:${audit === 'cancelled' ? '#FEF2F2' : '#FFF7ED'};border:1px solid ${AUDIT_TIP[audit].badge};">
+                <span style="display:inline-block;padding:1px 6px;border-radius:3px;background:${AUDIT_TIP[audit].badge};color:#fff;font-size:11px;font-weight:700">${AUDIT_TIP[audit].label}</span>
+                <div style="color:#444;margin-top:4px;font-size:12px">${audit === 'cancelled' ? '该保护区已被省政府批复取消，KMZ 数据为过期内容，叠加分析请排除。' : '该保护区已由省政府批复调整，KMZ 为调整前范围，需核对最新批复。'}</div>
+              </div>`
+            : '';
           poly.bindPopup(
             `<div style="font-family:system-ui;min-width:180px;font-size:13px">
               <div style="font-weight:700;font-size:14px;margin-bottom:4px;color:#333">${b.name}</div>
-              <div style="color:#666"><b>级别：</b><span style="color:${style.color};font-weight:600">${b.level}</span></div>
+              <div style="color:#666"><b>级别：</b><span style="color:${isAudit ? style.color : style.color};font-weight:600">${b.level}</span></div>
+              ${auditTip}
             </div>`,
           );
           lg.addLayer(poly);
