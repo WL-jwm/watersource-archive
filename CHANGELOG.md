@@ -1,5 +1,23 @@
 # 变更日志
 
+## [P8.4.0] - 2026-08-13
+
+### 实际边界避让分析（真实保护区边界，对接开发区规划避让）
+
+- **避让引擎**：新增 src/lib/actualBoundaryAvoidance.ts，基于真实保护区边界多边形（zone-boundaries/KMZ）用 turf 精确判断项目点与边界的包含/相交/距离，区别于计算圈层的圆形近似
+  - checkPointAgainstBoundary 纯函数：booleanPointInPolygon + pointToPolygonDistance，输出 isInside/isInvolved/edgeDistanceM/areaKm2，并叠加审计状态
+  - runBoundaryAvoidance：按需加载城市边界 + 全量判断；已取消保护区剔除出避让判定、已调整标注需核验
+  - NEAR_THRESHOLD_M=100m 临近阈值
+- **UI**：空间分析工具箱新增「实际边界避让」Tab（src/components/spatial/ActualBoundaryTab.tsx）
+  - 输入：项目名称/经度/纬度/项目半径(可选)/城市范围(全省或指定)
+  - 输出：检查保护区数 / 需避让数 / 最近边界距离 / 已取消剔除数 统计卡片
+  - 需避让列表（在保护区内/触及边界 + 审计标记）+ 安全提示（最近边界 + 是否临近）
+- **数据加载**：复用 public/zone-boundaries 按需 fetch，模块级缓存
+- **新增测试**：actualBoundaryAvoidance.test.ts（9 tests）验证内/外判断、缓冲涉及、审计匹配、面积、距离量级
+
+### 测试
+- 单元测试全量通过，tsc 0 错误，ESLint 0 问题
+
 ## [P8.3.0] - 2026-08-13
 
 ### 缺失保护区清单 UI（P8.1/8.2 深化）

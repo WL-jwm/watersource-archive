@@ -30,6 +30,7 @@ import {
   downloadPdfReport,
   downloadDocxReport,
 } from '@/lib/reportExportEngine';
+import ActualBoundaryTab from '@/components/spatial/ActualBoundaryTab';
 
 // ===== 数据构造 =====
 
@@ -38,7 +39,7 @@ interface Props {
   sensitiveTargets?: SensitiveTarget[];
 }
 
-type Tab = 'report' | 'batch' | 'import' | 'history';
+type Tab = 'report' | 'batch' | 'import' | 'history' | 'actual';
 
 const SpatialAnalysisTools: React.FC<Props> = () => {
   const { loaded, initDB, sources: storeSources } = useWaterSourceStore();
@@ -71,6 +72,7 @@ const SpatialAnalysisTools: React.FC<Props> = () => {
     { id: 'report', label: '空间分析报告' },
     { id: 'batch', label: '多项目批量评估' },
     { id: 'import', label: '空间数据导入' },
+    { id: 'actual', label: '实际边界避让' },
     { id: 'history', label: '历史记录' },
   ];
 
@@ -112,6 +114,9 @@ const SpatialAnalysisTools: React.FC<Props> = () => {
       )}
       {tab === 'import' && (
         <ImportTab />
+      )}
+      {tab === 'actual' && (
+        <ActualBoundaryTab />
       )}
       {tab === 'history' && (
         <HistoryTab />
