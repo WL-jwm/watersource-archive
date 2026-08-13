@@ -75,6 +75,72 @@ const ActualBoundaryTab: React.FC = () => {
     return '';
   };
 
+  const handleExportExcel = async () => {
+    if (!result) return;
+    try {
+      const XLSX = await import('xlsx');
+      const wb = XLSX.utils.book_new();
+
+      // Sheet 1: 项目信息
+      const infoRows = [
+        ['项目名称', result.project.name],
+        ['项目经度', result.project.lng],
+        ['项目纬度', result.project.lat],
+        ['项目半径(m)', result.project.bufferRadiusM],
+        ['检查保护区数', result.checks.length],
+        ['需避让数', result.involved.length],
+        ['最近边界距离(m)', result.nearest ? result.nearest.absDistanceM : '—'],
+        ['已取消(剔除)数', result.checks.filter((c) => c.auditStatus === 'cancelled').length],
+        ['是否涉及保护区', result.hasInvolved ? '是' : '否'],
+        ['导出时间', new Date().toLocaleString('zh-CN')],
+      ];
+      const ws1 = XLSX.utils.aoa_to_sheet(infoRows);
+      ws1['!cols'] = [{ wch: 22 }, { wch: 28 }];
+      XLSX.utils.book_append_sheet(wb, ws1, '项目信息');
+
+      // Sheet 2: 需避让清单
+      const involvedRows = result.involved.map((c, i) => ({
+        序号: i + 1,
+        保护区名称: c.name,
+        城市: c.city,
+        级别: c.level,
+        关系: c.isInside ? '在保护区内' : '触及边界',
+        距边界_m: c.isInside ? `深入 ${c.absDistanceM}` : c.absDistanceM,
+        面积_km2: c.areaKm2 ?? '',
+        审计状态: c.auditStatus === 'normal' ? '' : statusLabel(c.auditStatus),
+      }));
+      const ws2 = XLSX.utils.json_to_sheet(involvedRows);
+      ws2['!cols'] = [
+        { wch: 6 }, { wch: 30 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 14 }, { wch: 12 }, { wch: 10 },
+      ];
+      XLSX.utils.book_append_sheet(wb, ws2, '需避让清单');
+
+      // Sheet 3: 全部检查（含未涉及与已取消）
+      const allRows = result.checks.map((c, i) => ({
+        序号: i + 1,
+        保护区名称: c.name,
+        城市: c.city,
+        级别: c.level,
+        是否涉及: c.isInvolved ? '是' : '否',
+        在保护区内: c.isInside ? '是' : '否',
+        距边界_m: c.edgeDistanceM,
+        面积_km2: c.areaKm2 ?? '',
+        审计状态: c.auditStatus === 'normal' ? '' : statusLabel(c.auditStatus),
+      }));
+      const ws3 = XLSX.utils.json_to_sheet(allRows);
+      ws3['!cols'] = [
+        { wch: 6 }, { wch: 30 }, { wch: 12 }, { wch: 12 }, { wch: 10 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 10 },
+      ];
+      XLSX.utils.book_append_sheet(wb, ws3, '全部检查');
+
+      const safeName = (result.project.name || '未命名项目').replace(/[\\/:*?"<>|]/g, '_');
+      XLSX.writeFile(wb, `${safeName}_保护区避让分析.xlsx`);
+      toast.success('Excel 报告已导出');
+    } catch {
+      toast.error('Excel 导出失败');
+    }
+  };
+
   const involvedCount = result ? result.involved.length : 0;
   const cancelledCount = result
     ? result.checks.filter((c) => c.auditStatus === 'cancelled').length
@@ -136,6 +202,14 @@ const ActualBoundaryTab: React.FC = () => {
 
       {result && (
         <>
+          <div className="flex items-center justify-end">
+            <button
+              onClick={handleExportExcel}
+              className="px-3 py-1.5 text-xs rounded-md border border-border text-text-secondary hover:bg-surface-tertiary"
+            >
+              导出 Excel 报告
+            </button>
+          </div>
           <div className="grid grid-cols-4 gap-2">
             <div className="bg-surface border border-border rounded-lg p-2.5">
               <div className="text-xl font-bold text-text-primary">{result.checks.length}</div>
