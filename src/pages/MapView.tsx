@@ -19,6 +19,7 @@ import type { QuerySource } from '@/lib/spatialQueryEngine';
 import MapFilters, { type FilterType, type SourceTypeFilter, type GeoSource } from '@/components/map/MapFilters';
 import MapLegend from '@/components/map/MapLegend';
 import { useZoneLayer } from '@/hooks/useZoneLayer';
+import { useActualZoneLayer } from '@/hooks/useActualZoneLayer';
 import { useMapExport } from '@/hooks/useMapExport';
 
 // P7: Leaflet图标修复 — 使用本地资源替代CDN
@@ -43,6 +44,7 @@ const MapView: React.FC = () => {
   const mapInstanceRef = useRef<L.Map | null>(null);
   const layerGroupRef = useRef<L.LayerGroup | null>(null);
   const zoneLayerRef = useRef<L.LayerGroup | null>(null);
+  const actualZoneLayerRef = useRef<L.LayerGroup | null>(null);
   const tileLayerRef = useRef<L.TileLayer | null>(null);
   const [filter, setFilter] = useState<FilterType>('all');
   const [typeFilter, setTypeFilter] = useState<SourceTypeFilter>('all');
@@ -50,6 +52,7 @@ const MapView: React.FC = () => {
   const [hoveredSource, setHoveredSource] = useState<GeoSource | null>(null);
   const [mapReady, setMapReady] = useState(false);
   const [showZones, setShowZones] = useState(false);
+  const [showActualZones, setShowActualZones] = useState(false);
   const [legendCollapsed, setLegendCollapsed] = useState(true);
 
   // 地图绘制工具
@@ -142,6 +145,7 @@ const MapView: React.FC = () => {
     mapInstanceRef.current = map;
     layerGroupRef.current = L.layerGroup().addTo(map);
     zoneLayerRef.current = L.layerGroup().addTo(map);
+    actualZoneLayerRef.current = L.layerGroup().addTo(map);
     drawLayerRef.current = L.layerGroup().addTo(map);
 
     drawControllerRef.current = new MapDrawController(
@@ -222,6 +226,9 @@ const MapView: React.FC = () => {
   // N6: 保护区圈层渲染（提取为独立 Hook）
   useZoneLayer(mapInstanceRef, zoneLayerRef, showZones, zoneResults, storeSources, mapReady);
 
+  // 实际保护区边界图层（KMZ 导入的真实范围）
+  useActualZoneLayer(mapInstanceRef, actualZoneLayerRef, showActualZones, selectedCity, mapReady);
+
   // 聚焦到选中城市
   useEffect(() => {
     if (!mapInstanceRef.current || selectedCity === 'all') return;
@@ -272,6 +279,8 @@ const MapView: React.FC = () => {
         onTypeFilterChange={setTypeFilter}
         onCityChange={setSelectedCity}
         onToggleZones={() => setShowZones((v) => !v)}
+        onToggleActualZones={() => setShowActualZones((v) => !v)}
+        showActualZones={showActualZones}
         onExport={exportMap}
       />
 
@@ -293,6 +302,7 @@ const MapView: React.FC = () => {
         <MapLegend
           collapsed={legendCollapsed}
           showZones={showZones}
+          showActualZones={showActualZones}
           onToggle={() => setLegendCollapsed((v) => !v)}
         />
 

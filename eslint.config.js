@@ -98,9 +98,12 @@ export default [
     },
   },
 
-  // 测试文件配置
+  // 测试文件配置（测试运行在 Node 环境，提供 Node 全局变量）
   {
     files: ['**/*.test.{ts,tsx}', '**/__tests__/**'],
+    languageOptions: {
+      globals: globals.node,
+    },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       'react-refresh/only-export-components': 'off',
