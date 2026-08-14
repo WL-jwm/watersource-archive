@@ -66,7 +66,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.309,
     lat: 37.9494,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '辛集市',
     level: 'municipal',
@@ -77,7 +79,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.332,
     lat: 37.9543,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '辛集市',
     level: 'county',
@@ -88,7 +92,9 @@ export const cityGeo = [
     remark: '一级保护区，2022年划定',
     lng: 115.3317,
     lat: 37.9614,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '辛集市',
     level: 'county',
@@ -99,7 +105,9 @@ export const cityGeo = [
     remark: '一级保护区，2022年划定',
     lng: 115.3073,
     lat: 37.917,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '辛集市',
     level: 'township',
@@ -110,5 +118,7 @@ export const cityGeo = [
     remark: '城乡供水一体化，南水北调水源覆盖全市',
     lng: 115.3301,
     lat: 37.941,
-  },
+    kind: '井',
+  }
+,
 ];

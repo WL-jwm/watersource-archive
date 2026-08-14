@@ -508,7 +508,9 @@ export const cityGeo = [
     remark: '国家大II型平原水库，库区面积16.738km²，总库容1.003亿m³，沧州市主水源',
     lng: 116.7227,
     lat: 38.0663,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '沧州市',
     level: 'municipal',
@@ -520,7 +522,9 @@ export const cityGeo = [
     remark: '南水北调中线受水区',
     lng: 116.7511,
     lat: 38.3456,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -530,7 +534,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.0555,
     lat: 38.735,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -542,7 +548,9 @@ export const cityGeo = [
     remark: '沧州南水北调配套工程通水',
     lng: 116.0751,
     lat: 38.461,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -554,7 +562,9 @@ export const cityGeo = [
     remark: '沧州南水北调配套工程通水',
     lng: 116.5774,
     lat: 38.1096,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -564,7 +574,9 @@ export const cityGeo = [
     status: '在用',
     lng: 117.3753,
     lat: 38.3748,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -574,7 +586,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.7302,
     lat: 38.0649,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -584,7 +598,9 @@ export const cityGeo = [
     status: '在用',
     lng: 117.2438,
     lat: 38.0723,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -596,7 +612,9 @@ export const cityGeo = [
     remark: '生态环境部督查确认水源地',
     lng: 117.5217,
     lat: 38.1033,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -608,7 +626,9 @@ export const cityGeo = [
     remark: '生态环境部督查确认水源地',
     lng: 116.5361,
     lat: 38.0434,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -618,7 +638,9 @@ export const cityGeo = [
     status: '在用',
     lng: 117.0579,
     lat: 38.056,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -628,7 +650,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.852,
     lat: 37.6461,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -640,7 +664,9 @@ export const cityGeo = [
     remark: '沧州南水北调配套工程督查确认',
     lng: 116.0728,
     lat: 38.2171,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -650,7 +676,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.8446,
     lat: 38.4219,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -662,7 +690,9 @@ export const cityGeo = [
     remark: '沧州南水北调配套工程督查确认',
     lng: 116.8305,
     lat: 38.5899,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -672,7 +702,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.8755,
     lat: 38.3097,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -682,7 +714,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.8488,
     lat: 38.3206,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -692,7 +726,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.8496,
     lat: 38.3191,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'county',
@@ -703,7 +739,9 @@ export const cityGeo = [
     remark: '2021年省政府批复取消',
     lng: 116.7531,
     lat: 38.2946,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -713,8 +751,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 116.5693,
     lat: 38.0908,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -724,8 +763,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.5689,
     lat: 38.1048,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -735,8 +775,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.5573,
     lat: 38.0728,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -746,8 +787,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.553,
     lat: 38.0733,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -757,8 +799,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.6092,
     lat: 38.1087,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -768,8 +811,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.5614,
     lat: 38.1091,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -779,8 +823,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 116.5537,
     lat: 38.0944,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -790,8 +835,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.5745,
     lat: 38.0733,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -801,8 +847,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.6011,
     lat: 38.0517,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -812,8 +859,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.5994,
     lat: 38.0883,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -823,8 +871,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.5777,
     lat: 38.073,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -834,8 +883,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.5783,
     lat: 38.1046,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -845,8 +895,9 @@ export const cityGeo = [
     remark: '乡镇级和千吨万人',
     lng: 116.5836,
     lat: 38.0607,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -856,8 +907,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 115.8276,
     lat: 38.4399,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -867,8 +919,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 115.8001,
     lat: 38.4062,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -878,8 +931,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 115.8386,
     lat: 38.4037,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -889,8 +943,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 115.8289,
     lat: 38.4495,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -900,8 +955,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 115.8382,
     lat: 38.3973,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -911,8 +967,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 116.9032,
     lat: 38.3145,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -922,8 +979,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 116.8988,
     lat: 38.2668,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -933,8 +991,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 116.9016,
     lat: 38.309,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -944,8 +1003,9 @@ export const cityGeo = [
     remark: '千吨万人',
     lng: 116.9028,
     lat: 38.3015,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -954,8 +1014,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0971,
     lat: 38.4332,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -964,8 +1025,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0634,
     lat: 38.4359,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -974,8 +1036,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0637,
     lat: 38.4648,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -984,8 +1047,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.1165,
     lat: 38.4635,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -994,8 +1058,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.081,
     lat: 38.4684,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1004,8 +1069,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.1157,
     lat: 38.4473,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1014,8 +1080,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0695,
     lat: 38.4711,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1024,8 +1091,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0838,
     lat: 38.4351,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1034,8 +1102,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0867,
     lat: 38.4415,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1044,8 +1113,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0649,
     lat: 38.4343,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1054,8 +1124,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0995,
     lat: 38.4522,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1064,8 +1135,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0767,
     lat: 38.4781,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1074,8 +1146,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0675,
     lat: 38.4705,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1084,8 +1157,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.1162,
     lat: 38.4532,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1094,8 +1168,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.1073,
     lat: 38.446,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1104,8 +1179,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0719,
     lat: 38.4401,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1114,8 +1190,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0989,
     lat: 38.4456,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1124,8 +1201,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0603,
     lat: 38.4501,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1134,8 +1212,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.1112,
     lat: 38.4388,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1144,8 +1223,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.1089,
     lat: 38.4651,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1154,8 +1234,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.1106,
     lat: 38.4406,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1164,8 +1245,9 @@ export const cityGeo = [
     county: '河间市',
     lng: 116.0651,
     lat: 38.4312,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1175,8 +1257,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8463,
     lat: 37.6163,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1186,8 +1269,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8021,
     lat: 37.614,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1197,8 +1281,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.815,
     lat: 37.6477,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1208,8 +1293,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.82,
     lat: 37.6598,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1219,8 +1305,9 @@ export const cityGeo = [
     remark: '乡镇级',
     lng: 116.8103,
     lat: 37.6341,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1230,8 +1317,9 @@ export const cityGeo = [
     remark: '乡镇级',
     lng: 116.8168,
     lat: 37.6461,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1241,8 +1329,9 @@ export const cityGeo = [
     remark: '乡镇级',
     lng: 116.8375,
     lat: 37.624,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1252,8 +1341,9 @@ export const cityGeo = [
     remark: '乡镇级',
     lng: 116.8511,
     lat: 37.6556,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1263,8 +1353,9 @@ export const cityGeo = [
     remark: '乡镇级',
     lng: 116.8094,
     lat: 37.6238,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1274,8 +1365,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8494,
     lat: 38.5963,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1285,8 +1377,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8353,
     lat: 38.5822,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1296,8 +1389,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8797,
     lat: 38.6058,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1307,8 +1401,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8801,
     lat: 38.5579,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1318,8 +1413,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8778,
     lat: 38.5999,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1329,8 +1425,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8758,
     lat: 38.5823,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1340,8 +1437,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8835,
     lat: 38.6052,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1351,8 +1449,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8544,
     lat: 38.5963,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1362,8 +1461,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8349,
     lat: 38.5678,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1373,8 +1473,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8668,
     lat: 38.5577,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1384,8 +1485,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8589,
     lat: 38.593,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1395,8 +1497,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8683,
     lat: 38.5911,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1406,8 +1509,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 116.8829,
     lat: 38.5591,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1418,7 +1522,9 @@ export const cityGeo = [
     remark: '集中式生活饮用水地下水水源，另有21个农村千吨万人水源地名称未公开',
     lng: 116.0981,
     lat: 38.1712,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1429,7 +1535,9 @@ export const cityGeo = [
     remark: '县级地表水水源地，2020年省政府批复',
     lng: 116.5066,
     lat: 38.0687,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1440,7 +1548,9 @@ export const cityGeo = [
     remark: '应急热备水源，2026年省政府批复',
     lng: 116.5562,
     lat: 38.0223,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1451,7 +1561,9 @@ export const cityGeo = [
     remark: '县级地表水水源地，省政府批复',
     lng: 117.4849,
     lat: 38.098,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1462,7 +1574,9 @@ export const cityGeo = [
     remark: '城区集中式供水，已切换为长江水',
     lng: 117.2394,
     lat: 38.0853,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1473,7 +1587,9 @@ export const cityGeo = [
     remark: '城乡供水一体化，南水北调长江水，24万m³/d',
     lng: 116.1026,
     lat: 38.6904,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1483,7 +1599,9 @@ export const cityGeo = [
     status: '在用',
     lng: 117.3396,
     lat: 38.3777,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '沧州市',
     level: 'township',
@@ -1494,5 +1612,7 @@ export const cityGeo = [
     remark: '2021年竣工，农村供水全部切换长江水',
     lng: 117.3243,
     lat: 38.3472,
-  },
+    kind: '井',
+  }
+,
 ];

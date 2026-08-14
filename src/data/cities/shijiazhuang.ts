@@ -493,7 +493,9 @@ export const cityGeo = [
     river: '滹沱河',
     lng: 114.21,
     lat: 38.2739,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'municipal',
@@ -506,7 +508,9 @@ export const cityGeo = [
     river: '滹沱河',
     lng: 114.2962,
     lat: 38.0903,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'municipal',
@@ -519,7 +523,9 @@ export const cityGeo = [
     river: '滹沱河',
     lng: 114.569,
     lat: 38.1518,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'municipal',
@@ -531,7 +537,9 @@ export const cityGeo = [
     remark: '88个城市水源地之一',
     lng: 114.3584,
     lat: 38.3097,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'municipal',
@@ -543,7 +551,9 @@ export const cityGeo = [
     remark: '2025年11月划定保护区，面积4.549km²',
     lng: 114.5605,
     lat: 37.9817,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -553,7 +563,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.6284,
     lat: 37.8764,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -564,7 +576,9 @@ export const cityGeo = [
     remark: '2025年下半年监测达标',
     lng: 114.6211,
     lat: 37.9039,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -574,7 +588,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.6675,
     lat: 37.9212,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -585,7 +601,9 @@ export const cityGeo = [
     remark: '县级集中式饮用水水源',
     lng: 114.5519,
     lat: 37.7774,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -595,7 +613,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.9554,
     lat: 38.145,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -607,7 +627,9 @@ export const cityGeo = [
     remark: '南水北调水源',
     lng: 115.1795,
     lat: 38.0982,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -618,7 +640,9 @@ export const cityGeo = [
     remark: '南水北调受水县',
     lng: 114.5858,
     lat: 38.1699,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -628,7 +652,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0861,
     lat: 38.0138,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -639,7 +665,9 @@ export const cityGeo = [
     remark: '南水北调受水县',
     lng: 114.3839,
     lat: 37.6673,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -650,7 +678,9 @@ export const cityGeo = [
     remark: '南水北调受水县',
     lng: 114.6179,
     lat: 37.6198,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -661,7 +691,9 @@ export const cityGeo = [
     remark: '南水北调受水县',
     lng: 114.802,
     lat: 37.7772,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -672,7 +704,9 @@ export const cityGeo = [
     remark: '南水北调受水市',
     lng: 115.1851,
     lat: 38.0236,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -683,7 +717,9 @@ export const cityGeo = [
     remark: '南水北调受水市',
     lng: 114.6948,
     lat: 38.3696,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -693,7 +729,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.188,
     lat: 38.2689,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -705,7 +743,9 @@ export const cityGeo = [
     remark: '南水北调受水厂，服务主城区东部',
     lng: 114.5455,
     lat: 38.0838,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'county',
@@ -717,7 +757,9 @@ export const cityGeo = [
     remark: '岗南水库取水，西柏坡景区供水',
     lng: 114.2037,
     lat: 38.2679,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -728,7 +770,9 @@ export const cityGeo = [
     remark: '服务人口31319人，日供水2600吨',
     lng: 114.5261,
     lat: 37.7988,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -739,7 +783,9 @@ export const cityGeo = [
     remark: '服务人口14702人，日供水1200吨',
     lng: 114.545,
     lat: 37.7618,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -750,7 +796,9 @@ export const cityGeo = [
     remark: '服务人口27518人，日供水2200吨',
     lng: 114.5138,
     lat: 37.788,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -761,7 +809,9 @@ export const cityGeo = [
     remark: '服务人口22618人，日供水1800吨',
     lng: 114.5377,
     lat: 37.7519,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -772,7 +822,9 @@ export const cityGeo = [
     remark: '服务人口12500人，日供水1100吨',
     lng: 114.5306,
     lat: 37.7669,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -783,7 +835,9 @@ export const cityGeo = [
     remark: '服务人口14432人，日供水1200吨',
     lng: 114.5318,
     lat: 37.7623,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -794,7 +848,9 @@ export const cityGeo = [
     remark: '服务人口15112人，日供水1300吨',
     lng: 114.5064,
     lat: 37.7822,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -805,7 +861,9 @@ export const cityGeo = [
     remark: '万人千吨，2025年下半年监测达标',
     lng: 114.654,
     lat: 37.9252,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -816,7 +874,9 @@ export const cityGeo = [
     remark: '万人千吨，2025年下半年监测达标',
     lng: 114.6712,
     lat: 37.9284,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -827,7 +887,9 @@ export const cityGeo = [
     remark: '万人千吨，2025年下半年监测达标',
     lng: 114.6262,
     lat: 37.8815,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -838,7 +900,9 @@ export const cityGeo = [
     remark: '南水北调配套地表水厂，城乡供水一体化核心',
     lng: 115.2022,
     lat: 38.0543,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -849,7 +913,9 @@ export const cityGeo = [
     remark: '联村供水工程',
     lng: 115.2276,
     lat: 38.0677,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -860,7 +926,9 @@ export const cityGeo = [
     remark: '联村供水工程',
     lng: 115.2086,
     lat: 38.0594,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -871,7 +939,9 @@ export const cityGeo = [
     remark: '联村供水工程',
     lng: 115.1933,
     lat: 38.047,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -882,7 +952,9 @@ export const cityGeo = [
     remark: '产业园区供水站',
     lng: 115.1741,
     lat: 38.0187,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -893,7 +965,9 @@ export const cityGeo = [
     remark: '乡镇供水站',
     lng: 115.2258,
     lat: 38.0169,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -904,7 +978,9 @@ export const cityGeo = [
     remark: '乡镇供水站',
     lng: 115.1837,
     lat: 38.0562,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -915,7 +991,9 @@ export const cityGeo = [
     remark: '周家庄乡供水站',
     lng: 115.2175,
     lat: 38.0566,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -926,7 +1004,9 @@ export const cityGeo = [
     remark: '乡镇供水站',
     lng: 115.2095,
     lat: 38.0183,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -937,7 +1017,9 @@ export const cityGeo = [
     remark: '乡镇供水站',
     lng: 115.182,
     lat: 38.0564,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -948,7 +1030,9 @@ export const cityGeo = [
     remark: '乡镇供水站',
     lng: 115.2155,
     lat: 38.0598,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -958,7 +1042,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0314,
     lat: 38.0934,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -968,7 +1054,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0842,
     lat: 38.0998,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -978,7 +1066,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0675,
     lat: 38.1043,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -988,7 +1078,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0379,
     lat: 38.0886,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -998,7 +1090,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0847,
     lat: 38.1098,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1008,7 +1102,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0859,
     lat: 38.0864,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1018,7 +1114,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0565,
     lat: 38.0507,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1028,7 +1126,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0632,
     lat: 38.0983,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1038,7 +1138,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0761,
     lat: 38.0718,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1048,7 +1150,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0362,
     lat: 38.0697,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1058,7 +1162,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0749,
     lat: 38.101,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1068,7 +1174,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0626,
     lat: 38.0889,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1078,7 +1186,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0858,
     lat: 38.0878,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1088,7 +1198,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0349,
     lat: 38.1098,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1098,7 +1210,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0553,
     lat: 38.0872,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1108,7 +1222,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0575,
     lat: 38.1002,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1118,7 +1234,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0659,
     lat: 38.0549,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1128,7 +1246,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0452,
     lat: 38.0874,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1138,7 +1258,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0896,
     lat: 38.0626,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1148,7 +1270,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0635,
     lat: 38.0848,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1158,7 +1282,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0517,
     lat: 38.094,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1168,7 +1294,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0887,
     lat: 38.0501,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1178,7 +1306,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0683,
     lat: 38.053,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1188,7 +1318,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.04,
     lat: 38.0622,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1198,7 +1330,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0311,
     lat: 38.1094,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1208,7 +1342,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0378,
     lat: 38.1021,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1218,7 +1354,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0304,
     lat: 38.08,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1228,7 +1366,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.058,
     lat: 38.1074,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1238,7 +1378,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0312,
     lat: 38.0547,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1248,7 +1390,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.071,
     lat: 38.1043,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1258,7 +1402,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.0462,
     lat: 38.0913,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1269,7 +1415,9 @@ export const cityGeo = [
     remark: '千吨万人水源保护区，规范化建设',
     lng: 114.8303,
     lat: 38.0165,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1280,7 +1428,9 @@ export const cityGeo = [
     remark: '千吨万人水源保护区，规范化建设',
     lng: 114.8262,
     lat: 38.0242,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1291,7 +1441,9 @@ export const cityGeo = [
     remark: '千吨万人水源保护区，规范化建设',
     lng: 114.8348,
     lat: 38.0165,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1302,7 +1454,9 @@ export const cityGeo = [
     remark: '千吨万人水源保护区，规范化建设',
     lng: 114.8043,
     lat: 38.009,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1313,7 +1467,9 @@ export const cityGeo = [
     remark: '千吨万人水源保护区，规范化建设',
     lng: 114.3527,
     lat: 38.316,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1324,7 +1480,9 @@ export const cityGeo = [
     remark: '千吨万人水源保护区，规范化建设',
     lng: 114.3803,
     lat: 38.3271,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1335,7 +1493,9 @@ export const cityGeo = [
     remark: '正定联村供水有限公司运营，覆盖全县35个千人以上集中供水工程，城乡供水一体化',
     lng: 114.5686,
     lat: 38.1384,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1346,7 +1506,9 @@ export const cityGeo = [
     remark: '南水北调配套地表水厂，日处理3.5万吨，供水人口20.38万，城乡供水一体化全覆盖',
     lng: 114.5955,
     lat: 37.5954,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1357,7 +1519,9 @@ export const cityGeo = [
     remark: '城乡供水一体化，南水北调水源',
     lng: 115.0081,
     lat: 38.1684,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1368,7 +1532,9 @@ export const cityGeo = [
     remark: '城乡供水一体化，覆盖全区农村供水',
     lng: 114.3249,
     lat: 38.0664,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1379,7 +1545,9 @@ export const cityGeo = [
     remark: '79个千人以上集中供水工程已纳入统一管理',
     lng: 114.1798,
     lat: 38.2684,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1390,7 +1558,9 @@ export const cityGeo = [
     remark: '南水北调水源，城乡供水一体化',
     lng: 115.1968,
     lat: 38.0713,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1401,7 +1571,9 @@ export const cityGeo = [
     remark: '南水北调配套，赞皇皇达水务发展有限公司运营，城乡供水一体化',
     lng: 114.3773,
     lat: 37.64,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1412,7 +1584,9 @@ export const cityGeo = [
     remark: '南水北调受水市，城乡供水一体化',
     lng: 114.6696,
     lat: 38.3725,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1423,7 +1597,9 @@ export const cityGeo = [
     remark: '2024年水质信息公开确认',
     lng: 114.0792,
     lat: 38.0098,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1434,7 +1610,9 @@ export const cityGeo = [
     remark: '南水北调配套工程赵县城区水厂及配套管网，2025年划拨用地',
     lng: 114.7605,
     lat: 37.7326,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '石家庄市',
     level: 'township',
@@ -1445,5 +1623,7 @@ export const cityGeo = [
     remark: '农村饮水江水置换，新打机井+水塔+管网覆盖多村',
     lng: 114.5415,
     lat: 38.4415,
-  },
+    kind: '井',
+  }
+,
 ];

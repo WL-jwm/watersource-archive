@@ -20,6 +20,7 @@ export interface GeoSource {
   lng: number;
   lat: number;
   population?: number;
+  kind?: '井' | '保护区范围';
 }
 
 interface MapFiltersProps {

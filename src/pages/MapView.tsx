@@ -108,6 +108,7 @@ const MapView: React.FC = () => {
         lng: s.lng!,
         lat: s.lat!,
         population: s.population,
+        kind: s.kind,
       }));
   }, [loaded, storeSources]);
 
@@ -214,6 +215,7 @@ const MapView: React.FC = () => {
             <div><b>城市：</b>${s.city}</div>
             <div><b>县区：</b>${s.county}</div>
             <div><b>类型：</b>${s.type}</div>
+            ${s.kind ? `<div><b>要素类型：</b><span style="color:${s.kind === '井' ? '#B45309' : '#2563EB'};font-weight:600">${s.kind}</span></div>` : ''}
             ${s.population != null ? `<div><b>供水人口：</b><span style="color:#059669;font-weight:600">${s.population}万人</span></div>` : ''}
             ${s.remark ? `<div><b>备注：</b>${s.remark}</div>` : ''}
           </div>

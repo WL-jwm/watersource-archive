@@ -64,7 +64,14 @@ const MapLegend: React.FC<MapLegendProps> = ({ collapsed, showZones, showActualZ
           {showActualZones && (
             <>
               <div className="w-full h-px bg-border my-1" />
-              <div className="text-[10px] font-semibold text-text-tertiary">实际保护区范围</div>
+              <div className="text-[10px] font-semibold text-text-tertiary">实际保护区范围（井 / 保护区）</div>
+              <div className="flex items-center gap-2">
+                <span
+                  className="inline-block w-3 h-3 rounded-full border-2"
+                  style={{ borderColor: '#B45309', backgroundColor: '#B4530940' }}
+                />
+                <span className="text-xs text-text-secondary">井（单井保护区）</span>
+              </div>
               <div className="flex items-center gap-2">
                 <span
                   className="inline-block w-3 h-3 rounded-full border-2"

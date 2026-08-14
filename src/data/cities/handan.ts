@@ -1245,7 +1245,9 @@ export const cityGeo = [
     river: '漳河',
     lng: 114.38,
     lat: 36.3762,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '邯郸市',
     level: 'municipal',
@@ -1256,7 +1258,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4721,
     lat: 36.587,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '邯郸市',
     level: 'municipal',
@@ -1268,7 +1272,9 @@ export const cityGeo = [
     remark: '华北地区最大地下水源地之一，日产水30万吨，17眼深井，黑龙洞泉域',
     lng: 114.2366,
     lat: 36.4343,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1278,7 +1284,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.1857,
     lat: 36.6942,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1288,7 +1296,9 @@ export const cityGeo = [
     status: '在用',
     lng: 113.7137,
     lat: 36.5718,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1298,7 +1308,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.3721,
     lat: 36.3606,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1309,7 +1321,9 @@ export const cityGeo = [
     remark: '南水北调受水区',
     lng: 114.4822,
     lat: 36.7618,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1320,7 +1334,9 @@ export const cityGeo = [
     remark: '井堂街与建安路交汇处',
     lng: 114.8163,
     lat: 36.5673,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1330,7 +1346,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5983,
     lat: 36.3111,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1341,7 +1359,9 @@ export const cityGeo = [
     remark: '二水厂位于道东堡镇学苑西路',
     lng: 114.6901,
     lat: 36.4315,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1351,7 +1371,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.15,
     lat: 36.297,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1362,7 +1384,9 @@ export const cityGeo = [
     remark: '南水北调受水县',
     lng: 115.3164,
     lat: 36.5441,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1372,7 +1396,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.9302,
     lat: 36.3432,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1383,7 +1409,9 @@ export const cityGeo = [
     remark: '滏阳河下游',
     lng: 115.1236,
     lat: 36.7588,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1393,7 +1421,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.2025,
     lat: 36.8071,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1404,7 +1434,9 @@ export const cityGeo = [
     remark: '滏阳河出邯郸境',
     lng: 114.846,
     lat: 36.929,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1414,7 +1446,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.9569,
     lat: 36.49,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1426,7 +1460,9 @@ export const cityGeo = [
     remark: '滏阳河源头，龙池沟+九山蛟沟',
     lng: 114.1883,
     lat: 36.3907,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1436,7 +1472,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5287,
     lat: 36.5288,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1446,7 +1484,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5164,
     lat: 36.6559,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1456,7 +1496,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4342,
     lat: 36.5812,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'county',
@@ -1469,7 +1511,9 @@ export const cityGeo = [
     river: '滏阳河',
     lng: 114.386,
     lat: 36.3544,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1480,7 +1524,9 @@ export const cityGeo = [
     remark: '万人千吨, 南东坊镇西三',
     lng: 114.6475,
     lat: 36.3174,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1491,7 +1537,9 @@ export const cityGeo = [
     remark: '万人千吨, 南东坊镇张修屯',
     lng: 114.6029,
     lat: 36.3525,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1502,7 +1550,9 @@ export const cityGeo = [
     remark: '万人千吨, 孙陶集镇刘村',
     lng: 114.591,
     lat: 36.3369,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1513,7 +1563,9 @@ export const cityGeo = [
     remark: '万人千吨, 柳园镇二分庄',
     lng: 114.609,
     lat: 36.3595,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1524,7 +1576,9 @@ export const cityGeo = [
     remark: '农村集中式, 柳园镇后三村',
     lng: 114.6034,
     lat: 36.3038,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1535,7 +1589,9 @@ export const cityGeo = [
     remark: '万人千吨, 柳园镇樊营',
     lng: 114.6437,
     lat: 36.3113,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1546,7 +1602,9 @@ export const cityGeo = [
     remark: '万人千吨, 称勾集镇北杨庄',
     lng: 114.6186,
     lat: 36.3005,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1557,7 +1615,9 @@ export const cityGeo = [
     remark: '万人千吨, 称勾集镇郭小屯',
     lng: 114.5998,
     lat: 36.3114,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1568,7 +1628,9 @@ export const cityGeo = [
     remark: '万人千吨, 邺城镇香西村',
     lng: 114.6482,
     lat: 36.3128,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1579,7 +1641,9 @@ export const cityGeo = [
     remark: '万人千吨, 章里集镇东屯',
     lng: 114.6261,
     lat: 36.3571,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1590,7 +1654,9 @@ export const cityGeo = [
     remark: '万人千吨, 章里集镇章里集村',
     lng: 114.6258,
     lat: 36.3286,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1601,7 +1667,9 @@ export const cityGeo = [
     remark: '农村集中式, 章里集镇北东坊',
     lng: 114.6353,
     lat: 36.3563,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1612,7 +1680,9 @@ export const cityGeo = [
     remark: '万人千吨, 狄邱乡西狄邱',
     lng: 114.6446,
     lat: 36.3228,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1623,7 +1693,9 @@ export const cityGeo = [
     remark: '万人千吨, 张村集乡贾河口村',
     lng: 114.5987,
     lat: 36.3355,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1634,7 +1706,9 @@ export const cityGeo = [
     remark: '万人千吨, 张村集乡奶奶庙村',
     lng: 114.6103,
     lat: 36.3013,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1645,7 +1719,9 @@ export const cityGeo = [
     remark: '万人千吨, 西羊羔乡西羊羔南村',
     lng: 114.6357,
     lat: 36.3002,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1656,7 +1732,9 @@ export const cityGeo = [
     remark: '万人千吨, 杜村集乡东营',
     lng: 114.6091,
     lat: 36.3291,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1667,7 +1745,9 @@ export const cityGeo = [
     remark: '万人千吨, 习文乡东太平村',
     lng: 114.6482,
     lat: 36.3519,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1678,7 +1758,9 @@ export const cityGeo = [
     remark: '农村集中式, 砖寨营乡协王村',
     lng: 114.6307,
     lat: 36.3453,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1689,7 +1771,9 @@ export const cityGeo = [
     remark: '万人千吨, 砖寨营乡前屯',
     lng: 114.6461,
     lat: 36.3326,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1700,7 +1784,9 @@ export const cityGeo = [
     remark: '万人千吨, 砖寨营乡东风柳村',
     lng: 114.6088,
     lat: 36.3298,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1711,7 +1797,9 @@ export const cityGeo = [
     remark: '万人千吨, 柏鹤集乡兵马寨',
     lng: 114.6132,
     lat: 36.3088,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1722,7 +1810,9 @@ export const cityGeo = [
     remark: '万人千吨, 柏鹤集乡有阁刘村',
     lng: 114.6403,
     lat: 36.3268,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1733,7 +1823,9 @@ export const cityGeo = [
     remark: '农村集中式, 黄金堤乡邢村',
     lng: 115.1344,
     lat: 36.3187,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1744,7 +1836,9 @@ export const cityGeo = [
     remark: '万人千吨, 黄金堤乡三村',
     lng: 115.1452,
     lat: 36.3093,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1755,7 +1849,9 @@ export const cityGeo = [
     remark: '万人千吨, 铺上镇西李二庄',
     lng: 115.1691,
     lat: 36.2887,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1766,7 +1862,9 @@ export const cityGeo = [
     remark: '万人千吨, 铺上镇后兆固',
     lng: 115.1277,
     lat: 36.3273,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1777,7 +1875,9 @@ export const cityGeo = [
     remark: '农村集中式, 旧治乡李五牌',
     lng: 115.1492,
     lat: 36.2808,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1788,7 +1888,9 @@ export const cityGeo = [
     remark: '万人千吨, 大街镇张谷',
     lng: 115.1487,
     lat: 36.3208,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1799,7 +1901,9 @@ export const cityGeo = [
     remark: '万人千吨, 大街镇后南门口',
     lng: 115.1488,
     lat: 36.3104,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1810,7 +1914,9 @@ export const cityGeo = [
     remark: '万人千吨, 金滩镇金南村',
     lng: 115.1407,
     lat: 36.3158,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1821,7 +1927,9 @@ export const cityGeo = [
     remark: '万人千吨, 红庙乡徐杨庄',
     lng: 115.1712,
     lat: 36.2789,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1832,7 +1940,9 @@ export const cityGeo = [
     remark: '万人千吨, 杨桥镇杨桥',
     lng: 115.1317,
     lat: 36.3034,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1843,7 +1953,9 @@ export const cityGeo = [
     remark: '万人千吨, 张铁集乡后庄村',
     lng: 115.1564,
     lat: 36.3107,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1854,7 +1966,9 @@ export const cityGeo = [
     remark: '万人千吨, 沙圪塔镇西马寨',
     lng: 115.173,
     lat: 36.3234,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1865,7 +1979,9 @@ export const cityGeo = [
     remark: '万人千吨, 沙圪塔镇南沙村',
     lng: 115.1301,
     lat: 36.313,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1876,7 +1992,9 @@ export const cityGeo = [
     remark: '万人千吨, 孙甘店乡孙甘店',
     lng: 115.1357,
     lat: 36.3287,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1887,7 +2005,9 @@ export const cityGeo = [
     remark: '万人千吨, 王村乡李岳村',
     lng: 115.1314,
     lat: 36.2867,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1898,7 +2018,9 @@ export const cityGeo = [
     remark: '万人千吨, 龙王庙镇二村',
     lng: 115.1397,
     lat: 36.2889,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1909,7 +2031,9 @@ export const cityGeo = [
     remark: '万人千吨, 万堤镇后桥村',
     lng: 115.1263,
     lat: 36.2786,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1920,7 +2044,9 @@ export const cityGeo = [
     remark: '万人千吨, 北峰乡后北峰',
     lng: 115.1587,
     lat: 36.3165,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1931,7 +2057,9 @@ export const cityGeo = [
     remark: '万人千吨, 西付集乡后鲍庄',
     lng: 115.1204,
     lat: 36.2952,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1942,7 +2070,9 @@ export const cityGeo = [
     remark: '万人千吨, 西付集乡郭马陵',
     lng: 115.128,
     lat: 36.3079,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1953,7 +2083,9 @@ export const cityGeo = [
     remark: '万人千吨, 束馆镇前寺头',
     lng: 115.1359,
     lat: 36.3261,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1964,7 +2096,9 @@ export const cityGeo = [
     remark: '万人千吨, 前大磨前大磨',
     lng: 114.9357,
     lat: 36.3735,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1975,7 +2109,9 @@ export const cityGeo = [
     remark: '万人千吨, 北台头台西',
     lng: 114.9246,
     lat: 36.338,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1986,7 +2122,9 @@ export const cityGeo = [
     remark: '万人千吨, 车往黄甘固',
     lng: 114.9236,
     lat: 36.3776,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -1997,7 +2135,9 @@ export const cityGeo = [
     remark: '万人千吨, 边马边中',
     lng: 114.9395,
     lat: 36.3417,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2008,7 +2148,9 @@ export const cityGeo = [
     remark: '万人千吨, 泊口后佃坡',
     lng: 114.9471,
     lat: 36.3758,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2019,7 +2161,9 @@ export const cityGeo = [
     remark: '万人千吨, 回隆东街',
     lng: 114.927,
     lat: 36.3496,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2030,7 +2174,9 @@ export const cityGeo = [
     remark: '万人千吨, 沙口集漳河村',
     lng: 114.9592,
     lat: 36.3525,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2041,7 +2187,9 @@ export const cityGeo = [
     remark: '万人千吨, 大辛庄马庄',
     lng: 114.9159,
     lat: 36.3777,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2052,7 +2200,9 @@ export const cityGeo = [
     remark: '万人千吨, 张二庄南刘庄',
     lng: 114.9503,
     lat: 36.3783,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2063,7 +2213,9 @@ export const cityGeo = [
     remark: '万人千吨, 棘针寨徐小庄',
     lng: 114.9386,
     lat: 36.3691,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2074,7 +2226,9 @@ export const cityGeo = [
     remark: '万人千吨, 牙里镇牙东',
     lng: 114.925,
     lat: 36.3677,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2085,7 +2239,9 @@ export const cityGeo = [
     remark: '万人千吨, 魏城镇白仕望',
     lng: 114.9324,
     lat: 36.3658,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2096,7 +2252,9 @@ export const cityGeo = [
     remark: '万人千吨, 沙口集集西',
     lng: 114.9167,
     lat: 36.382,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2107,7 +2265,9 @@ export const cityGeo = [
     remark: '万人千吨, 野胡拐东红庙',
     lng: 114.9146,
     lat: 36.3368,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2118,7 +2278,9 @@ export const cityGeo = [
     remark: '万人千吨, 北皋李谢庄',
     lng: 114.9477,
     lat: 36.3588,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2129,7 +2291,9 @@ export const cityGeo = [
     remark: '万人千吨, 双井东街',
     lng: 114.9363,
     lat: 36.3404,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2140,7 +2304,9 @@ export const cityGeo = [
     remark: '万人千吨, 南双庙大李村',
     lng: 114.9499,
     lat: 36.373,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2151,7 +2317,9 @@ export const cityGeo = [
     remark: '万人千吨, 大马村大康庄',
     lng: 114.9539,
     lat: 36.3772,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2162,7 +2330,9 @@ export const cityGeo = [
     remark: '万人千吨, 张二庄西留固',
     lng: 114.9318,
     lat: 36.3835,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2173,7 +2343,9 @@ export const cityGeo = [
     remark: '万人千吨, 前大磨后崔村',
     lng: 114.9506,
     lat: 36.3748,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2184,7 +2356,9 @@ export const cityGeo = [
     remark: '万人千吨, 广府镇前北廓村',
     lng: 114.4919,
     lat: 36.7961,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2195,7 +2369,9 @@ export const cityGeo = [
     remark: '万人千吨, 刘营镇陈刘营村',
     lng: 114.4559,
     lat: 36.7525,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2206,7 +2382,9 @@ export const cityGeo = [
     remark: '万人千吨, 西苏镇油村村',
     lng: 114.4837,
     lat: 36.8053,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2217,7 +2395,9 @@ export const cityGeo = [
     remark: '万人千吨, 刘汉乡武庄村',
     lng: 114.5007,
     lat: 36.7547,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2228,7 +2408,9 @@ export const cityGeo = [
     remark: '万人千吨, 讲武镇讲武村',
     lng: 114.5047,
     lat: 36.7983,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2239,7 +2421,9 @@ export const cityGeo = [
     remark: '万人千吨, 曲陌乡前党庄村',
     lng: 114.4511,
     lat: 36.7982,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2250,7 +2434,9 @@ export const cityGeo = [
     remark: '万人千吨, 辛庄堡乡辛八街村',
     lng: 114.4821,
     lat: 36.756,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2261,7 +2447,9 @@ export const cityGeo = [
     remark: '万人千吨, 小龙马乡郑营村',
     lng: 114.4848,
     lat: 36.7631,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2272,7 +2460,9 @@ export const cityGeo = [
     remark: '万人千吨, 东杨庄镇西陈甫村',
     lng: 114.4815,
     lat: 36.7702,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2283,7 +2473,9 @@ export const cityGeo = [
     remark: '万人千吨, 西河庄乡顾二村',
     lng: 114.5068,
     lat: 36.7551,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2294,7 +2486,9 @@ export const cityGeo = [
     remark: '万人千吨, 西河庄乡刘宋寨村',
     lng: 114.4654,
     lat: 36.7812,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2305,7 +2499,9 @@ export const cityGeo = [
     remark: '万人千吨, 西苏镇周村',
     lng: 114.464,
     lat: 36.8069,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2316,7 +2512,9 @@ export const cityGeo = [
     remark: '万人千吨, 刘营镇龙曹村',
     lng: 114.4515,
     lat: 36.7725,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2327,7 +2525,9 @@ export const cityGeo = [
     remark: '万人千吨, 西河庄乡李二八寨村',
     lng: 114.4714,
     lat: 36.8057,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2338,7 +2538,9 @@ export const cityGeo = [
     remark: '万人千吨, 辛庄堡乡赵庄村',
     lng: 114.4654,
     lat: 36.7843,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2349,7 +2551,9 @@ export const cityGeo = [
     remark: '万人千吨, 第四疃镇朱庄村',
     lng: 115.1297,
     lat: 36.7543,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2360,7 +2564,9 @@ export const cityGeo = [
     remark: '万人千吨, 安寨镇马庄村',
     lng: 115.1267,
     lat: 36.7962,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2371,7 +2577,9 @@ export const cityGeo = [
     remark: '万人千吨, 侯村镇庞寨村',
     lng: 115.1397,
     lat: 36.8039,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2382,7 +2590,9 @@ export const cityGeo = [
     remark: '万人千吨, 南里岳乡小王庄村',
     lng: 115.1605,
     lat: 36.7833,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2393,7 +2603,9 @@ export const cityGeo = [
     remark: '万人千吨, 白寨镇南王庄村',
     lng: 115.115,
     lat: 36.7881,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2404,7 +2616,9 @@ export const cityGeo = [
     remark: '万人千吨, 大河道乡常庄村',
     lng: 115.161,
     lat: 36.754,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2415,7 +2629,9 @@ export const cityGeo = [
     remark: '万人千吨, 依庄乡牛疃村',
     lng: 115.1576,
     lat: 36.8014,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2426,7 +2642,9 @@ export const cityGeo = [
     remark: '万人千吨, 第四疃镇四疃村',
     lng: 115.1162,
     lat: 36.7972,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2437,7 +2655,9 @@ export const cityGeo = [
     remark: '万人千吨, 河南疃镇河一村',
     lng: 115.1189,
     lat: 36.7545,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2448,7 +2668,9 @@ export const cityGeo = [
     remark: '万人千吨, 槐桥乡西韩固村',
     lng: 115.1474,
     lat: 36.7815,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2459,7 +2681,9 @@ export const cityGeo = [
     remark: '万人千吨, 白寨镇白小营村',
     lng: 115.1623,
     lat: 36.7786,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2470,7 +2694,9 @@ export const cityGeo = [
     remark: '万人千吨, 馆陶镇车疃村',
     lng: 115.29,
     lat: 36.5328,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2481,7 +2707,9 @@ export const cityGeo = [
     remark: '万人千吨, 房寨镇房寨南村',
     lng: 115.3292,
     lat: 36.5416,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2492,7 +2720,9 @@ export const cityGeo = [
     remark: '万人千吨, 柴堡镇柴南村',
     lng: 115.3177,
     lat: 36.5497,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2503,7 +2733,9 @@ export const cityGeo = [
     remark: '万人千吨, 柴堡镇柴庄村',
     lng: 115.3025,
     lat: 36.5668,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2514,7 +2746,9 @@ export const cityGeo = [
     remark: '万人千吨, 魏僧寨镇赵官寨村',
     lng: 115.3118,
     lat: 36.5388,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2525,7 +2759,9 @@ export const cityGeo = [
     remark: '万人千吨, 魏僧寨镇范草厂村',
     lng: 115.2752,
     lat: 36.5551,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2536,7 +2772,9 @@ export const cityGeo = [
     remark: '万人千吨, 寿山寺乡韩高庄村',
     lng: 115.2768,
     lat: 36.542,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2547,7 +2785,9 @@ export const cityGeo = [
     remark: '万人千吨, 南徐村乡南徐村',
     lng: 115.2704,
     lat: 36.5347,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2558,7 +2798,9 @@ export const cityGeo = [
     remark: '万人千吨, 路桥乡李路桥村',
     lng: 115.3016,
     lat: 36.5515,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2569,7 +2811,9 @@ export const cityGeo = [
     remark: '万人千吨, 路桥乡北榆林村',
     lng: 115.2768,
     lat: 36.5133,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2580,7 +2824,9 @@ export const cityGeo = [
     remark: '万人千吨, 辛安镇辛安镇',
     lng: 114.8054,
     lat: 36.568,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2591,7 +2837,9 @@ export const cityGeo = [
     remark: '万人千吨, 辛安镇白落堡村',
     lng: 114.7959,
     lat: 36.5386,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2602,7 +2850,9 @@ export const cityGeo = [
     remark: '万人千吨, 天台山镇天台山村',
     lng: 114.7857,
     lat: 36.5316,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2613,7 +2863,9 @@ export const cityGeo = [
     remark: '万人千吨, 天台山镇西马固村',
     lng: 114.7738,
     lat: 36.5761,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2624,7 +2876,9 @@ export const cityGeo = [
     remark: '万人千吨, 元固乡元固村',
     lng: 114.7821,
     lat: 36.5239,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2635,7 +2889,9 @@ export const cityGeo = [
     remark: '万人千吨, 旧店乡小营村',
     lng: 114.7753,
     lat: 36.5311,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2646,7 +2902,9 @@ export const cityGeo = [
     remark: '万人千吨, 东漳堡镇宋庄村',
     lng: 114.8206,
     lat: 36.5678,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2657,7 +2915,9 @@ export const cityGeo = [
     remark: '万人千吨, 屯庄营乡周寨村',
     lng: 114.7904,
     lat: 36.5589,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2668,7 +2928,9 @@ export const cityGeo = [
     remark: '万人千吨, 毛演堡乡崔庄村',
     lng: 114.8126,
     lat: 36.5793,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2679,7 +2941,9 @@ export const cityGeo = [
     remark: '万人千吨, 大寺上镇大西韩村',
     lng: 114.814,
     lat: 36.5529,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2690,7 +2954,9 @@ export const cityGeo = [
     remark: '万人千吨, 道东堡乡西化店村',
     lng: 114.7281,
     lat: 36.4692,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2701,7 +2967,9 @@ export const cityGeo = [
     remark: '万人千吨, 道东堡乡河疃村',
     lng: 114.6952,
     lat: 36.4374,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2712,7 +2980,9 @@ export const cityGeo = [
     remark: '万人千吨, 北乡义镇北乡义村',
     lng: 114.7081,
     lat: 36.4512,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2723,7 +2993,9 @@ export const cityGeo = [
     remark: '万人千吨, 漳河店镇漳河店村',
     lng: 114.7238,
     lat: 36.44,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2734,7 +3006,9 @@ export const cityGeo = [
     remark: '万人千吨, 柏寺营乡大金山村',
     lng: 114.7181,
     lat: 36.4455,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2745,7 +3019,9 @@ export const cityGeo = [
     remark: '万人千吨, 李家疃镇李家疃南村',
     lng: 114.6938,
     lat: 36.4178,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2756,7 +3032,9 @@ export const cityGeo = [
     remark: '万人千吨, 辛义乡西高陵阜村',
     lng: 114.7259,
     lat: 36.44,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2767,7 +3045,9 @@ export const cityGeo = [
     remark: '万人千吨, 辛义乡王耳营村',
     lng: 114.6923,
     lat: 36.4184,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2778,7 +3058,9 @@ export const cityGeo = [
     remark: '万人千吨, 商城镇北郎堡村',
     lng: 114.7201,
     lat: 36.4488,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2789,7 +3071,9 @@ export const cityGeo = [
     remark: '万人千吨, 商城镇秦连庄村',
     lng: 114.6865,
     lat: 36.4434,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2800,7 +3084,9 @@ export const cityGeo = [
     remark: '万人千吨, 鸡泽镇西关村',
     lng: 114.8416,
     lat: 36.9466,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2811,7 +3097,9 @@ export const cityGeo = [
     remark: '万人千吨, 小寨镇柴庄村',
     lng: 114.8725,
     lat: 36.9468,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2822,7 +3110,9 @@ export const cityGeo = [
     remark: '万人千吨, 小寨镇小寨村',
     lng: 114.8754,
     lat: 36.9304,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2833,7 +3123,9 @@ export const cityGeo = [
     remark: '万人千吨, 双塔镇东双塔村',
     lng: 114.8937,
     lat: 36.9462,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2844,7 +3136,9 @@ export const cityGeo = [
     remark: '万人千吨, 曹庄镇康马昌村',
     lng: 114.8979,
     lat: 36.9487,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2855,7 +3149,9 @@ export const cityGeo = [
     remark: '万人千吨, 浮图店乡东柳村',
     lng: 114.8924,
     lat: 36.9261,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2866,7 +3162,9 @@ export const cityGeo = [
     remark: '万人千吨, 浮图店乡浮西村',
     lng: 114.8984,
     lat: 36.9022,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2877,7 +3175,9 @@ export const cityGeo = [
     remark: '万人千吨, 吴官营乡张六固村',
     lng: 114.8707,
     lat: 36.9226,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2888,7 +3188,9 @@ export const cityGeo = [
     remark: '万人千吨, 风正乡中风正村',
     lng: 114.8821,
     lat: 36.9451,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2899,7 +3201,9 @@ export const cityGeo = [
     remark: '万人千吨, 南韩镇北靳庄村',
     lng: 114.9643,
     lat: 36.4899,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2910,7 +3214,9 @@ export const cityGeo = [
     remark: '万人千吨, 南韩镇南韩村',
     lng: 114.9261,
     lat: 36.4736,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2921,7 +3227,9 @@ export const cityGeo = [
     remark: '万人千吨, 十里铺镇北小留村',
     lng: 114.9365,
     lat: 36.4909,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2932,7 +3240,9 @@ export const cityGeo = [
     remark: '万人千吨, 平固店镇崔庄村',
     lng: 114.9515,
     lat: 36.4881,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2943,7 +3253,9 @@ export const cityGeo = [
     remark: '万人千吨, 胜营镇马宋固村',
     lng: 114.9328,
     lat: 36.4611,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2954,7 +3266,9 @@ export const cityGeo = [
     remark: '万人千吨, 南阳堡镇南阳堡村',
     lng: 114.9594,
     lat: 36.474,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2965,7 +3279,9 @@ export const cityGeo = [
     remark: '万人千吨, 广平镇大马庄村',
     lng: 114.9392,
     lat: 36.4525,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2976,7 +3292,9 @@ export const cityGeo = [
     remark: '万人千吨, 胜营镇北温村',
     lng: 114.9672,
     lat: 36.489,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2987,7 +3305,9 @@ export const cityGeo = [
     remark: '万人千吨, 东张孟镇东张孟村',
     lng: 114.9676,
     lat: 36.4533,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -2998,7 +3318,9 @@ export const cityGeo = [
     remark: '万人千吨, 新马头镇西常屯村',
     lng: 115.1797,
     lat: 36.8439,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3009,7 +3331,9 @@ export const cityGeo = [
     remark: '万人千吨, 新马头镇聂山固村',
     lng: 115.1976,
     lat: 36.8414,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3020,7 +3344,9 @@ export const cityGeo = [
     remark: '万人千吨, 新马头镇布路店村',
     lng: 115.1562,
     lat: 36.8372,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3031,7 +3357,9 @@ export const cityGeo = [
     remark: '万人千吨, 邱城镇石佛寺村',
     lng: 115.1697,
     lat: 36.7943,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3042,7 +3370,9 @@ export const cityGeo = [
     remark: '万人千吨, 梁二庄镇坞头村',
     lng: 115.201,
     lat: 36.794,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3053,7 +3383,9 @@ export const cityGeo = [
     remark: '万人千吨, 香城固镇刘云固村',
     lng: 115.2005,
     lat: 36.8233,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3064,7 +3396,9 @@ export const cityGeo = [
     remark: '万人千吨, 香城固镇东石彦固村',
     lng: 115.155,
     lat: 36.8281,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3075,7 +3409,9 @@ export const cityGeo = [
     remark: '万人千吨, 古城营镇花台村',
     lng: 115.1667,
     lat: 36.8362,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3086,7 +3422,9 @@ export const cityGeo = [
     remark: '万人千吨, 磁州镇朱庄村',
     lng: 114.3548,
     lat: 36.3578,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3097,7 +3435,9 @@ export const cityGeo = [
     remark: '万人千吨, 磁州镇固城村',
     lng: 114.3415,
     lat: 36.3741,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3108,7 +3448,9 @@ export const cityGeo = [
     remark: '万人千吨, 磁州镇小营店村',
     lng: 114.3807,
     lat: 36.3992,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3119,7 +3461,9 @@ export const cityGeo = [
     remark: '万人千吨, 时村营乡牛尾岗村',
     lng: 114.3491,
     lat: 36.3404,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3130,7 +3474,9 @@ export const cityGeo = [
     remark: '万人千吨, 岳城镇马家坟村',
     lng: 114.3463,
     lat: 36.3701,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3141,7 +3487,9 @@ export const cityGeo = [
     remark: '万人千吨, 路村营乡泥河村',
     lng: 114.3521,
     lat: 36.3985,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3152,7 +3500,9 @@ export const cityGeo = [
     remark: '万人千吨, 路村营乡圣水洼村',
     lng: 114.3696,
     lat: 36.3703,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3163,7 +3513,9 @@ export const cityGeo = [
     remark: '万人千吨, 白土镇青碗窑村',
     lng: 114.3557,
     lat: 36.382,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3174,7 +3526,9 @@ export const cityGeo = [
     remark: '万人千吨, 辛庄营乡太平村',
     lng: 114.5346,
     lat: 36.5062,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3185,7 +3539,9 @@ export const cityGeo = [
     remark: '万人千吨, 南城乡东南城村',
     lng: 114.5409,
     lat: 36.4997,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3196,7 +3552,9 @@ export const cityGeo = [
     remark: '万人千吨, 峰峰镇五矿生活区',
     lng: 114.2094,
     lat: 36.4026,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邯郸市',
     level: 'township',
@@ -3207,5 +3565,7 @@ export const cityGeo = [
     remark: '万人千吨, 大社镇牛儿庄',
     lng: 114.1973,
     lat: 36.4212,
-  },
+    kind: '井',
+  }
+,
 ];

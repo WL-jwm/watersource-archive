@@ -241,7 +241,9 @@ export const cityGeo = [
     remark: '唐山市主城区主要地表水水源，2023年调整保护区',
     lng: 118.2357,
     lat: 39.6748,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '唐山市',
     level: 'municipal',
@@ -254,7 +256,9 @@ export const cityGeo = [
     river: '还乡河',
     lng: 118.1316,
     lat: 39.8096,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '唐山市',
     level: 'municipal',
@@ -265,7 +269,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.1881,
     lat: 39.6848,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'municipal',
@@ -276,7 +282,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.2001,
     lat: 39.656,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'municipal',
@@ -287,7 +295,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.1861,
     lat: 39.6332,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'municipal',
@@ -298,7 +308,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.1554,
     lat: 39.832,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'municipal',
@@ -309,7 +321,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.2191,
     lat: 39.6545,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -320,7 +334,9 @@ export const cityGeo = [
     remark: '2024年调整保护区，一级0.64km²+二级7.4km²+准保护14.5km²',
     lng: 118.7193,
     lat: 39.9941,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -331,7 +347,9 @@ export const cityGeo = [
     remark: '教厂水源地已于2024年取消',
     lng: 117.9856,
     lat: 40.172,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -341,7 +359,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.294,
     lat: 40.0351,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -351,7 +371,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.7172,
     lat: 39.7189,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -362,7 +384,9 @@ export const cityGeo = [
     remark: '2026年6月调整保护区，一级0.957km²',
     lng: 117.7397,
     lat: 39.8818,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -372,7 +396,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.6472,
     lat: 39.5225,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -382,7 +408,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.8753,
     lat: 39.4101,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -393,7 +421,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.4689,
     lat: 39.2934,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -403,7 +433,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.432,
     lat: 39.7495,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -413,7 +445,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.096,
     lat: 39.5726,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -423,7 +457,9 @@ export const cityGeo = [
     status: '在用',
     lng: 117.8104,
     lat: 39.3494,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'county',
@@ -433,7 +469,9 @@ export const cityGeo = [
     status: '在用',
     lng: 117.8877,
     lat: 39.3687,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -445,7 +483,9 @@ export const cityGeo = [
     remark: '千吨万人级集中式饮用水水源地',
     lng: 118.4754,
     lat: 39.2501,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -457,7 +497,9 @@ export const cityGeo = [
     remark: '千吨万人级集中式饮用水水源地',
     lng: 118.4364,
     lat: 39.2963,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -469,7 +511,9 @@ export const cityGeo = [
     remark: '千吨万人级集中式饮用水水源地',
     lng: 118.478,
     lat: 39.2401,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -481,7 +525,9 @@ export const cityGeo = [
     remark: '千吨万人级集中式饮用水水源地',
     lng: 118.4619,
     lat: 39.2915,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -493,7 +539,9 @@ export const cityGeo = [
     remark: '千吨万人级集中式饮用水水源地',
     lng: 118.4762,
     lat: 39.2993,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -505,7 +553,9 @@ export const cityGeo = [
     remark: '千吨万人级集中式饮用水水源地',
     lng: 118.456,
     lat: 39.2536,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -517,7 +567,9 @@ export const cityGeo = [
     remark: '千吨万人级集中式饮用水水源地',
     lng: 118.4568,
     lat: 39.2685,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -529,7 +581,9 @@ export const cityGeo = [
     remark: '千吨万人级集中式饮用水水源地',
     lng: 118.4386,
     lat: 39.2494,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -541,7 +595,9 @@ export const cityGeo = [
     remark: '千吨万人级集中式饮用水水源地',
     lng: 118.4585,
     lat: 39.2999,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -553,7 +609,9 @@ export const cityGeo = [
     remark: '乡镇级集中式饮用水水源地',
     lng: 118.437,
     lat: 39.2636,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -565,7 +623,9 @@ export const cityGeo = [
     remark: '乡镇级集中式饮用水水源地',
     lng: 118.4549,
     lat: 39.2624,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -577,7 +637,9 @@ export const cityGeo = [
     remark: '县级集中式地表水饮用水水源地',
     lng: 117.9929,
     lat: 40.197,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -588,7 +650,9 @@ export const cityGeo = [
     remark: '城乡供水一体化，覆盖14个乡镇',
     lng: 118.6897,
     lat: 40.036,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -599,7 +663,9 @@ export const cityGeo = [
     remark: '城乡供水一体化，教厂水源地2024年取消',
     lng: 117.985,
     lat: 40.1996,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -610,7 +676,9 @@ export const cityGeo = [
     remark: '省级标准化管理评价确认，千吨万人',
     lng: 117.9903,
     lat: 40.1607,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -621,7 +689,9 @@ export const cityGeo = [
     remark: '城乡供水一体化',
     lng: 118.7078,
     lat: 39.7382,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -632,7 +702,9 @@ export const cityGeo = [
     remark: '2026年6月调整保护区',
     lng: 117.7138,
     lat: 39.8933,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -643,7 +715,9 @@ export const cityGeo = [
     remark: '南水北调水源，城乡供水一体化',
     lng: 118.4838,
     lat: 39.29,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '唐山市',
     level: 'township',
@@ -654,5 +728,7 @@ export const cityGeo = [
     remark: '县级水源地，千吨万人',
     lng: 118.4807,
     lat: 39.2713,
-  },
+    kind: '井',
+  }
+,
 ];

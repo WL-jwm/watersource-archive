@@ -714,7 +714,9 @@ export const cityGeo = [
     river: '沙河',
     lng: 114.5185,
     lat: 36.9974,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '邢台市',
     level: 'municipal',
@@ -725,7 +727,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.486,
     lat: 37.0451,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'municipal',
@@ -736,7 +740,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5188,
     lat: 37.042,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'municipal',
@@ -747,7 +753,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4777,
     lat: 37.0804,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -757,7 +765,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4785,
     lat: 36.9678,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -767,7 +777,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.3945,
     lat: 37.3595,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -777,7 +789,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.6533,
     lat: 37.0642,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -787,7 +801,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0373,
     lat: 37.6355,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -797,7 +813,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0352,
     lat: 37.6261,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -807,7 +825,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0481,
     lat: 37.2189,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -817,7 +837,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.2615,
     lat: 37.5482,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -827,7 +849,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5186,
     lat: 37.4613,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -839,7 +863,9 @@ export const cityGeo = [
     remark: '临城县旺泉供水有限公司运营',
     lng: 114.5069,
     lat: 37.4564,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -849,7 +875,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.7186,
     lat: 37.4808,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -859,7 +887,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.7986,
     lat: 37.351,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -870,7 +900,9 @@ export const cityGeo = [
     remark: '2024年调整保护区',
     lng: 115.2323,
     lat: 37.0053,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -880,7 +912,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.1407,
     lat: 37.084,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -890,7 +924,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0539,
     lat: 37.0649,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -900,7 +936,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4978,
     lat: 37.2993,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -910,7 +948,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5232,
     lat: 36.8524,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -920,7 +960,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.6698,
     lat: 37.1055,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -930,7 +972,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.7031,
     lat: 36.9827,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -942,7 +986,9 @@ export const cityGeo = [
     remark: '百泉复涌生态恢复',
     lng: 114.5364,
     lat: 37.0744,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'county',
@@ -954,7 +1000,9 @@ export const cityGeo = [
     remark: '北控水务邢台区域公司运营，南水北调受水',
     lng: 114.4929,
     lat: 37.0878,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -965,7 +1013,9 @@ export const cityGeo = [
     remark: '联村供水',
     lng: 114.5009,
     lat: 37.4787,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -976,7 +1026,9 @@ export const cityGeo = [
     remark: '联村供水',
     lng: 114.5278,
     lat: 37.4728,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -986,7 +1038,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5243,
     lat: 37.4229,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -996,7 +1050,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.524,
     lat: 37.4214,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1006,7 +1062,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5208,
     lat: 37.4394,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1016,7 +1074,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4889,
     lat: 37.4415,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1026,7 +1086,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5106,
     lat: 37.4304,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1036,7 +1098,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5221,
     lat: 37.4413,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1046,7 +1110,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.518,
     lat: 37.4486,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1057,7 +1123,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.787,
     lat: 37.3795,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1068,7 +1136,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.7779,
     lat: 37.3599,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1079,7 +1149,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.755,
     lat: 37.3796,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1090,7 +1162,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.7562,
     lat: 37.3637,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1101,7 +1175,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.8007,
     lat: 37.3238,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1112,7 +1188,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.7978,
     lat: 37.3212,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1123,7 +1201,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.7654,
     lat: 37.3333,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1134,7 +1214,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.7693,
     lat: 37.3215,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1145,7 +1227,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.7932,
     lat: 37.3704,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1156,7 +1240,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.7882,
     lat: 37.3592,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1167,7 +1253,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.7859,
     lat: 37.3584,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1178,7 +1266,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.8072,
     lat: 37.3486,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1189,7 +1279,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.8065,
     lat: 37.3412,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1200,7 +1292,9 @@ export const cityGeo = [
     remark: '乡镇级',
     lng: 114.7674,
     lat: 37.3684,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1210,7 +1304,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0829,
     lat: 37.6063,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1220,7 +1316,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0511,
     lat: 37.629,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1230,7 +1328,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0667,
     lat: 37.6462,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1240,7 +1340,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0839,
     lat: 37.592,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1250,7 +1352,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0519,
     lat: 37.6394,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1260,7 +1364,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0498,
     lat: 37.6432,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1270,7 +1376,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0588,
     lat: 37.6163,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1280,7 +1388,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0814,
     lat: 37.6453,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1290,7 +1400,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0897,
     lat: 37.6034,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1300,7 +1412,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0552,
     lat: 37.6177,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1310,7 +1424,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0778,
     lat: 37.6109,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1320,7 +1436,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0357,
     lat: 37.6416,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1330,7 +1448,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0716,
     lat: 37.6436,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1340,7 +1460,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0431,
     lat: 37.6397,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1350,7 +1472,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0574,
     lat: 37.5989,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1360,7 +1484,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0825,
     lat: 37.6461,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1370,7 +1496,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0729,
     lat: 37.603,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1380,7 +1508,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0596,
     lat: 37.617,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1390,7 +1520,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.088,
     lat: 37.6487,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1400,7 +1532,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0478,
     lat: 37.5959,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1410,7 +1544,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.046,
     lat: 37.6122,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1420,7 +1556,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4899,
     lat: 37.0064,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1430,7 +1568,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5204,
     lat: 36.9538,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1440,7 +1580,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.512,
     lat: 36.9785,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1450,7 +1592,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4928,
     lat: 36.9881,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1460,7 +1604,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4918,
     lat: 36.9512,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1470,7 +1616,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5238,
     lat: 36.9815,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1480,7 +1628,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5083,
     lat: 36.9661,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1490,7 +1640,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5121,
     lat: 37.0062,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1500,7 +1652,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4854,
     lat: 36.9578,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1510,7 +1664,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4741,
     lat: 36.9997,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1520,7 +1676,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4806,
     lat: 36.956,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1530,7 +1688,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4822,
     lat: 36.9915,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1540,7 +1700,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.508,
     lat: 36.9701,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1550,7 +1712,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.495,
     lat: 36.9724,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1561,7 +1725,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.3984,
     lat: 37.3733,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1572,7 +1738,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.3854,
     lat: 37.3739,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1583,7 +1751,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.3748,
     lat: 37.3663,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1594,7 +1764,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.3883,
     lat: 37.3838,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1605,7 +1777,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.3655,
     lat: 37.3451,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1616,7 +1790,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.4084,
     lat: 37.337,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1627,7 +1803,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.3771,
     lat: 37.3592,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1638,7 +1816,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.3841,
     lat: 37.3699,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1649,7 +1829,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.4025,
     lat: 37.3777,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1660,7 +1842,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.373,
     lat: 37.3475,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1671,7 +1855,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.3989,
     lat: 37.3558,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1682,7 +1868,9 @@ export const cityGeo = [
     remark: '万人千吨配水站',
     lng: 115.3703,
     lat: 37.381,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1693,7 +1881,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.6727,
     lat: 37.0692,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1704,7 +1894,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.67,
     lat: 37.048,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1715,7 +1907,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.6558,
     lat: 37.075,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1726,7 +1920,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.6893,
     lat: 37.0573,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1737,7 +1933,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.6432,
     lat: 37.0619,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1748,7 +1946,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.6974,
     lat: 37.0942,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1759,7 +1959,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.6486,
     lat: 37.0432,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1770,7 +1972,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.6783,
     lat: 37.0478,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1781,7 +1985,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.691,
     lat: 37.0789,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1792,7 +1998,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.6645,
     lat: 37.0827,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1803,7 +2011,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.6691,
     lat: 37.0557,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1814,7 +2024,9 @@ export const cityGeo = [
     remark: '城乡供水一体化，南水北调水源覆盖全县11个乡镇',
     lng: 115.0694,
     lat: 37.1936,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1825,7 +2037,9 @@ export const cityGeo = [
     remark: '联村供水公司管理',
     lng: 115.159,
     lat: 37.0505,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1836,7 +2050,9 @@ export const cityGeo = [
     remark: '联村供水公司管理',
     lng: 115.164,
     lat: 37.0992,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1847,7 +2063,9 @@ export const cityGeo = [
     remark: '联村供水公司管理',
     lng: 115.144,
     lat: 37.0623,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1858,7 +2076,9 @@ export const cityGeo = [
     remark: '联村供水公司管理',
     lng: 115.1486,
     lat: 37.0836,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1869,7 +2089,9 @@ export const cityGeo = [
     remark: '联村供水公司管理',
     lng: 115.1748,
     lat: 37.0758,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1880,7 +2102,9 @@ export const cityGeo = [
     remark: '联村供水公司管理',
     lng: 115.1345,
     lat: 37.0686,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1891,7 +2115,9 @@ export const cityGeo = [
     remark: '联村供水公司管理',
     lng: 115.1492,
     lat: 37.0585,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1902,7 +2128,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.2494,
     lat: 36.9585,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1913,7 +2141,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.2355,
     lat: 36.9988,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1924,7 +2154,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.2837,
     lat: 36.9864,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1935,7 +2167,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.2698,
     lat: 36.9708,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1946,7 +2180,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.2747,
     lat: 36.9763,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1957,7 +2193,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.275,
     lat: 37.0071,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1968,7 +2206,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.2776,
     lat: 36.9503,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1979,7 +2219,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.2634,
     lat: 36.9559,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -1990,7 +2232,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.2737,
     lat: 36.9953,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2001,7 +2245,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.2762,
     lat: 37.0092,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2012,7 +2258,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.2388,
     lat: 36.9849,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2023,7 +2271,9 @@ export const cityGeo = [
     remark: '千人以上供水工程',
     lng: 114.6997,
     lat: 37.1062,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2034,7 +2284,9 @@ export const cityGeo = [
     remark: '千人以上供水工程',
     lng: 114.6546,
     lat: 37.0633,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2045,7 +2297,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 114.6534,
     lat: 37.0568,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2056,7 +2310,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 114.6666,
     lat: 37.0554,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2067,7 +2323,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 114.707,
     lat: 37.0833,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2078,7 +2336,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 114.6591,
     lat: 37.0888,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2089,7 +2349,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 114.6524,
     lat: 37.1064,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2100,7 +2362,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 114.7067,
     lat: 37.1025,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2111,7 +2375,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 114.7006,
     lat: 37.0786,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2122,7 +2388,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 114.6804,
     lat: 37.0546,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2133,7 +2401,9 @@ export const cityGeo = [
     remark: '南水北调江水置换，覆盖6个乡镇81个村',
     lng: 114.7003,
     lat: 37.4618,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2144,7 +2414,9 @@ export const cityGeo = [
     remark: '千人以上供水站',
     lng: 115.0183,
     lat: 37.0525,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2155,7 +2427,9 @@ export const cityGeo = [
     remark: '城乡供水一体化，覆盖7个乡镇',
     lng: 115.0266,
     lat: 37.0518,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2166,7 +2440,9 @@ export const cityGeo = [
     remark: '银龙水务运营，城乡供水一体化',
     lng: 115.2621,
     lat: 37.5158,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2177,7 +2453,9 @@ export const cityGeo = [
     remark: '南水北调受水，城乡供水一体化',
     lng: 114.6748,
     lat: 37.0275,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2188,7 +2466,9 @@ export const cityGeo = [
     remark: '城乡供水一体化',
     lng: 115.4937,
     lat: 36.8829,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2198,7 +2478,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5008,
     lat: 37.3095,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2208,7 +2490,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.4874,
     lat: 37.2768,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2218,7 +2502,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5118,
     lat: 37.2877,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '邢台市',
     level: 'township',
@@ -2228,5 +2514,7 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5294,
     lat: 37.317,
-  },
+    kind: '井',
+  }
+,
 ];

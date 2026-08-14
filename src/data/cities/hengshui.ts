@@ -840,7 +840,9 @@ export const cityGeo = [
     remark: '滏阳水厂，市区出厂水监测点',
     lng: 115.6801,
     lat: 37.7189,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'municipal',
@@ -852,7 +854,9 @@ export const cityGeo = [
     remark: '大庆水厂',
     lng: 115.6401,
     lat: 37.7346,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'municipal',
@@ -864,7 +868,9 @@ export const cityGeo = [
     remark: '南水北调中线受水区',
     lng: 115.6883,
     lat: 37.755,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -876,7 +882,9 @@ export const cityGeo = [
     remark: '全市332万农村人口已全部喝上长江水',
     lng: 115.5967,
     lat: 37.5474,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -886,7 +894,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.7792,
     lat: 37.5252,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -896,7 +906,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.8683,
     lat: 37.8006,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -906,7 +918,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.6764,
     lat: 37.7765,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -916,7 +930,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.9566,
     lat: 38.0188,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -927,7 +943,9 @@ export const cityGeo = [
     remark: '2026年2月调整保护区',
     lng: 115.7401,
     lat: 38.2591,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -937,7 +955,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5206,
     lat: 38.1893,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -947,7 +967,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.8783,
     lat: 37.3541,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -957,7 +979,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.022,
     lat: 37.7277,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -967,7 +991,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.1267,
     lat: 37.8693,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -977,7 +1003,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.7358,
     lat: 37.752,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'county',
@@ -987,7 +1015,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.6292,
     lat: 37.7165,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -997,7 +1027,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.6544,
     lat: 37.7492,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1007,7 +1039,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.6467,
     lat: 37.7577,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1017,7 +1051,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.6833,
     lat: 37.7286,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1028,7 +1064,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6059,
     lat: 37.5534,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1039,7 +1077,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.5803,
     lat: 37.5753,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1050,7 +1090,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.5975,
     lat: 37.5246,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1061,7 +1103,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.5677,
     lat: 37.5438,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1072,7 +1116,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6059,
     lat: 37.5742,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1083,7 +1129,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.5622,
     lat: 37.5634,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1094,7 +1142,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.5717,
     lat: 37.5401,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1105,7 +1155,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.5883,
     lat: 37.5692,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1116,7 +1168,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.5672,
     lat: 37.5428,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1127,7 +1181,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.557,
     lat: 37.5765,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1138,7 +1194,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6029,
     lat: 37.5506,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1149,7 +1207,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.8064,
     lat: 37.4882,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1160,7 +1220,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7613,
     lat: 37.4911,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1171,7 +1233,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.8092,
     lat: 37.5124,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1182,7 +1246,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7924,
     lat: 37.5245,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1193,7 +1259,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7699,
     lat: 37.5249,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1204,7 +1272,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7747,
     lat: 37.5214,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1215,7 +1285,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7529,
     lat: 37.5055,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1226,7 +1298,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7862,
     lat: 37.536,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1237,7 +1311,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.8041,
     lat: 37.5153,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1248,7 +1324,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7862,
     lat: 37.5277,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1259,7 +1337,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.8003,
     lat: 37.5036,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1270,7 +1350,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.77,
     lat: 37.4868,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1281,7 +1363,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.801,
     lat: 37.5279,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1292,7 +1376,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.79,
     lat: 37.513,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1303,7 +1389,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.9058,
     lat: 37.8178,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1314,7 +1402,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.9147,
     lat: 37.7951,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1325,7 +1415,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.9161,
     lat: 37.8107,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1336,7 +1428,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.915,
     lat: 37.816,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1347,7 +1441,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.8966,
     lat: 37.7759,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1358,7 +1454,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.8709,
     lat: 37.8248,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1369,7 +1467,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.8728,
     lat: 37.7912,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1380,7 +1480,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.9163,
     lat: 37.8118,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1391,7 +1493,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.9652,
     lat: 38.0002,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1402,7 +1506,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.9967,
     lat: 38.0362,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1413,7 +1519,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.9667,
     lat: 38.0214,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1424,7 +1532,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.9885,
     lat: 38.0321,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1435,7 +1545,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.9998,
     lat: 38.0325,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1446,7 +1558,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.971,
     lat: 38.0031,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1457,7 +1571,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7292,
     lat: 38.2363,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1468,7 +1584,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7262,
     lat: 38.2287,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1479,7 +1597,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.703,
     lat: 38.2155,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1490,7 +1610,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7027,
     lat: 38.2114,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1501,7 +1623,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7305,
     lat: 38.2506,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1512,7 +1636,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7562,
     lat: 38.228,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1523,7 +1649,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7271,
     lat: 38.2597,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1534,7 +1662,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7299,
     lat: 38.2479,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1545,7 +1675,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.7283,
     lat: 38.2393,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1555,7 +1687,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5267,
     lat: 38.1983,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1565,7 +1699,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5364,
     lat: 38.2049,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1575,7 +1711,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5394,
     lat: 38.2136,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1585,7 +1723,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5406,
     lat: 38.1879,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1595,7 +1735,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5438,
     lat: 38.1947,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1606,7 +1748,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.8897,
     lat: 37.3661,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1617,7 +1761,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.8974,
     lat: 37.3259,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1628,7 +1774,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.8857,
     lat: 37.3733,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1639,7 +1787,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.863,
     lat: 37.3334,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1650,7 +1800,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.9062,
     lat: 37.3746,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1661,7 +1813,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.864,
     lat: 37.3512,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1672,7 +1826,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.9026,
     lat: 37.3444,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1683,7 +1839,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.9096,
     lat: 37.3483,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1694,7 +1852,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.875,
     lat: 37.374,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1705,7 +1865,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.9169,
     lat: 37.3657,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1716,7 +1878,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.8622,
     lat: 37.3471,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1727,7 +1891,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.8878,
     lat: 37.3671,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1738,7 +1904,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.87,
     lat: 37.3627,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1749,7 +1917,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.8869,
     lat: 37.3456,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1760,7 +1930,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.8791,
     lat: 37.359,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1771,7 +1943,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.8635,
     lat: 37.3594,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1782,7 +1956,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.8666,
     lat: 37.3601,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1793,7 +1969,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.908,
     lat: 37.3744,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1804,7 +1982,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0019,
     lat: 37.6778,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1815,7 +1995,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0099,
     lat: 37.7074,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1826,7 +2008,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0487,
     lat: 37.6846,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1837,7 +2021,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.9995,
     lat: 37.712,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1848,7 +2034,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0416,
     lat: 37.6961,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1859,7 +2047,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 116.0283,
     lat: 37.7029,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1870,7 +2060,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0381,
     lat: 37.6763,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1881,7 +2073,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0249,
     lat: 37.7256,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1892,7 +2086,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0229,
     lat: 37.6822,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1903,7 +2099,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0205,
     lat: 37.7085,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1914,7 +2112,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.9973,
     lat: 37.6936,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1925,7 +2125,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.9962,
     lat: 37.7071,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1936,7 +2138,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0078,
     lat: 37.6947,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1947,7 +2151,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.022,
     lat: 37.7299,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1958,7 +2164,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0347,
     lat: 37.727,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1969,7 +2177,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0261,
     lat: 37.71,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1980,7 +2190,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.9929,
     lat: 37.6826,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -1991,7 +2203,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 115.9914,
     lat: 37.7024,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2002,7 +2216,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.0365,
     lat: 37.6966,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2013,7 +2229,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.1162,
     lat: 37.8339,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2024,7 +2242,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 116.1437,
     lat: 37.8595,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2035,7 +2255,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.1372,
     lat: 37.847,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2046,7 +2268,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.1544,
     lat: 37.8699,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2057,7 +2281,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.1413,
     lat: 37.8567,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2068,7 +2294,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 116.115,
     lat: 37.8809,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2079,7 +2307,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 116.1523,
     lat: 37.8629,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2090,7 +2320,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.1592,
     lat: 37.8483,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2101,7 +2333,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.1625,
     lat: 37.8521,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2112,7 +2346,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.11,
     lat: 37.8774,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2123,7 +2359,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.1683,
     lat: 37.8884,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2134,7 +2372,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.1656,
     lat: 37.8764,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2145,7 +2385,9 @@ export const cityGeo = [
     remark: '氟化物超标(地质背景)',
     lng: 116.1142,
     lat: 37.8331,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2156,7 +2398,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6884,
     lat: 37.705,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2167,7 +2411,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6068,
     lat: 37.688,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2178,7 +2424,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6138,
     lat: 37.6903,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2189,7 +2437,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6607,
     lat: 37.6745,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2200,7 +2450,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6544,
     lat: 37.7159,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2211,7 +2463,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6972,
     lat: 37.6613,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2222,7 +2476,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6021,
     lat: 37.6822,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2233,7 +2489,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6692,
     lat: 37.7543,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2244,7 +2502,9 @@ export const cityGeo = [
     remark: '备用水源',
     lng: 115.6521,
     lat: 37.7298,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2254,7 +2514,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.6134,
     lat: 37.7274,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2264,7 +2526,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.7058,
     lat: 37.7735,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '衡水市',
     level: 'township',
@@ -2274,5 +2538,7 @@ export const cityGeo = [
     status: '在用',
     lng: 115.6624,
     lat: 37.7448,
-  },
+    kind: '井',
+  }
+,
 ];

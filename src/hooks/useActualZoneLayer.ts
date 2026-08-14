@@ -24,6 +24,8 @@ export interface ZoneBoundary {
   level: string;
   /** 多边形顶点环 [[lng, lat], ...] */
   ring: Array<[number, number]>;
+  /** 要素类型：井 / 保护区范围（按保护区级别判定） */
+  kind?: '井' | '保护区范围';
 }
 
 /** 与数据文件对应的全部城市 */
@@ -42,6 +44,12 @@ const ALL_CITIES = [
   '辛集市',
   '定州市',
 ];
+
+/** 要素类型样式：井（棕色系） vs 保护区范围（蓝绿色系） */
+const KIND_STYLE: Record<'井' | '保护区范围', { color: string; fill: string }> = {
+  井: { color: '#B45309', fill: '#B45309' },
+  保护区范围: { color: '', fill: '' },
+};
 
 /** 各级别样式（实际边界用蓝绿色系，与计算圈层红色系区分） */
 const LEVEL_STYLE: Record<string, { color: string; fill: string }> = {
@@ -97,7 +105,9 @@ export function useActualZoneLayer(
           if (cancelled) return;
           const audit = auditZoneStatusWithRules(auditRules, city, b.name);
           const isAudit = audit !== null;
-          const style = isAudit ? AUDIT_STYLE[audit] : (LEVEL_STYLE[b.level] ?? DEFAULT_STYLE);
+          const baseStyle =
+            b.kind === '井' ? KIND_STYLE['井'] : (LEVEL_STYLE[b.level] ?? DEFAULT_STYLE);
+          const style = isAudit ? AUDIT_STYLE[audit] : baseStyle;
           const latlngs = b.ring.map((p) => [p[1], p[0]] as [number, number]);
           const poly = L.polygon(latlngs, {
             color: style.color,
@@ -115,7 +125,8 @@ export function useActualZoneLayer(
           poly.bindPopup(
             `<div style="font-family:system-ui;min-width:180px;font-size:13px">
               <div style="font-weight:700;font-size:14px;margin-bottom:4px;color:#333">${b.name}</div>
-              <div style="color:#666"><b>级别：</b><span style="color:${isAudit ? style.color : style.color};font-weight:600">${b.level}</span></div>
+              <div style="color:#666"><b>级别：</b><span style="color:${style.color};font-weight:600">${b.level}</span></div>
+              ${b.kind ? `<div style="color:#666"><b>要素类型：</b><span style="color:${b.kind === '井' ? '#B45309' : '#2563EB'};font-weight:600">${b.kind}</span></div>` : ''}
               ${auditTip}
             </div>`,
           );

@@ -805,7 +805,9 @@ export const cityGeo = [
     river: '唐河',
     lng: 114.9609,
     lat: 38.7491,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '保定市',
     level: 'municipal',
@@ -818,7 +820,9 @@ export const cityGeo = [
     river: '大清河',
     lng: 114.8883,
     lat: 38.6003,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '保定市',
     level: 'municipal',
@@ -830,7 +834,9 @@ export const cityGeo = [
     remark: '"先有一亩泉，后有保定府',
     lng: 115.4715,
     lat: 38.8695,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'municipal',
@@ -842,7 +848,9 @@ export const cityGeo = [
     remark: '南水北调中线受水，累计供水超44亿m³，受益人口逾420万',
     lng: 115.4913,
     lat: 38.8364,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '保定市',
     level: 'municipal',
@@ -855,7 +863,9 @@ export const cityGeo = [
     river: '瀑河',
     lng: 115.7199,
     lat: 39.0195,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -865,7 +875,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.4977,
     lat: 38.7986,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -875,7 +887,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.6927,
     lat: 39.3787,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -885,7 +899,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.7458,
     lat: 38.9953,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -895,7 +911,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.6901,
     lat: 39.3844,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -905,7 +923,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.2031,
     lat: 38.8316,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -915,7 +935,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.8037,
     lat: 39.2871,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -925,7 +947,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0024,
     lat: 38.7734,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -935,7 +959,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.7582,
     lat: 38.5909,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -945,7 +971,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.842,
     lat: 38.9601,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -955,7 +983,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.1343,
     lat: 38.7211,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -965,7 +995,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.8343,
     lat: 38.9248,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -975,7 +1007,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.4803,
     lat: 39.3534,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -985,7 +1019,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.8932,
     lat: 38.6341,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -995,7 +1031,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5965,
     lat: 38.4853,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -1005,7 +1043,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.1127,
     lat: 38.8272,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -1015,7 +1055,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.4444,
     lat: 38.4816,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -1025,7 +1067,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.8614,
     lat: 39.3072,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -1036,7 +1080,9 @@ export const cityGeo = [
     remark: '南水北调受水市',
     lng: 115.9643,
     lat: 39.5078,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -1046,7 +1092,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.2962,
     lat: 38.4262,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -1056,7 +1104,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.3428,
     lat: 38.9725,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'county',
@@ -1066,7 +1116,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.4628,
     lat: 38.879,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1078,7 +1130,9 @@ export const cityGeo = [
     remark: '日供水10万吨，城区主要水源，南水北调配套',
     lng: 115.9571,
     lat: 39.5035,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1090,7 +1144,9 @@ export const cityGeo = [
     remark: '望都智乐水业有限公司，南水北调配套工程',
     lng: 115.1478,
     lat: 38.7253,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1102,7 +1158,9 @@ export const cityGeo = [
     remark: '集中式生活饮用水水源，2025年监测达标',
     lng: 115.812,
     lat: 38.9277,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1114,7 +1172,9 @@ export const cityGeo = [
     remark: '集中式生活饮用水水源',
     lng: 115.8662,
     lat: 38.9257,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1126,7 +1186,9 @@ export const cityGeo = [
     remark: '集中式生活饮用水水源',
     lng: 115.8304,
     lat: 38.9209,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1138,7 +1200,9 @@ export const cityGeo = [
     remark: '集中式生活饮用水水源',
     lng: 115.85,
     lat: 38.9285,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1150,7 +1214,9 @@ export const cityGeo = [
     remark: '集中式生活饮用水水源',
     lng: 115.856,
     lat: 38.9556,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1162,7 +1228,9 @@ export const cityGeo = [
     remark: '中洲水业有限公司，地表饮用水水源',
     lng: 115.8399,
     lat: 38.9183,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1174,7 +1242,9 @@ export const cityGeo = [
     remark: '雄县集中式生活饮用水水源地',
     lng: 116.112,
     lat: 38.981,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1186,7 +1256,9 @@ export const cityGeo = [
     remark: '雄县集中式生活饮用水水源地',
     lng: 116.109,
     lat: 38.9818,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1198,7 +1270,9 @@ export const cityGeo = [
     remark: '雄县集中式生活饮用水水源地',
     lng: 116.0848,
     lat: 38.9732,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1210,7 +1284,9 @@ export const cityGeo = [
     remark: '冀政字〔2025〕29号，一级保护区62436m²',
     lng: 115.8649,
     lat: 38.9941,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1222,7 +1298,9 @@ export const cityGeo = [
     remark: '已取消保护区，冀政字〔2021〕15号',
     lng: 115.9722,
     lat: 39.497,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1234,7 +1312,9 @@ export const cityGeo = [
     remark: '已取消保护区，冀政字〔2023〕65号',
     lng: 115.487,
     lat: 38.7708,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1246,7 +1326,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.6886,
     lat: 39.37,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1258,7 +1340,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.705,
     lat: 39.3912,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1270,7 +1354,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.9593,
     lat: 39.469,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1282,7 +1368,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.891,
     lat: 38.62,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1294,7 +1382,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.896,
     lat: 38.597,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1306,7 +1396,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.8876,
     lat: 38.5991,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1318,7 +1410,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.8792,
     lat: 38.6298,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1330,7 +1424,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.8694,
     lat: 38.6173,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1342,7 +1438,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.3038,
     lat: 38.413,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1354,7 +1452,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.2995,
     lat: 38.3993,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1366,7 +1466,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.3068,
     lat: 38.4419,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1378,7 +1480,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.4556,
     lat: 38.4822,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1390,7 +1494,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.4424,
     lat: 38.4701,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1402,7 +1508,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.4863,
     lat: 38.4838,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1414,7 +1522,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.4889,
     lat: 38.4753,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1426,7 +1536,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.4417,
     lat: 38.4683,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1438,7 +1550,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.9875,
     lat: 38.7215,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1450,7 +1564,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.9591,
     lat: 38.723,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1462,7 +1578,9 @@ export const cityGeo = [
     remark: '齐家佐乡',
     lng: 114.9572,
     lat: 38.7305,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1474,7 +1592,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.9895,
     lat: 38.7453,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1486,7 +1606,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.5141,
     lat: 39.3686,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1498,7 +1620,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.5083,
     lat: 39.3477,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1510,7 +1634,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.4916,
     lat: 39.3224,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1522,7 +1648,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.123,
     lat: 38.8176,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1534,7 +1662,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.1234,
     lat: 38.8516,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1546,7 +1676,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.7143,
     lat: 39.3845,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1558,7 +1690,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.7184,
     lat: 39.386,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1570,7 +1704,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.1621,
     lat: 38.8707,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1582,7 +1718,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.2105,
     lat: 38.8687,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1594,7 +1732,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 114.2083,
     lat: 38.836,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1606,7 +1746,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.7719,
     lat: 38.5751,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1618,7 +1760,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.7956,
     lat: 38.5875,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1630,7 +1774,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.7847,
     lat: 38.5842,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1642,7 +1788,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.7902,
     lat: 38.5776,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1654,7 +1802,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.7742,
     lat: 38.6044,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1666,7 +1816,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.788,
     lat: 38.5902,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1678,7 +1830,9 @@ export const cityGeo = [
     remark: '乡镇集中式饮用水水源保护区',
     lng: 115.7759,
     lat: 38.5852,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1690,7 +1844,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地',
     lng: 115.5213,
     lat: 38.8407,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1702,7 +1858,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地，已停用',
     lng: 115.6098,
     lat: 38.4711,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1714,7 +1872,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地，已停用',
     lng: 115.5597,
     lat: 38.4646,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1726,7 +1886,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地',
     lng: 115.7591,
     lat: 38.5882,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1738,7 +1900,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地',
     lng: 115.7528,
     lat: 38.5617,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1750,7 +1914,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地',
     lng: 115.483,
     lat: 38.4702,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1762,7 +1928,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地',
     lng: 115.4534,
     lat: 38.4835,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1774,7 +1942,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地，应急备用',
     lng: 115.3258,
     lat: 38.4213,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1786,7 +1956,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地（已取消保护区，2025年3月）',
     lng: 115.2965,
     lat: 38.9391,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1798,7 +1970,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地二水厂',
     lng: 114.8846,
     lat: 38.6327,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1810,7 +1984,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地二水厂',
     lng: 114.8828,
     lat: 38.6103,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1822,7 +1998,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地二水厂',
     lng: 114.8769,
     lat: 38.645,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1834,7 +2012,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地',
     lng: 114.7175,
     lat: 39.3313,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1846,7 +2026,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地，备用水源',
     lng: 115.7175,
     lat: 39.4132,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1858,7 +2040,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地，备用水源',
     lng: 115.7254,
     lat: 39.3627,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1870,7 +2054,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地',
     lng: 115.4729,
     lat: 39.3689,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1882,7 +2068,9 @@ export const cityGeo = [
     remark: '省考集中式饮用水水源地',
     lng: 115.7416,
     lat: 39.0008,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1893,7 +2081,9 @@ export const cityGeo = [
     remark: '城乡供水一体化，24座水厂覆盖主城区',
     lng: 115.5163,
     lat: 38.8884,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1904,7 +2094,9 @@ export const cityGeo = [
     remark: '多村联合供水，集中式供水设施名录确认',
     lng: 115.8237,
     lat: 39.29,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1915,7 +2107,9 @@ export const cityGeo = [
     remark: '南水北调受水市，城乡供水一体化',
     lng: 115.9976,
     lat: 39.4775,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1926,7 +2120,9 @@ export const cityGeo = [
     remark: '城乡供水一体化',
     lng: 115.9061,
     lat: 39.3235,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1937,7 +2133,9 @@ export const cityGeo = [
     remark: '城乡供水一体化，南水北调受水市',
     lng: 115.3261,
     lat: 38.4024,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1948,7 +2146,9 @@ export const cityGeo = [
     remark: '城乡供水一体化推进中',
     lng: 115.7618,
     lat: 38.6072,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1959,7 +2159,9 @@ export const cityGeo = [
     remark: '298个村级供水工程，瀑河水库备用水源，农村自来水全覆盖',
     lng: 115.7564,
     lat: 38.9771,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1970,7 +2172,9 @@ export const cityGeo = [
     remark: '乡镇级水源保护区已划定',
     lng: 114.6649,
     lat: 39.3852,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1981,7 +2185,9 @@ export const cityGeo = [
     remark: '乡镇级水源保护区已划定',
     lng: 114.6653,
     lat: 39.3639,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -1992,7 +2198,9 @@ export const cityGeo = [
     remark: '乡镇级水源保护区已划定',
     lng: 114.7148,
     lat: 39.3304,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -2003,7 +2211,9 @@ export const cityGeo = [
     remark: '乡镇级水源保护区已划定',
     lng: 114.6739,
     lat: 39.3518,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -2014,7 +2224,9 @@ export const cityGeo = [
     remark: '乡镇级水源保护区已划定',
     lng: 114.7115,
     lat: 39.3429,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -2025,7 +2237,9 @@ export const cityGeo = [
     remark: '乡镇级水源保护区已划定',
     lng: 114.6824,
     lat: 39.3539,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -2036,7 +2250,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕11号批复，乡镇水源保护区已划定',
     lng: 114.9512,
     lat: 38.7343,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -2047,7 +2263,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕11号批复，乡镇水源保护区已划定',
     lng: 115.5251,
     lat: 39.3731,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -2058,7 +2276,9 @@ export const cityGeo = [
     remark: '保政呈〔2020〕133号批复，乡镇水源保护区已划定',
     lng: 115.1432,
     lat: 38.8579,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -2069,7 +2289,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕11号批复，乡镇水源保护区已划定',
     lng: 114.9071,
     lat: 38.6082,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '保定市',
     level: 'township',
@@ -2080,5 +2302,7 @@ export const cityGeo = [
     remark: '冀政字〔2022〕11号批复，乡镇水源保护区已划定',
     lng: 114.21,
     lat: 38.8435,
-  },
+    kind: '井',
+  }
+,
 ];

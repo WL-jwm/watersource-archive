@@ -1,5 +1,18 @@
 # 变更日志
 
+## [P8.8.0] - 2026-08-14
+
+### 保护区范围与井字段区分
+
+- **边界数据加 kind 字段**：zone-boundaries 每条要素新增 `kind`（`井` / `保护区范围`），按名称聚合保护区级别判定——含二级/准/核心/缓冲区 → `保护区范围`，仅一级保护区 → `井`（1258 环：保护区范围 570、井 688）
+- **点位数据加 kind 字段**：waterSourceGeo.json 与 data/cities/*.ts 的 cityGeo 每条新增 `kind`，按水源类型判定——地下水 → `井`，地表水 → `保护区范围`（1002 条：保护区范围 60、井 942）
+- **类型联动**：`ZoneBoundary`、`WaterSourceRecord`、`GeoSource` 均新增 `kind` 字段，store 构建记录时从 geo 带出 kind
+- **地图可视化区分**：实际保护区边界图层按 kind 着色（井=棕色，保护区范围=蓝绿色系）；边界与点位弹窗均显示「要素类型」字段；图例新增「井（单井保护区）」项
+- **数据重建**：内联离线数据 zoneBoundaryInlineData.ts 重新生成（含 kind）；public/zone-boundaries/*.json、waterSourceGeo.json、13 个城市 cityGeo 均已同步；原始数据已备份（scripts/backup_kind/）
+
+### 测试
+- 边界/点位相关测试通过（zoneBoundaryData 1258 环校验、zoneBoundarySource、actualBoundaryAvoidance、waterSourceStore 缓存/预加载），tsc 0 错误，ESLint 0 问题
+
 ## [P8.7.0] - 2026-08-14
 
 ### 地图交互增强（三项）

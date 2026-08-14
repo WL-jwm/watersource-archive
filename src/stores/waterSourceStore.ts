@@ -43,6 +43,8 @@ export interface WaterSourceRecord {
   river?: string;
   lng?: number;
   lat?: number;
+  /** 要素类型：井 / 保护区范围（按水源类型判定） */
+  kind?: '井' | '保护区范围';
   dataVersion?: number;
   /** S11.7: 标签 ID 列表 */
   tags?: string[];
@@ -169,11 +171,11 @@ function buildRecordsFromStatic(
   const sources: WaterSourceRecord[] = [];
   const metas: CityMeta[] = [];
 
-  const geoIndex = new Map<string, { lng: number; lat: number }>();
+  const geoIndex = new Map<string, { lng: number; lat: number; kind?: string }>();
   if (geoData && Array.isArray(geoData)) {
     for (const g of geoData) {
       if (g && g.city && g.name && typeof g.lng === 'number' && typeof g.lat === 'number') {
-        geoIndex.set(`${g.city}_${g.name}`, { lng: g.lng, lat: g.lat });
+        geoIndex.set(`${g.city}_${g.name}`, { lng: g.lng, lat: g.lat, kind: g.kind });
       }
     }
   }
@@ -208,6 +210,7 @@ function buildRecordsFromStatic(
           river: ws.river,
           lng: geo?.lng,
           lat: geo?.lat,
+          kind: geo?.kind as '井' | '保护区范围' | undefined,
           dataVersion: DATA_VERSION,
         });
       }

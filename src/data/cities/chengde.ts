@@ -418,7 +418,9 @@ export const cityGeo = [
     river: '武烈河流域',
     lng: 117.9254,
     lat: 40.9829,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'municipal',
@@ -431,7 +433,9 @@ export const cityGeo = [
     river: '滦河流域',
     lng: 117.9106,
     lat: 40.9668,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'municipal',
@@ -443,7 +447,9 @@ export const cityGeo = [
     river: '武烈河流域',
     lng: 117.9051,
     lat: 40.9467,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'municipal',
@@ -455,7 +461,9 @@ export const cityGeo = [
     river: '武烈河流域',
     lng: 117.9076,
     lat: 40.9533,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'municipal',
@@ -467,7 +475,9 @@ export const cityGeo = [
     river: '武烈河流域',
     lng: 117.9232,
     lat: 40.9497,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'municipal',
@@ -480,7 +490,9 @@ export const cityGeo = [
     river: '滦河流域',
     lng: 117.8,
     lat: 40.933,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'municipal',
@@ -491,7 +503,9 @@ export const cityGeo = [
     status: '在用',
     lng: 117.8131,
     lat: 40.947,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'municipal',
@@ -502,7 +516,9 @@ export const cityGeo = [
     status: '在用',
     lng: 117.8284,
     lat: 40.9703,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'municipal',
@@ -514,7 +530,9 @@ export const cityGeo = [
     river: '柳河流域',
     lng: 117.6907,
     lat: 40.5383,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'municipal',
@@ -527,7 +545,9 @@ export const cityGeo = [
     river: '武烈河',
     lng: 117.9053,
     lat: 40.9893,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '承德市',
     level: 'municipal',
@@ -539,7 +559,9 @@ export const cityGeo = [
     remark: '2026年起列为地市级水源',
     lng: 117.7872,
     lat: 40.9791,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -551,7 +573,9 @@ export const cityGeo = [
     river: '小滦河流域',
     lng: 117.978,
     lat: 41.0153,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -563,7 +587,9 @@ export const cityGeo = [
     river: '老牛河流域',
     lng: 118.186,
     lat: 40.7507,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -575,7 +601,9 @@ export const cityGeo = [
     river: '老牛河流域',
     lng: 118.16,
     lat: 40.7834,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -587,7 +615,9 @@ export const cityGeo = [
     river: '伊逊河流域',
     lng: 117.761,
     lat: 41.3201,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -600,7 +630,9 @@ export const cityGeo = [
     river: '牤牛河',
     lng: 117.3407,
     lat: 40.9154,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -611,7 +643,9 @@ export const cityGeo = [
     river: '兴州河',
     lng: 117.3435,
     lat: 40.95,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -622,7 +656,9 @@ export const cityGeo = [
     river: '瀑河',
     lng: 118.6823,
     lat: 41.0354,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -634,7 +670,9 @@ export const cityGeo = [
     river: '伊逊河流域',
     lng: 117.7802,
     lat: 41.9138,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -646,7 +684,9 @@ export const cityGeo = [
     river: '伊逊河流域',
     lng: 117.766,
     lat: 41.9169,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -659,7 +699,9 @@ export const cityGeo = [
     river: '清河/滦河山区',
     lng: 118.5125,
     lat: 40.5806,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -671,7 +713,9 @@ export const cityGeo = [
     river: '瀑河/滦河山区',
     lng: 118.4912,
     lat: 40.5989,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -683,7 +727,9 @@ export const cityGeo = [
     river: '柳河流域',
     lng: 117.4736,
     lat: 40.4378,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -695,7 +741,9 @@ export const cityGeo = [
     river: '柳河流域',
     lng: 117.5196,
     lat: 40.4367,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -707,7 +755,9 @@ export const cityGeo = [
     river: '柳河流域',
     lng: 117.479,
     lat: 40.3977,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -718,7 +768,9 @@ export const cityGeo = [
     remark: '2025年新划定保护区',
     lng: 117.5106,
     lat: 40.4253,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -730,7 +782,9 @@ export const cityGeo = [
     river: '潮河流域',
     lng: 116.6652,
     lat: 41.1914,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'county',
@@ -741,7 +795,9 @@ export const cityGeo = [
     remark: '待建成后替代大龙庙水源地',
     lng: 117.8281,
     lat: 40.9319,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -753,7 +809,9 @@ export const cityGeo = [
     remark: '冀政字〔2023〕8号，乡镇集中式饮用水水源保护区',
     lng: 117.7429,
     lat: 41.2978,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -765,7 +823,9 @@ export const cityGeo = [
     remark: '冀政字〔2023〕8号，乡镇集中式饮用水水源保护区',
     lng: 117.9848,
     lat: 40.9605,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -777,7 +837,9 @@ export const cityGeo = [
     remark: '冀政字〔2023〕8号，乡镇集中式饮用水水源保护区',
     lng: 118.713,
     lat: 41.0385,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -789,7 +851,9 @@ export const cityGeo = [
     remark: '已取消',
     lng: 117.9549,
     lat: 40.9658,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -801,7 +865,9 @@ export const cityGeo = [
     remark: '已取消',
     lng: 117.9306,
     lat: 40.9942,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -813,7 +879,9 @@ export const cityGeo = [
     remark: '已取消',
     lng: 117.9378,
     lat: 40.9943,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -825,7 +893,9 @@ export const cityGeo = [
     remark: '已取消',
     lng: 117.9262,
     lat: 40.9461,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -837,7 +907,9 @@ export const cityGeo = [
     river: '小滦河流域',
     lng: 117.7886,
     lat: 41.9558,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -849,7 +921,9 @@ export const cityGeo = [
     river: '老牛河流域',
     lng: 118.1712,
     lat: 40.7961,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -861,7 +935,9 @@ export const cityGeo = [
     river: '滦河流域',
     lng: 118.1649,
     lat: 40.7816,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -873,7 +949,9 @@ export const cityGeo = [
     river: '滦河',
     lng: 117.3556,
     lat: 40.9199,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -885,7 +963,9 @@ export const cityGeo = [
     river: '滦河',
     lng: 117.3508,
     lat: 40.9481,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -897,7 +977,9 @@ export const cityGeo = [
     river: '兴洲河',
     lng: 117.3571,
     lat: 40.9581,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -909,7 +991,9 @@ export const cityGeo = [
     river: '伊逊河',
     lng: 117.316,
     lat: 40.9617,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -921,7 +1005,9 @@ export const cityGeo = [
     river: '牤牛河',
     lng: 117.3227,
     lat: 40.9562,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -933,7 +1019,9 @@ export const cityGeo = [
     river: '滦河流域',
     lng: 116.6375,
     lat: 41.2263,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -944,7 +1032,9 @@ export const cityGeo = [
     remark: '潘家口水库流域，城乡供水一体化',
     lng: 118.512,
     lat: 40.6036,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -955,7 +1045,9 @@ export const cityGeo = [
     remark: '雾灵山流域，城乡供水一体化',
     lng: 117.4746,
     lat: 40.4473,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '承德市',
     level: 'township',
@@ -966,5 +1058,7 @@ export const cityGeo = [
     remark: '城乡供水一体化',
     lng: 118.6762,
     lat: 41.0181,
-  },
+    kind: '井',
+  }
+,
 ];

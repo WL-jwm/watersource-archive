@@ -201,7 +201,9 @@ export const cityGeo = [
     remark: '秦皇岛市主城区主要水源',
     lng: 119.5789,
     lat: 39.93,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'municipal',
@@ -212,7 +214,9 @@ export const cityGeo = [
     status: '在用',
     lng: 119.2221,
     lat: 39.8857,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'municipal',
@@ -224,7 +228,9 @@ export const cityGeo = [
     river: '青龙河',
     lng: 118.949,
     lat: 40.363,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'county',
@@ -235,7 +241,9 @@ export const cityGeo = [
     status: '在用',
     lng: 118.9729,
     lat: 40.3906,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'county',
@@ -245,7 +253,9 @@ export const cityGeo = [
     status: '在用',
     lng: 119.1318,
     lat: 39.6874,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'county',
@@ -256,7 +266,9 @@ export const cityGeo = [
     remark: '青龙河流域地下水',
     lng: 118.865,
     lat: 39.8651,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'county',
@@ -266,7 +278,9 @@ export const cityGeo = [
     status: '在用',
     lng: 119.2548,
     lat: 39.9048,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'county',
@@ -276,7 +290,9 @@ export const cityGeo = [
     status: '在用',
     lng: 119.7836,
     lat: 39.9924,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'county',
@@ -286,7 +302,9 @@ export const cityGeo = [
     status: '在用',
     lng: 119.484,
     lat: 39.8336,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -298,7 +316,9 @@ export const cityGeo = [
     remark: '冀政字〔2021〕68号，已取消保护区',
     lng: 119.6527,
     lat: 39.9526,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -310,7 +330,9 @@ export const cityGeo = [
     remark: '冀政字〔2023〕3号，已取消保护区',
     lng: 119.1747,
     lat: 39.7054,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -322,7 +344,9 @@ export const cityGeo = [
     remark: '北戴河区集中式生活饮用水水源',
     lng: 119.4775,
     lat: 39.8274,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -334,7 +358,9 @@ export const cityGeo = [
     remark: '山海关区集中式生活饮用水水源',
     lng: 119.7534,
     lat: 39.9975,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -346,7 +372,9 @@ export const cityGeo = [
     remark: '山海关区集中式生活饮用水水源',
     lng: 119.7784,
     lat: 39.9877,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -358,7 +386,9 @@ export const cityGeo = [
     remark: '山海关区集中式生活饮用水水源',
     lng: 119.7633,
     lat: 40.0146,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -370,7 +400,9 @@ export const cityGeo = [
     remark: '山海关区集中式生活饮用水水源',
     lng: 119.7862,
     lat: 39.9912,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -382,7 +414,9 @@ export const cityGeo = [
     remark: '海港区集中式生活饮用水水源',
     lng: 119.5717,
     lat: 39.9503,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -394,7 +428,9 @@ export const cityGeo = [
     remark: '海港区集中式生活饮用水水源',
     lng: 119.5942,
     lat: 39.9368,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -406,7 +442,9 @@ export const cityGeo = [
     remark: '海港区集中式生活饮用水水源',
     lng: 119.5918,
     lat: 39.9302,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -418,7 +456,9 @@ export const cityGeo = [
     remark: '抚宁区主要供水水厂，2022年正式供水',
     lng: 119.2301,
     lat: 39.8599,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -430,7 +470,9 @@ export const cityGeo = [
     remark: '抚宁区集中式饮用水水源地，地下水型',
     lng: 119.2517,
     lat: 39.8691,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -442,7 +484,9 @@ export const cityGeo = [
     remark: '已取消保护区，冀政字〔2026〕',
     lng: 119.5412,
     lat: 39.9289,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -453,7 +497,9 @@ export const cityGeo = [
     remark: '水胡同水库+桃林口水库联合供水',
     lng: 118.9638,
     lat: 40.4099,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -464,7 +510,9 @@ export const cityGeo = [
     remark: '城乡供水一体化',
     lng: 119.1331,
     lat: 39.6868,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -475,7 +523,9 @@ export const cityGeo = [
     remark: '青龙河流域地下水，城乡供水一体化',
     lng: 118.8801,
     lat: 39.8768,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '秦皇岛市',
     level: 'township',
@@ -486,5 +536,7 @@ export const cityGeo = [
     remark: '洋河水库配套，城乡供水一体化',
     lng: 119.2697,
     lat: 39.8569,
-  },
+    kind: '井',
+  }
+,
 ];

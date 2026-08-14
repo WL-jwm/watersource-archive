@@ -54,7 +54,9 @@ export const cityGeo = [
     remark: '位于定州市西城区燕家佐，2号水井口',
     lng: 115.0116,
     lat: 38.5363,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '定州市',
     level: 'municipal',
@@ -66,7 +68,9 @@ export const cityGeo = [
     remark: '位于定州市西城区燕家佐，南水北调中线水源',
     lng: 115.0071,
     lat: 38.4925,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '定州市',
     level: 'county',
@@ -77,7 +81,9 @@ export const cityGeo = [
     remark: '城乡供水一体化，南水北调中线水源覆盖全市25个乡镇',
     lng: 115.0035,
     lat: 38.5129,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '定州市',
     level: 'township',
@@ -88,5 +94,7 @@ export const cityGeo = [
     remark: '城乡供水一体化，南水北调中线水源覆盖全市25个乡镇',
     lng: 115.0035,
     lat: 38.5129,
-  },
+    kind: '井',
+  }
+,
 ];

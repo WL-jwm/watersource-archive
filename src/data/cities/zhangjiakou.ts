@@ -425,7 +425,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0679,
     lat: 40.5939,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'municipal',
@@ -437,7 +439,9 @@ export const cityGeo = [
     remark: '建于1993年，服务人口约26万人',
     lng: 114.7716,
     lat: 40.747,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'municipal',
@@ -448,7 +452,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0433,
     lat: 40.6088,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'municipal',
@@ -460,7 +466,9 @@ export const cityGeo = [
     remark: '赤城县云州水库饮用水水源，省政府批复中',
     lng: 115.5371,
     lat: 40.9271,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -470,7 +478,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.58,
     lat: 39.8354,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -480,7 +490,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.7282,
     lat: 40.7538,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -490,7 +502,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.2343,
     lat: 40.3727,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -501,7 +515,9 @@ export const cityGeo = [
     remark: '冬奥会赛区供水',
     lng: 115.2577,
     lat: 40.9992,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -511,7 +527,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5502,
     lat: 40.5287,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -521,7 +539,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.549,
     lat: 40.5334,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -531,7 +551,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.0815,
     lat: 40.6322,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -541,7 +563,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.8629,
     lat: 40.8876,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -551,7 +575,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.6533,
     lat: 41.665,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -561,7 +587,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5335,
     lat: 40.3833,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -571,7 +599,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5218,
     lat: 40.3827,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -581,7 +611,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.3817,
     lat: 40.6643,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -591,7 +623,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.158,
     lat: 40.075,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -601,7 +635,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.1788,
     lat: 40.1296,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -611,7 +647,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.7236,
     lat: 41.1368,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -621,7 +659,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.9049,
     lat: 40.7952,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -631,7 +671,9 @@ export const cityGeo = [
     status: '在用',
     lng: 113.9308,
     lat: 41.1082,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -641,7 +683,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.5836,
     lat: 41.8355,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -651,7 +695,9 @@ export const cityGeo = [
     status: '在用',
     lng: 115.5543,
     lat: 40.944,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -661,7 +707,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.8868,
     lat: 40.8101,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -671,7 +719,9 @@ export const cityGeo = [
     status: '在用',
     lng: 114.8905,
     lat: 40.7852,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'county',
@@ -682,7 +732,9 @@ export const cityGeo = [
     remark: '县城集中式饮用水水源地',
     lng: 114.6041,
     lat: 39.8397,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -694,7 +746,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.5621,
     lat: 39.8132,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -706,7 +760,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.6166,
     lat: 39.8394,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -718,7 +774,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.565,
     lat: 39.8205,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -730,7 +788,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.5652,
     lat: 39.8414,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -742,7 +802,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.5632,
     lat: 39.8581,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -754,7 +816,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.6128,
     lat: 39.8579,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -766,7 +830,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.5897,
     lat: 39.8263,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -778,7 +844,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.6162,
     lat: 39.817,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -790,7 +858,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.608,
     lat: 39.8334,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -802,7 +872,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.5607,
     lat: 39.8535,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -814,7 +886,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.6105,
     lat: 39.8573,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -826,7 +900,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.1483,
     lat: 40.0871,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -838,7 +914,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.1312,
     lat: 40.0797,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -850,7 +928,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.1357,
     lat: 40.1287,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -862,7 +942,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.1792,
     lat: 40.0772,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -874,7 +956,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.1294,
     lat: 40.0755,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -886,7 +970,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.1495,
     lat: 40.1156,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -898,7 +984,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.1798,
     lat: 40.0795,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -910,7 +998,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.1605,
     lat: 40.0944,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -922,7 +1012,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.1218,
     lat: 40.0727,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -934,7 +1026,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.1527,
     lat: 40.0792,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -946,7 +1040,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 115.2381,
     lat: 40.351,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -958,7 +1054,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 115.2495,
     lat: 40.3602,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -970,7 +1068,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 115.2054,
     lat: 40.3826,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -982,7 +1082,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 115.6645,
     lat: 41.6776,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -994,7 +1096,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 114.4071,
     lat: 40.665,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1006,7 +1110,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 115.5312,
     lat: 40.9236,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1018,7 +1124,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 115.5342,
     lat: 40.3465,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1030,7 +1138,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 115.5148,
     lat: 40.3979,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1042,7 +1152,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 115.5481,
     lat: 40.3627,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1054,7 +1166,9 @@ export const cityGeo = [
     remark: '冀政字〔2022〕12号，乡镇集中式饮用水水源保护区',
     lng: 115.5196,
     lat: 40.3472,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1066,7 +1180,9 @@ export const cityGeo = [
     remark: '张家口市县级集中式饮用水水源地',
     lng: 114.7274,
     lat: 40.7941,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1077,7 +1193,9 @@ export const cityGeo = [
     remark: '坝上地区核心供水工程，城乡供水一体化',
     lng: 114.6955,
     lat: 41.1748,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1088,7 +1206,9 @@ export const cityGeo = [
     remark: '坝上地区，城乡供水一体化',
     lng: 114.5761,
     lat: 41.842,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1099,7 +1219,9 @@ export const cityGeo = [
     remark: '坝上地区，城乡供水一体化',
     lng: 115.6804,
     lat: 41.6636,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1110,7 +1232,9 @@ export const cityGeo = [
     remark: '坝上地区，城乡供水一体化',
     lng: 113.9649,
     lat: 41.0563,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1121,7 +1245,9 @@ export const cityGeo = [
     remark: '冬奥赛区供水保障，城乡供水一体化',
     lng: 115.2505,
     lat: 40.9736,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1132,7 +1258,9 @@ export const cityGeo = [
     remark: '云州水库配套，城乡供水一体化',
     lng: 115.5197,
     lat: 40.8999,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1143,7 +1271,9 @@ export const cityGeo = [
     remark: '官厅水库流域，城乡供水一体化',
     lng: 115.5323,
     lat: 40.3451,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1154,7 +1284,9 @@ export const cityGeo = [
     remark: '城乡供水一体化',
     lng: 114.61,
     lat: 39.8662,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1165,7 +1297,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.5864,
     lat: 39.8159,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1176,7 +1310,9 @@ export const cityGeo = [
     remark: '万人千吨',
     lng: 114.5917,
     lat: 39.8535,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1187,7 +1323,9 @@ export const cityGeo = [
     remark: '桑干河流域，城乡供水一体化',
     lng: 114.1423,
     lat: 40.0918,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '张家口市',
     level: 'township',
@@ -1198,5 +1336,7 @@ export const cityGeo = [
     remark: '桑干河流域，城乡供水一体化',
     lng: 115.1958,
     lat: 40.3622,
-  },
+    kind: '井',
+  }
+,
 ];

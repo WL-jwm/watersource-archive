@@ -422,7 +422,9 @@ export const cityGeo = [
     remark: '一水厂+二水厂',
     lng: 116.7211,
     lat: 39.5445,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'municipal',
@@ -434,7 +436,9 @@ export const cityGeo = [
     remark: '开发区一水厂+二水厂',
     lng: 116.6538,
     lat: 39.4769,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'municipal',
@@ -446,7 +450,9 @@ export const cityGeo = [
     remark: '热备水源地',
     lng: 116.274,
     lat: 39.4415,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'municipal',
@@ -458,7 +464,9 @@ export const cityGeo = [
     remark: '九州镇东冯务村，三干六支九水厂体系核心',
     lng: 116.7243,
     lat: 39.4952,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -468,7 +476,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.4177,
     lat: 39.1084,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -478,7 +488,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.3877,
     lat: 39.1099,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -489,7 +501,9 @@ export const cityGeo = [
     remark: '南水北调受水市',
     lng: 117.0786,
     lat: 40.0043,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -500,7 +514,9 @@ export const cityGeo = [
     remark: '南水北调受水县',
     lng: 117.0065,
     lat: 39.7742,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -510,7 +526,9 @@ export const cityGeo = [
     status: '在用',
     lng: 117.0118,
     lat: 39.8728,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -520,7 +538,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.3048,
     lat: 39.3538,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -530,7 +550,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.2731,
     lat: 39.4501,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -540,7 +562,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.4795,
     lat: 38.8456,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -550,7 +574,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.6342,
     lat: 38.6799,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -560,7 +586,9 @@ export const cityGeo = [
     status: '在用',
     lng: 116.7132,
     lat: 39.5185,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'county',
@@ -572,7 +600,9 @@ export const cityGeo = [
     remark: '廊涿干渠受水',
     lng: 116.3227,
     lat: 39.4236,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -583,7 +613,9 @@ export const cityGeo = [
     remark: '县级集中式地下水水源地，2009年完成保护区划分',
     lng: 117.0659,
     lat: 39.9634,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -594,7 +626,9 @@ export const cityGeo = [
     remark: '县级集中式地下水水源地，2009年完成保护区划分',
     lng: 117.0829,
     lat: 39.9653,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -604,8 +638,9 @@ export const cityGeo = [
     remark: '鼎盛水业发展有限公司',
     lng: 117.0881,
     lat: 39.9615,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -615,8 +650,9 @@ export const cityGeo = [
     remark: '金桥水业有限责任公司',
     lng: 117.0891,
     lat: 40.0074,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -627,7 +663,9 @@ export const cityGeo = [
     remark: '南水北调北三县供水工程，2025年开工',
     lng: 117.0277,
     lat: 39.7619,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -638,7 +676,9 @@ export const cityGeo = [
     remark: '日供水2.3万m³，设计供水人口12.3万人',
     lng: 116.3008,
     lat: 39.4431,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -649,7 +689,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂',
     lng: 116.2798,
     lat: 39.4368,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -660,7 +702,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂',
     lng: 116.2979,
     lat: 39.4139,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -671,7 +715,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂',
     lng: 116.2982,
     lat: 39.4147,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -682,7 +728,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂',
     lng: 116.3014,
     lat: 39.4287,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -693,7 +741,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂，2009年首批竣工通水',
     lng: 116.3119,
     lat: 39.4562,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -704,7 +754,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂',
     lng: 116.289,
     lat: 39.437,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -715,7 +767,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂',
     lng: 116.3061,
     lat: 39.4588,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -726,7 +780,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂',
     lng: 116.2896,
     lat: 39.4473,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -737,7 +793,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂，2009年首批竣工通水',
     lng: 116.2731,
     lat: 39.4547,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -748,7 +806,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂，2009年首批竣工通水',
     lng: 116.2961,
     lat: 39.4179,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -759,7 +819,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂，2009年首批竣工通水',
     lng: 116.2873,
     lat: 39.4258,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -770,7 +832,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂，2009年首批竣工通水',
     lng: 116.3128,
     lat: 39.4628,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -781,7 +845,9 @@ export const cityGeo = [
     remark: '供水规模2150吨/日，覆盖2乡35村2.7万人，已切换长江水',
     lng: 116.3194,
     lat: 39.3366,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -792,7 +858,9 @@ export const cityGeo = [
     remark: '日供水6.4万吨，南水北调长江水',
     lng: 116.3094,
     lat: 39.3371,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -803,7 +871,9 @@ export const cityGeo = [
     remark: '南水北调丹江口水库水源，城区供水已切换长江水',
     lng: 116.4103,
     lat: 39.1402,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -813,8 +883,9 @@ export const cityGeo = [
     remark: '乡镇级饮用水水源地',
     lng: 116.7283,
     lat: 39.5036,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -824,8 +895,9 @@ export const cityGeo = [
     remark: '乡镇级饮用水水源地',
     lng: 116.6994,
     lat: 39.5343,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -835,8 +907,9 @@ export const cityGeo = [
     remark: '乡镇级饮用水水源地（广阳第一水厂），覆盖8村2086户8165人',
     lng: 116.6963,
     lat: 39.509,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -846,8 +919,9 @@ export const cityGeo = [
     remark: '农村供水站，广阳区6座农村供水站之一',
     lng: 116.7148,
     lat: 39.5335,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -857,8 +931,9 @@ export const cityGeo = [
     remark: '农村供水站，广阳区6座农村供水站之一',
     lng: 116.714,
     lat: 39.5439,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -868,8 +943,9 @@ export const cityGeo = [
     remark: '农村供水站，广阳区6座农村供水站之一',
     lng: 116.6864,
     lat: 39.5344,
-    status: '在用',
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -880,7 +956,9 @@ export const cityGeo = [
     remark: '南水北调廊涿干渠水源，铭顺自来水有限公司运营',
     lng: 116.717,
     lat: 39.5053,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -891,7 +969,9 @@ export const cityGeo = [
     remark: '南水北调天津干渠水源，铭顺自来水有限公司运营',
     lng: 116.683,
     lat: 39.4955,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -902,7 +982,9 @@ export const cityGeo = [
     remark: '北区供水中心，日处理6600吨超滤设备，已切换长江水',
     lng: 116.6851,
     lat: 39.5431,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -913,7 +995,9 @@ export const cityGeo = [
     remark: '农村供水水站，已切换长江水',
     lng: 116.728,
     lat: 39.5305,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -924,7 +1008,9 @@ export const cityGeo = [
     remark: '农村供水水站，已切换长江水',
     lng: 116.7126,
     lat: 39.5355,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -935,7 +1021,9 @@ export const cityGeo = [
     remark: '农村供水水站，已切换长江水',
     lng: 116.6969,
     lat: 39.4932,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -946,7 +1034,9 @@ export const cityGeo = [
     remark: '农村供水水站，已切换长江水',
     lng: 116.6726,
     lat: 39.5366,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -957,7 +1047,9 @@ export const cityGeo = [
     remark: '南区供水站，超滤一体化净化处理设备，已切换长江水',
     lng: 116.727,
     lat: 39.5396,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -968,7 +1060,9 @@ export const cityGeo = [
     remark: '南区供水站，超滤一体化净化处理设备，已切换长江水',
     lng: 116.6833,
     lat: 39.5081,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -979,7 +1073,9 @@ export const cityGeo = [
     remark: '南区供水站，已切换长江水',
     lng: 116.672,
     lat: 39.4952,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -990,7 +1086,9 @@ export const cityGeo = [
     remark: '2012年建成集中供水工程，已切换南水北调长江水',
     lng: 116.6705,
     lat: 38.7283,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -1001,7 +1099,9 @@ export const cityGeo = [
     remark: '2012年建成集中供水工程',
     lng: 116.6712,
     lat: 38.6961,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -1012,7 +1112,9 @@ export const cityGeo = [
     remark: '2012年建成集中供水工程',
     lng: 116.6769,
     lat: 38.7274,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -1023,7 +1125,9 @@ export const cityGeo = [
     remark: '2012年建成集中供水工程',
     lng: 116.6625,
     lat: 38.6862,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -1034,7 +1138,9 @@ export const cityGeo = [
     remark: '2012年建成集中供水工程',
     lng: 116.631,
     lat: 38.7114,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -1045,7 +1151,9 @@ export const cityGeo = [
     remark: '农村集中供水水厂',
     lng: 116.6396,
     lat: 38.6849,
-  },,
+    kind: '井',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -1056,7 +1164,9 @@ export const cityGeo = [
     remark: '南水北调长江水，与7座农村水厂管网连通，208村22.3万人',
     lng: 116.6706,
     lat: 38.6756,
-  },,
+    kind: '保护区范围',
+  }
+,
   {
     city: '廊坊市',
     level: 'township',
@@ -1066,6 +1176,7 @@ export const cityGeo = [
     remark: '2019年启动乡镇以上农村集中式饮用水水源地保护区划定项目，12镇1乡5农场，具体名称待公开',
     lng: 116.459,
     lat: 38.8936,
-    status: '在用',
-  },
+    kind: '井',
+  }
+,
 ];
