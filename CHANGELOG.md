@@ -1,5 +1,18 @@
 # 变更日志
 
+## [P8.6.0] - 2026-08-14
+
+### 离线单机版（file:// 拷贝即用）
+
+- **内联边界数据**：新增 src/data/zoneBoundaryInlineData.ts（gen_zone_inline 自动生成，13 城 1258 环全部内联）
+- **统一数据源**：新增 zoneBoundarySource.ts，file:// 协议下用内联数据（避免 fetch 本地 JSON 被浏览器拦截），http/https 仍走 fetch；模块级缓存
+- **加载改造**：useActualZoneLayer、actualBoundaryAvoidance 均委托统一数据源，http 部署首屏不受影响（内联数据为独立 chunk，仅 file:// 动态加载）
+- **用途**：把 dist 拷到共享盘/每台电脑，双击 index.html 即可离线使用全部功能（含地图边界、实际边界避让分析）
+- **新增测试**：zoneBoundarySource.test.ts（4 tests）验证内联数据覆盖全部城市、非空、总环数 1258、结构合法
+
+### 测试
+- 单元测试全量通过（1266），tsc 0 错误，ESLint 0 问题，build 成功
+
 ## [P8.5.0] - 2026-08-13
 
 ### 实际保护区边界数据 清洗（public/zone-boundaries）

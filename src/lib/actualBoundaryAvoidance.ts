@@ -12,6 +12,10 @@ import * as turf from '@turf/turf';
 import type { Feature, Polygon } from 'geojson';
 import { auditZoneStatusWithRules, type ZoneAuditRule, type ZoneAuditStatus } from '@/data/zoneAuditMeta';
 import type { ZoneBoundary } from '@/hooks/useActualZoneLayer';
+import {
+  ALL_BOUNDARY_CITIES as ALL_CITIES_FROM_SOURCE,
+  loadCityBoundaries as loadCityBoundariesFromSource,
+} from '@/data/zoneBoundarySource';
 
 /** 单个边界要素的避让检查结果 */
 export interface BoundaryAvoidanceCheck {
@@ -112,39 +116,13 @@ export interface CityBoundaryBundle {
   boundaries: ZoneBoundary[];
 }
 
-const cache = new Map<string, ZoneBoundary[]>();
-
-/** 加载指定城市边界（缓存，复用跨调用） */
+/** 加载指定城市边界（委托统一数据源，支持离线 file:// 内联数据） */
 export async function loadCityBoundaries(city: string): Promise<ZoneBoundary[]> {
-  const hit = cache.get(city);
-  if (hit) return hit;
-  try {
-    const res = await fetch(`/zone-boundaries/${encodeURIComponent(city)}.json`);
-    if (!res.ok) return [];
-    const data = (await res.json()) as ZoneBoundary[];
-    cache.set(city, data);
-    return data;
-  } catch {
-    return [];
-  }
+  return loadCityBoundariesFromSource(city);
 }
 
 /** 全部城市列表（与数据文件一致） */
-export const ALL_BOUNDARY_CITIES = [
-  '石家庄市',
-  '唐山市',
-  '秦皇岛市',
-  '邯郸市',
-  '邢台市',
-  '保定市',
-  '张家口市',
-  '承德市',
-  '沧州市',
-  '廊坊市',
-  '衡水市',
-  '辛集市',
-  '定州市',
-];
+export const ALL_BOUNDARY_CITIES = ALL_CITIES_FROM_SOURCE;
 
 /**
  * 加载全部（或指定）城市的边界数据。

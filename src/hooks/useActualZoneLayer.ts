@@ -14,6 +14,7 @@ import { useEffect, type RefObject } from 'react';
 import L from 'leaflet';
 import { auditZoneStatusWithRules, type ZoneAuditStatus } from '../data/zoneAuditMeta';
 import { useZoneAuditStore } from '../data/zoneAuditStore';
+import { loadCityBoundaries } from '../data/zoneBoundarySource';
 
 /** 单个保护区边界要素 */
 export interface ZoneBoundary {
@@ -64,21 +65,8 @@ const AUDIT_TIP: Record<ZoneAuditStatus, { label: string; badge: string }> = {
   adjusted: { label: '已调整', badge: '#EA580C' },
 };
 
-/** 城市数据缓存 */
-const cache = new Map<string, ZoneBoundary[]>();
-
 async function loadCity(city: string): Promise<ZoneBoundary[]> {
-  const hit = cache.get(city);
-  if (hit) return hit;
-  try {
-    const res = await fetch(`/zone-boundaries/${encodeURIComponent(city)}.json`);
-    if (!res.ok) return [];
-    const data = (await res.json()) as ZoneBoundary[];
-    cache.set(city, data);
-    return data;
-  } catch {
-    return [];
-  }
+  return loadCityBoundaries(city);
 }
 
 export function useActualZoneLayer(
