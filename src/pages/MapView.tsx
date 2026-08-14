@@ -227,11 +227,11 @@ const MapView: React.FC = () => {
       marker.bindPopup(popupContent, { className: 'ws-popup', maxWidth: 300 });
       marker.on('mouseover', () => setHoveredSource(s));
       marker.on('mouseout', () => setHoveredSource(null));
-      // 管理页跳转定位：若当前渲染的水源地即聚焦目标，自动弹出信息窗
+      lg.addLayer(marker);
+      // 管理页跳转定位：图层加入地图后再打开信息窗（Leaflet 要求图层已在地图上）
       if (focusName && s.name === focusName) {
         marker.openPopup();
       }
-      lg.addLayer(marker);
     });
   }, [filtered, mapReady, focusName]);
 
