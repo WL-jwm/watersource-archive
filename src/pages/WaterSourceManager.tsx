@@ -30,6 +30,7 @@ import { useSearchFilter } from '@/hooks/useSearchFilter';
 import type { ImportResult } from '@/lib/dataImportEngine';
 import type { WaterSourceInfo } from '@/types';
 import { MobileCardList } from '@/lib/mobileEnhanced';
+import { useNavigate } from 'react-router-dom';
 
 const cityOrder = [
   '石家庄市',
@@ -56,6 +57,7 @@ const levelLabels: Record<string, string> = {
 const statusOptions = ['在用', '备用', '取消', '规划', '在建'];
 
 const WaterSourceManager: React.FC = () => {
+  const navigate = useNavigate();
   const toast = useToast();
   const confirm = useConfirm();
   const {
@@ -761,6 +763,17 @@ const WaterSourceManager: React.FC = () => {
                     {s.remark || '-'}
                   </td>
                   <td className="px-3 py-1.5 text-center">
+                    {s.lng != null && s.lat != null && (
+                      <button
+                        onClick={() =>
+                          navigate(`/map?focus=${encodeURIComponent(s.name)}`)
+                        }
+                        className="text-emerald-500 hover:text-emerald-700 text-[10px] mr-2"
+                        title="在 GIS 地图中定位查看"
+                      >
+                        地图
+                      </button>
+                    )}
                     <button
                       onClick={() => handleEdit(s)}
                       className="text-blue-400 hover:text-blue-600 text-[10px] mr-2"

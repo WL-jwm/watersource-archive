@@ -9,6 +9,7 @@
  */
 
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { WaterSourceRecord, useWaterSourceStore } from '@/stores/waterSourceStore';
@@ -54,6 +55,13 @@ const MapView: React.FC = () => {
   const [showZones, setShowZones] = useState(false);
   const [showActualZones, setShowActualZones] = useState(false);
   const [legendCollapsed, setLegendCollapsed] = useState(true);
+  const [baseLayer, setBaseLayer] = useState<'standard' | 'satellite'>('standard');
+  const satelliteLayersRef = useRef<L.Layer[]>([]);
+  // 管理页跳转定位的目标水源地名称
+  const focusNameRef = useRef<string | null>(null);
+  // 聚焦定位时跳过自动 fitBounds，避免覆盖定位视图
+  const skipFitRef = useRef(false);
+  const prevFilterKeyRef = useRef('all|all|all');
 
   // 地图绘制工具
   const drawControllerRef = useRef<MapDrawController | null>(null);
@@ -77,6 +85,8 @@ const MapView: React.FC = () => {
     loadZoneResults,
   } = useWaterSourceStore();
   const wsStats = useWaterSourceStore((s) => s.getStats());
+  const [searchParams] = useSearchParams();
+  const focusName = searchParams.get('focus');
 
   useEffect(() => {
     initDB();
@@ -219,6 +229,10 @@ const MapView: React.FC = () => {
       marker.bindPopup(popupContent, { className: 'ws-popup', maxWidth: 300 });
       marker.on('mouseover', () => setHoveredSource(s));
       marker.on('mouseout', () => setHoveredSource(null));
+      // 管理页跳转定位：若当前渲染的水源地即聚焦目标，自动弹出信息窗
+      if (focusNameRef.current && s.name === focusNameRef.current) {
+        marker.openPopup();
+      }
       lg.addLayer(marker);
     });
   }, [filtered, mapReady]);
@@ -229,14 +243,48 @@ const MapView: React.FC = () => {
   // 实际保护区边界图层（KMZ 导入的真实范围）
   useActualZoneLayer(mapInstanceRef, actualZoneLayerRef, showActualZones, selectedCity, mapReady);
 
-  // 聚焦到选中城市
+  // 筛选联动居中：切换级别/类型/城市时，地图自动 fitBounds 到筛选结果范围
   useEffect(() => {
-    if (!mapInstanceRef.current || selectedCity === 'all') return;
-    const citySources = filtered.filter((s) => s.city === selectedCity);
-    if (citySources.length === 0) return;
-    const bounds = L.latLngBounds(citySources.map((s) => [s.lat, s.lng] as [number, number]));
-    mapInstanceRef.current.fitBounds(bounds, { padding: [40, 40], maxZoom: 10 });
-  }, [selectedCity]);
+    if (!mapInstanceRef.current || !mapReady) return;
+    if (skipFitRef.current) return; // 聚焦定位场景跳过，避免覆盖定位视图
+    const key = `${filter}|${typeFilter}|${selectedCity}`;
+    if (prevFilterKeyRef.current === key) return;
+    prevFilterKeyRef.current = key;
+    if (filter === 'all' && typeFilter === 'all' && selectedCity === 'all') {
+      // 恢复全省视图
+      mapInstanceRef.current.fitBounds(
+        L.latLngBounds([
+          [35.5, 113.5],
+          [43.5, 120.5],
+        ] as [[number, number], [number, number]]),
+        { padding: [30, 30], animate: true },
+      );
+      return;
+    }
+    if (filtered.length === 0) return;
+    const bounds = L.latLngBounds(filtered.map((s) => [s.lat, s.lng] as [number, number]));
+    if (bounds.isValid()) {
+      mapInstanceRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 11, animate: true });
+    }
+  }, [filter, typeFilter, selectedCity, filtered, mapReady]);
+
+  // 管理页跳转定位：根据 URL 的 focus 参数定位到指定水源地并放大
+  useEffect(() => {
+    focusNameRef.current = focusName;
+    if (!mapReady || !focusName) return;
+    const target = storeSources.find((s) => s.name === focusName && s.lng != null && s.lat != null);
+    if (!target) return;
+    // 同步筛选，确保目标水源地可见
+    skipFitRef.current = true;
+    setSelectedCity(target.cityName);
+    setFilter('all');
+    setTypeFilter('all');
+    mapInstanceRef.current?.setView([target.lat!, target.lng!], 12, { animate: true });
+    const t = window.setTimeout(() => {
+      skipFitRef.current = false;
+    }, 1200);
+    return () => window.clearTimeout(t);
+  }, [mapReady, focusName, storeSources]);
 
   const handleToolChange = useCallback((tool: DrawTool) => {
     if (drawControllerRef.current) {
@@ -251,6 +299,34 @@ const MapView: React.FC = () => {
 
   const handleClearDraw = useCallback(() => {
     drawControllerRef.current?.clearAll();
+  }, []);
+
+  // 底图切换：标准高德 / 卫星影像（卫星附带注记层）
+  const switchBaseLayer = useCallback((mode: 'standard' | 'satellite') => {
+    const map = mapInstanceRef.current;
+    const tl = tileLayerRef.current;
+    if (!map || !tl) return;
+    setBaseLayer(mode);
+    // 移除旧的卫星注记层
+    satelliteLayersRef.current.forEach((l) => map.removeLayer(l));
+    satelliteLayersRef.current = [];
+    if (mode === 'standard') {
+      tl.setUrl(
+        'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
+      );
+    } else {
+      tl.setUrl('https://webst0{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}');
+      const anno = L.tileLayer(
+        'https://webst0{s}.is.autonavi.com/appmaptile?style=8&x={x}&y={y}&z={z}',
+        {
+          subdomains: ['1', '2', '3', '4'],
+          maxZoom: 18,
+          crossOrigin: true,
+        },
+      ).addTo(map);
+      satelliteLayersRef.current.push(anno);
+    }
+    tl.redraw();
   }, []);
 
   return (
@@ -287,6 +363,24 @@ const MapView: React.FC = () => {
       {/* 地图主体 */}
       <div className="flex-1 relative">
         <div ref={mapRef} className="w-full h-full" />
+
+        {/* 底图切换 */}
+        <div className="absolute right-2 top-14 z-[1000] flex rounded-lg overflow-hidden border border-border shadow bg-surface text-xs">
+          {(['standard', 'satellite'] as const).map((m) => (
+            <button
+              key={m}
+              onClick={() => switchBaseLayer(m)}
+              className={`px-2.5 py-1.5 transition-colors ${
+                baseLayer === m
+                  ? 'bg-accent-500 text-white font-medium'
+                  : 'bg-surface text-text-secondary hover:bg-gray-100'
+              }`}
+              title={m === 'standard' ? '标准地图' : '卫星影像'}
+            >
+              {m === 'standard' ? '标准' : '卫星'}
+            </button>
+          ))}
+        </div>
 
         {/* 悬浮提示 */}
         {hoveredSource && (
