@@ -57,8 +57,6 @@ const MapView: React.FC = () => {
   const [legendCollapsed, setLegendCollapsed] = useState(true);
   const [baseLayer, setBaseLayer] = useState<'standard' | 'satellite'>('standard');
   const satelliteLayersRef = useRef<L.Layer[]>([]);
-  // 管理页跳转定位的目标水源地名称
-  const focusNameRef = useRef<string | null>(null);
   // 聚焦定位时跳过自动 fitBounds，避免覆盖定位视图
   const skipFitRef = useRef(false);
   const prevFilterKeyRef = useRef('all|all|all');
@@ -230,12 +228,12 @@ const MapView: React.FC = () => {
       marker.on('mouseover', () => setHoveredSource(s));
       marker.on('mouseout', () => setHoveredSource(null));
       // 管理页跳转定位：若当前渲染的水源地即聚焦目标，自动弹出信息窗
-      if (focusNameRef.current && s.name === focusNameRef.current) {
+      if (focusName && s.name === focusName) {
         marker.openPopup();
       }
       lg.addLayer(marker);
     });
-  }, [filtered, mapReady]);
+  }, [filtered, mapReady, focusName]);
 
   // N6: 保护区圈层渲染（提取为独立 Hook）
   useZoneLayer(mapInstanceRef, zoneLayerRef, showZones, zoneResults, storeSources, mapReady);
@@ -270,7 +268,6 @@ const MapView: React.FC = () => {
 
   // 管理页跳转定位：根据 URL 的 focus 参数定位到指定水源地并放大
   useEffect(() => {
-    focusNameRef.current = focusName;
     if (!mapReady || !focusName) return;
     const target = storeSources.find((s) => s.name === focusName && s.lng != null && s.lat != null);
     if (!target) return;
