@@ -21,6 +21,8 @@ import MapFilters, { type FilterType, type SourceTypeFilter, type GeoSource } fr
 import MapLegend from '@/components/map/MapLegend';
 import { useZoneLayer } from '@/hooks/useZoneLayer';
 import { useActualZoneLayer } from '@/hooks/useActualZoneLayer';
+import { ARCHIVE_WELLS } from '@/data/archiveWells';
+import { ARCHIVE_BOUNDARIES } from '@/data/archiveBoundaries';
 import { useMapExport } from '@/hooks/useMapExport';
 
 // P7: Leaflet图标修复 — 使用本地资源替代CDN
@@ -46,6 +48,8 @@ const MapView: React.FC = () => {
   const layerGroupRef = useRef<L.LayerGroup | null>(null);
   const zoneLayerRef = useRef<L.LayerGroup | null>(null);
   const actualZoneLayerRef = useRef<L.LayerGroup | null>(null);
+  const wellsLayerRef = useRef<L.LayerGroup | null>(null);
+  const archiveBoundaryLayerRef = useRef<L.LayerGroup | null>(null);
   const tileLayerRef = useRef<L.TileLayer | null>(null);
   const [filter, setFilter] = useState<FilterType>('all');
   const [typeFilter, setTypeFilter] = useState<SourceTypeFilter>('all');
@@ -54,6 +58,8 @@ const MapView: React.FC = () => {
   const [mapReady, setMapReady] = useState(false);
   const [showZones, setShowZones] = useState(false);
   const [showActualZones, setShowActualZones] = useState(false);
+  const [showWells, setShowWells] = useState(false);
+  const [showArchiveBounds, setShowArchiveBounds] = useState(false);
   const [legendCollapsed, setLegendCollapsed] = useState(true);
   const [baseLayer, setBaseLayer] = useState<'standard' | 'satellite'>('standard');
   const satelliteLayersRef = useRef<L.Layer[]>([]);
@@ -155,6 +161,8 @@ const MapView: React.FC = () => {
     layerGroupRef.current = L.layerGroup().addTo(map);
     zoneLayerRef.current = L.layerGroup().addTo(map);
     actualZoneLayerRef.current = L.layerGroup().addTo(map);
+    wellsLayerRef.current = L.layerGroup().addTo(map);
+    archiveBoundaryLayerRef.current = L.layerGroup().addTo(map);
     drawLayerRef.current = L.layerGroup().addTo(map);
 
     drawControllerRef.current = new MapDrawController(
@@ -285,6 +293,58 @@ const MapView: React.FC = () => {
     return () => window.clearTimeout(t);
   }, [mapReady, focusName, storeSources]);
 
+  // 归档水井图层：展示归档提取的精确井位
+  useEffect(() => {
+    const lg = wellsLayerRef.current;
+    if (!lg || !mapReady) return;
+    lg.clearLayers();
+    if (!showWells) return;
+    ARCHIVE_WELLS.forEach((w) => {
+      const m = L.circleMarker([w.lat, w.lng], {
+        radius: 7,
+        color: '#B45309',
+        fillColor: '#B45309',
+        fillOpacity: 0.85,
+        weight: 2,
+      });
+      m.bindPopup(
+        `<div style="font-size:12px;min-width:180px"><div style="font-weight:700;margin-bottom:4px">${w.wellName}（水井）</div>
+        <div><b>水源地：</b>${w.sourceName}</div>
+        <div><b>地区：</b>${w.region}</div>
+        <div><b>水质类型：</b>${w.waterType}</div>
+        <div><b>坐标：</b>${w.lng}, ${w.lat}</div>
+        ${w.yieldStr ? `<div><b>出水量：</b>${w.yieldStr}</div>` : ''}
+        <div style="color:#B45309;font-weight:600;margin-top:3px">⚠ ${w.dataStatus}</div></div>`,
+      );
+      m.addTo(lg);
+    });
+  }, [showWells, mapReady]);
+
+  // 归档精确保护区边界图层：由拐点闭合的多边形
+  useEffect(() => {
+    const lg = archiveBoundaryLayerRef.current;
+    if (!lg || !mapReady) return;
+    lg.clearLayers();
+    if (!showArchiveBounds) return;
+    ARCHIVE_BOUNDARIES.forEach((b) => {
+      const poly = L.polygon(b.ring, {
+        color: '#9333EA',
+        fillColor: '#9333EA',
+        fillOpacity: 0.12,
+        weight: 2,
+        dashArray: '6 4',
+      });
+      poly.bindPopup(
+        `<div style="font-size:12px;min-width:180px"><div style="font-weight:700;margin-bottom:4px">${b.sourceName}</div>
+        <div><b>级别：</b>${b.level}</div>
+        <div><b>地区：</b>${b.region}</div>
+        <div><b>拐点数：</b>${b.ring.length - 1}</div>
+        <div style="color:#9333EA;font-weight:600;margin-top:3px">⚠ ${b.dataStatus}</div></div>`,
+      );
+      poly.addTo(lg);
+    });
+  }, [showArchiveBounds, mapReady]);
+
   const handleToolChange = useCallback((tool: DrawTool) => {
     if (drawControllerRef.current) {
       drawControllerRef.current.setTool(tool);
@@ -379,6 +439,28 @@ const MapView: React.FC = () => {
               {m === 'standard' ? '标准' : '卫星'}
             </button>
           ))}
+        </div>
+
+        {/* 归档图层开关：水井 / 精确边界 */}
+        <div className="absolute right-2 top-[7.5rem] z-[1000] flex flex-col rounded-lg overflow-hidden border border-border shadow bg-surface text-xs">
+          <button
+            onClick={() => setShowWells((v) => !v)}
+            className={`px-2.5 py-1.5 text-left transition-colors ${
+              showWells ? 'bg-accent-500 text-white font-medium' : 'bg-surface text-text-secondary hover:bg-gray-100'
+            }`}
+            title="归档提取的精确水源井位"
+          >
+            水井{showWells ? ' ✓' : ''}
+          </button>
+          <button
+            onClick={() => setShowArchiveBounds((v) => !v)}
+            className={`px-2.5 py-1.5 text-left transition-colors ${
+              showArchiveBounds ? 'bg-accent-500 text-white font-medium' : 'bg-surface text-text-secondary hover:bg-gray-100'
+            }`}
+            title="归档提取的精确保护区边界"
+          >
+            归档边界{showArchiveBounds ? ' ✓' : ''}
+          </button>
         </div>
 
         {/* 悬浮提示 */}
