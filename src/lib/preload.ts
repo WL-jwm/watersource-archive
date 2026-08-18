@@ -30,6 +30,7 @@ const pageImporters: Record<string, () => Promise<{ default: any }>> = {
   '/timeline': () => import('@/pages/Timeline'),
   '/sptools': () => import('@/pages/SpatialAnalysisTools'),
   '/zone-audit': () => import('@/pages/ZoneAuditManager'),
+  '/archive-sources': () => import('@/pages/ArchiveSourcesPage'),
 };
 
 /** 已注册的全部路由路径（供测试与配置校验，防止高频列表出现无效路径） */

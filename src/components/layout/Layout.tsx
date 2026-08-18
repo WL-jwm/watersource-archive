@@ -379,6 +379,19 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </svg>
             {!sidebarCollapsed && '保护区审计规则'}
           </a>
+          {/* P8.9: 归档水源地档案入口 */}
+          <a
+            href="#/archive-sources"
+              onMouseEnter={() => preloadPage('/archive-sources')}
+            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-tertiary rounded-md transition-colors"
+            title="归档水源地档案"
+          >
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            </svg>
+            {!sidebarCollapsed && '归档水源地档案'}
+          </a>
+
           {/* N4: 数据备份入口 */}
           <button
             onClick={() => setBackupModalOpen(true)}
