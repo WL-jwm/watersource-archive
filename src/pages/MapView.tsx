@@ -23,6 +23,8 @@ import { useZoneLayer } from '@/hooks/useZoneLayer';
 import { useActualZoneLayer } from '@/hooks/useActualZoneLayer';
 import { ARCHIVE_WELLS } from '@/data/archiveWells';
 import { ARCHIVE_BOUNDARIES } from '@/data/archiveBoundaries';
+import { ARCHIVE_GEO_WELLS } from '@/data/archiveGeoWells';
+import { ARCHIVE_GEO_BOUNDARIES } from '@/data/archiveGeoBoundaries';
 import { useMapExport } from '@/hooks/useMapExport';
 
 // P7: Leaflet图标修复 — 使用本地资源替代CDN
@@ -50,6 +52,8 @@ const MapView: React.FC = () => {
   const actualZoneLayerRef = useRef<L.LayerGroup | null>(null);
   const wellsLayerRef = useRef<L.LayerGroup | null>(null);
   const archiveBoundaryLayerRef = useRef<L.LayerGroup | null>(null);
+  const geoWellsLayerRef = useRef<L.LayerGroup | null>(null);
+  const geoBoundaryLayerRef = useRef<L.LayerGroup | null>(null);
   const tileLayerRef = useRef<L.TileLayer | null>(null);
   const [filter, setFilter] = useState<FilterType>('all');
   const [typeFilter, setTypeFilter] = useState<SourceTypeFilter>('all');
@@ -60,6 +64,8 @@ const MapView: React.FC = () => {
   const [showActualZones, setShowActualZones] = useState(false);
   const [showWells, setShowWells] = useState(false);
   const [showArchiveBounds, setShowArchiveBounds] = useState(false);
+  const [showGeoWells, setShowGeoWells] = useState(false);
+  const [showGeoBounds, setShowGeoBounds] = useState(false);
   const [legendCollapsed, setLegendCollapsed] = useState(true);
   const [baseLayer, setBaseLayer] = useState<'standard' | 'satellite'>('standard');
   const satelliteLayersRef = useRef<L.Layer[]>([]);
@@ -163,6 +169,8 @@ const MapView: React.FC = () => {
     actualZoneLayerRef.current = L.layerGroup().addTo(map);
     wellsLayerRef.current = L.layerGroup().addTo(map);
     archiveBoundaryLayerRef.current = L.layerGroup().addTo(map);
+    geoWellsLayerRef.current = L.layerGroup().addTo(map);
+    geoBoundaryLayerRef.current = L.layerGroup().addTo(map);
     drawLayerRef.current = L.layerGroup().addTo(map);
 
     drawControllerRef.current = new MapDrawController(
@@ -345,6 +353,59 @@ const MapView: React.FC = () => {
     });
   }, [showArchiveBounds, mapReady]);
 
+  // 资料包水源地点位图层（空间档案 63 个水源地定位）
+  useEffect(() => {
+    const lg = geoWellsLayerRef.current;
+    if (!lg || !mapReady) return;
+    lg.clearLayers();
+    if (!showGeoWells) return;
+    ARCHIVE_GEO_WELLS.forEach((w) => {
+      if (w.lng == null || w.lat == null) return;
+      const m = L.circleMarker([w.lat, w.lng], {
+        radius: 5,
+        color: '#0D9488',
+        fillColor: '#0D9488',
+        fillOpacity: 0.8,
+        weight: 1.5,
+      });
+      m.bindPopup(
+        `<div style="font-size:12px;min-width:180px"><div style="font-weight:700;margin-bottom:4px">${w.wsName}</div>
+        <div><b>城市：</b>${w.city}</div>
+        <div><b>坐标：</b>${w.lng}, ${w.lat}（${w.coordSys}）</div>
+        <div><b>定位：</b>${w.method}</div>
+        <div><b>精度：</b><span style="color:#B45309;font-weight:600">${w.coordType}</span></div>
+        ${w.addr ? `<div><b>地址：</b>${w.addr}</div>` : ''}</div>`,
+      );
+      m.addTo(lg);
+    });
+  }, [showGeoWells, mapReady]);
+
+  // 资料包保护区面图层（空间档案 14 个已空间化边界）
+  useEffect(() => {
+    const lg = geoBoundaryLayerRef.current;
+    if (!lg || !mapReady) return;
+    lg.clearLayers();
+    if (!showGeoBounds) return;
+    ARCHIVE_GEO_BOUNDARIES.forEach((b) => {
+      const poly = L.polygon(b.ring, {
+        color: '#F97316',
+        fillColor: '#F97316',
+        fillOpacity: 0.1,
+        weight: 2,
+        dashArray: '4 4',
+      });
+      poly.bindPopup(
+        `<div style="font-size:12px;min-width:180px"><div style="font-weight:700;margin-bottom:4px">${b.wsName}</div>
+        <div><b>城市：</b>${b.city}</div>
+        <div><b>保护范围：</b>${b.rangesM}</div>
+        <div><b>来源：</b>${b.source}</div>
+        <div><b>坐标系：</b>${b.coordSys}</div>
+        <div style="color:#F97316;font-weight:600;margin-top:3px">空间档案·已空间化</div></div>`,
+      );
+      poly.addTo(lg);
+    });
+  }, [showGeoBounds, mapReady]);
+
   const handleToolChange = useCallback((tool: DrawTool) => {
     if (drawControllerRef.current) {
       drawControllerRef.current.setTool(tool);
@@ -460,6 +521,24 @@ const MapView: React.FC = () => {
             title="归档提取的精确保护区边界"
           >
             归档边界{showArchiveBounds ? ' ✓' : ''}
+          </button>
+          <button
+            onClick={() => setShowGeoWells((v) => !v)}
+            className={`px-2.5 py-1.5 text-left transition-colors ${
+              showGeoWells ? 'bg-accent-500 text-white font-medium' : 'bg-surface text-text-secondary hover:bg-gray-100'
+            }`}
+            title="空间档案 63 个水源地定位"
+          >
+            资料包点位{showGeoWells ? ' ✓' : ''}
+          </button>
+          <button
+            onClick={() => setShowGeoBounds((v) => !v)}
+            className={`px-2.5 py-1.5 text-left transition-colors ${
+              showGeoBounds ? 'bg-accent-500 text-white font-medium' : 'bg-surface text-text-secondary hover:bg-gray-100'
+            }`}
+            title="空间档案 14 个已空间化保护区面"
+          >
+            资料包边界{showGeoBounds ? ' ✓' : ''}
           </button>
         </div>
 
