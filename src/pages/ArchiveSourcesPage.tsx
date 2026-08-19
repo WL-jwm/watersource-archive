@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import * as XLSX from 'xlsx';
 import { ARCHIVE_SOURCES } from '@/data/archiveSources';
 import { useWaitCoordStore } from '@/data/waitCoordStore';
 
@@ -88,6 +89,30 @@ const ArchiveSourcesPage: React.FC = () => {
     setCoord(r.name, { lng, lat, note: d.note, verified: true });
   };
 
+  /** 导出已核实坐标 */
+  const exportVerified = () => {
+    const verified = Object.values(records).filter((v) => v.verified);
+    if (verified.length === 0) {
+      alert('暂无已核实的坐标可导出，请先在列表核实保存坐标。');
+      return;
+    }
+    const data = verified.map((v) => {
+      const src = ARCHIVE_SOURCES.find((s) => s.name === v.name);
+      return {
+        水源地名称: v.name,
+        地区: src?.region || '',
+        精确经度: v.lng ?? '',
+        精确纬度: v.lat ?? '',
+        备注: v.note || '',
+        核实时间: v.updatedAt ? new Date(v.updatedAt).toLocaleString() : '',
+      };
+    });
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, '已核实坐标');
+    XLSX.writeFile(wb, `水源地_已核实坐标_${new Date().toISOString().slice(0, 10)}.xlsx`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       <div className="mx-auto max-w-6xl">
@@ -137,8 +162,15 @@ const ArchiveSourcesPage: React.FC = () => {
                 value={kw}
                 onChange={(e) => setKw(e.target.value)}
                 placeholder="搜索水源地名称"
-                className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm ml-auto"
+                className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm"
               />
+              <button
+                onClick={exportVerified}
+                className="ml-auto px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-600 text-white hover:bg-emerald-700"
+                title="导出已核实的坐标到 Excel"
+              >
+                导出已核实坐标（{verifiedCount}）
+              </button>
               <div className="text-sm text-gray-400">共 {waitList.length} 条</div>
             </div>
 
