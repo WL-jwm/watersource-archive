@@ -25,6 +25,7 @@ import { ARCHIVE_WELLS } from '@/data/archiveWells';
 import { ARCHIVE_BOUNDARIES } from '@/data/archiveBoundaries';
 import { ARCHIVE_GEO_WELLS } from '@/data/archiveGeoWells';
 import { ARCHIVE_GEO_BOUNDARIES } from '@/data/archiveGeoBoundaries';
+import { tiandituUrl, TIANDITU_SUBDOMAINS, TIANDITU_MAX_ZOOM } from '@/data/tiandituConfig';
 import { useMapExport } from '@/hooks/useMapExport';
 
 // P7: Leaflet图标修复 — 使用本地资源替代CDN
@@ -67,7 +68,7 @@ const MapView: React.FC = () => {
   const [showGeoWells, setShowGeoWells] = useState(false);
   const [showGeoBounds, setShowGeoBounds] = useState(false);
   const [legendCollapsed, setLegendCollapsed] = useState(true);
-  const [baseLayer, setBaseLayer] = useState<'standard' | 'satellite'>('standard');
+  const [baseLayer, setBaseLayer] = useState<'standard' | 'satellite' | 'tianditu'>('standard');
   const satelliteLayersRef = useRef<L.Layer[]>([]);
   // 聚焦定位时跳过自动 fitBounds，避免覆盖定位视图
   const skipFitRef = useRef(false);
@@ -422,7 +423,7 @@ const MapView: React.FC = () => {
   }, []);
 
   // 底图切换：标准高德 / 卫星影像（卫星附带注记层）
-  const switchBaseLayer = useCallback((mode: 'standard' | 'satellite') => {
+  const switchBaseLayer = useCallback((mode: 'standard' | 'satellite' | 'tianditu') => {
     const map = mapInstanceRef.current;
     const tl = tileLayerRef.current;
     if (!map || !tl) return;
@@ -435,7 +436,7 @@ const MapView: React.FC = () => {
         'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=2&style=8&x={x}&y={y}&z={z}',
       );
       (tl as unknown as { setMaxZoom(v: number): void }).setMaxZoom(18);
-    } else {
+    } else if (mode === 'satellite') {
       // 卫星影像（scale=2 高清，支持放大到 19 级）
       tl.setUrl('https://webst0{s}.is.autonavi.com/appmaptile?style=6&scale=2&x={x}&y={y}&z={z}');
       (tl as unknown as { setMaxZoom(v: number): void }).setMaxZoom(19);
@@ -447,6 +448,16 @@ const MapView: React.FC = () => {
           crossOrigin: true,
         },
       ).addTo(map);
+      satelliteLayersRef.current.push(anno);
+    } else {
+      // 天地图影像（高清国权底图）+ 影像注记
+      tl.setUrl(tiandituUrl('img'));
+      (tl as unknown as { setMaxZoom(v: number): void }).setMaxZoom(TIANDITU_MAX_ZOOM);
+      const anno = L.tileLayer(tiandituUrl('cia'), {
+        subdomains: TIANDITU_SUBDOMAINS,
+        maxZoom: TIANDITU_MAX_ZOOM,
+        crossOrigin: true,
+      }).addTo(map);
       satelliteLayersRef.current.push(anno);
     }
     tl.redraw();
@@ -489,7 +500,7 @@ const MapView: React.FC = () => {
 
         {/* 底图切换 */}
         <div className="absolute right-2 top-14 z-[1000] flex rounded-lg overflow-hidden border border-border shadow bg-surface text-xs">
-          {(['standard', 'satellite'] as const).map((m) => (
+          {(['standard', 'satellite', 'tianditu'] as const).map((m) => (
             <button
               key={m}
               onClick={() => switchBaseLayer(m)}
@@ -498,9 +509,9 @@ const MapView: React.FC = () => {
                   ? 'bg-accent-500 text-white font-medium'
                   : 'bg-surface text-text-secondary hover:bg-gray-100'
               }`}
-              title={m === 'standard' ? '标准地图' : '卫星影像'}
+              title={m === 'standard' ? '标准地图' : m === 'satellite' ? '高德卫星影像' : '天地图影像'}
             >
-              {m === 'standard' ? '标准' : '卫星'}
+              {m === 'standard' ? '标准' : m === 'satellite' ? '卫星' : '天地图'}
             </button>
           ))}
         </div>
