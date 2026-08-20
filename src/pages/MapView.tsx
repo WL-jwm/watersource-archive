@@ -146,12 +146,12 @@ const MapView: React.FC = () => {
       center: [38.5, 115.5],
       zoom: 7,
       minZoom: 6,
-      maxZoom: 14,
+      maxZoom: 19,
       zoomControl: false,
     });
 
     const tileLayer = L.tileLayer(
-      'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
+      'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=2&style=8&x={x}&y={y}&z={z}',
       {
         subdomains: ['1', '2', '3', '4'],
         attribution: '&copy; 高德地图',
@@ -432,15 +432,18 @@ const MapView: React.FC = () => {
     satelliteLayersRef.current = [];
     if (mode === 'standard') {
       tl.setUrl(
-        'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
+        'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=2&style=8&x={x}&y={y}&z={z}',
       );
+      (tl as unknown as { setMaxZoom(v: number): void }).setMaxZoom(18);
     } else {
-      tl.setUrl('https://webst0{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}');
+      // 卫星影像（scale=2 高清，支持放大到 19 级）
+      tl.setUrl('https://webst0{s}.is.autonavi.com/appmaptile?style=6&scale=2&x={x}&y={y}&z={z}');
+      (tl as unknown as { setMaxZoom(v: number): void }).setMaxZoom(19);
       const anno = L.tileLayer(
-        'https://webst0{s}.is.autonavi.com/appmaptile?style=8&x={x}&y={y}&z={z}',
+        'https://webst0{s}.is.autonavi.com/appmaptile?style=8&scale=2&x={x}&y={y}&z={z}',
         {
           subdomains: ['1', '2', '3', '4'],
-          maxZoom: 18,
+          maxZoom: 19,
           crossOrigin: true,
         },
       ).addTo(map);
