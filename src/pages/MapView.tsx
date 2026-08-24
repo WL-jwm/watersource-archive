@@ -26,6 +26,7 @@ import { ARCHIVE_BOUNDARIES } from '@/data/archiveBoundaries';
 import { ARCHIVE_GEO_WELLS } from '@/data/archiveGeoWells';
 import { ARCHIVE_GEO_BOUNDARIES } from '@/data/archiveGeoBoundaries';
 import { tiandituUrl, TIANDITU_SUBDOMAINS, TIANDITU_MAX_ZOOM } from '@/data/tiandituConfig';
+import { useWaitCoordStore } from '@/data/waitCoordStore';
 import { useMapExport } from '@/hooks/useMapExport';
 
 // P7: Leaflet图标修复 — 使用本地资源替代CDN
@@ -55,6 +56,7 @@ const MapView: React.FC = () => {
   const archiveBoundaryLayerRef = useRef<L.LayerGroup | null>(null);
   const geoWellsLayerRef = useRef<L.LayerGroup | null>(null);
   const geoBoundaryLayerRef = useRef<L.LayerGroup | null>(null);
+  const verifiedWellsLayerRef = useRef<L.LayerGroup | null>(null);
   const tileLayerRef = useRef<L.TileLayer | null>(null);
   const [filter, setFilter] = useState<FilterType>('all');
   const [typeFilter, setTypeFilter] = useState<SourceTypeFilter>('all');
@@ -67,6 +69,11 @@ const MapView: React.FC = () => {
   const [showArchiveBounds, setShowArchiveBounds] = useState(false);
   const [showGeoWells, setShowGeoWells] = useState(false);
   const [showGeoBounds, setShowGeoBounds] = useState(false);
+  const [showVerifiedWells, setShowVerifiedWells] = useState(false);
+  // 已核实的精确井位（来自归档页在线核实）
+  const verifiedWells = useWaitCoordStore((s) =>
+    Object.values(s.records).filter((v) => v.verified && v.lng != null && v.lat != null),
+  );
   const [legendCollapsed, setLegendCollapsed] = useState(true);
   const [baseLayer, setBaseLayer] = useState<'standard' | 'satellite' | 'tianditu'>('standard');
   const satelliteLayersRef = useRef<L.Layer[]>([]);
@@ -172,6 +179,7 @@ const MapView: React.FC = () => {
     archiveBoundaryLayerRef.current = L.layerGroup().addTo(map);
     geoWellsLayerRef.current = L.layerGroup().addTo(map);
     geoBoundaryLayerRef.current = L.layerGroup().addTo(map);
+    verifiedWellsLayerRef.current = L.layerGroup().addTo(map);
     drawLayerRef.current = L.layerGroup().addTo(map);
 
     drawControllerRef.current = new MapDrawController(
@@ -407,6 +415,32 @@ const MapView: React.FC = () => {
     });
   }, [showGeoBounds, mapReady]);
 
+  // 已核实精确井位图层（归档页在线核实后实时上地图）
+  useEffect(() => {
+    const lg = verifiedWellsLayerRef.current;
+    if (!lg || !mapReady) return;
+    lg.clearLayers();
+    if (!showVerifiedWells) return;
+    verifiedWells.forEach((v) => {
+      if (v.lng == null || v.lat == null) return;
+      const m = L.circleMarker([v.lat, v.lng], {
+        radius: 8,
+        color: '#059669',
+        fillColor: '#059669',
+        fillOpacity: 0.9,
+        weight: 2,
+      });
+      m.bindPopup(
+        `<div style="font-size:12px;min-width:180px"><div style="font-weight:700;margin-bottom:4px">${v.name}（已核实井位）</div>
+        <div><b>精确坐标：</b>${v.lng}, ${v.lat}</div>
+        ${v.note ? `<div><b>备注：</b>${v.note}</div>` : ''}
+        ${v.updatedAt ? `<div><b>核实时间：</b>${new Date(v.updatedAt).toLocaleString()}</div>` : ''}
+        <div style="color:#059669;font-weight:600;margin-top:3px">✓ 已核实</div></div>`,
+      );
+      m.addTo(lg);
+    });
+  }, [showVerifiedWells, verifiedWells, mapReady]);
+
   const handleToolChange = useCallback((tool: DrawTool) => {
     if (drawControllerRef.current) {
       drawControllerRef.current.setTool(tool);
@@ -553,6 +587,15 @@ const MapView: React.FC = () => {
             title="空间档案 14 个已空间化保护区面"
           >
             资料包边界{showGeoBounds ? ' ✓' : ''}
+          </button>
+          <button
+            onClick={() => setShowVerifiedWells((v) => !v)}
+            className={`px-2.5 py-1.5 text-left transition-colors ${
+              showVerifiedWells ? 'bg-accent-500 text-white font-medium' : 'bg-surface text-text-secondary hover:bg-gray-100'
+            }`}
+            title="归档页在线核实的精确井位（绿色）"
+          >
+            已核实井位{verifiedWells.length > 0 ? `(${verifiedWells.length})` : ''}{showVerifiedWells ? ' ✓' : ''}
           </button>
         </div>
 
