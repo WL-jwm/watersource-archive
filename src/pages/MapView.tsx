@@ -103,8 +103,14 @@ const MapView: React.FC = () => {
     loadZoneResults,
   } = useWaterSourceStore();
   const wsStats = useWaterSourceStore((s) => s.getStats());
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const focusName = searchParams.get('focus');
+  const pickName = searchParams.get('pick');
+  // 地图选点模式：归档页「地图选点」跳转至此，点击地图确定精确井位坐标
+  const pickNameRef = useRef<string | null>(null);
+  const pickMarkerRef = useRef<L.Marker | null>(null);
+  const [pickState, setPickState] = useState<{ status: 'picking' | 'done'; lng?: number; lat?: number } | null>(null);
+  const setCoord = useWaitCoordStore((s) => s.setCoord);
 
   useEffect(() => {
     initDB();
@@ -194,9 +200,35 @@ const MapView: React.FC = () => {
     );
 
     // S12.9: 空间查询模式 - 地图点击取点
+    // P8.13: 地图选点模式 - 归档页核实井位：点击地图在目标处放临时标记并提供确认/取消
     map.on('click', (e: L.LeafletMouseEvent) => {
       if (queryModeRef.current) {
         setQueryPoint({ lng: e.latlng.lng, lat: e.latlng.lat });
+        return;
+      }
+      if (pickNameRef.current) {
+        const name = pickNameRef.current;
+        const lng = Number(e.latlng.lng.toFixed(6));
+        const lat = Number(e.latlng.lat.toFixed(6));
+        if (pickMarkerRef.current) {
+          map.removeLayer(pickMarkerRef.current);
+        }
+        const m = L.marker([lat, lng]).addTo(map);
+        pickMarkerRef.current = m;
+        L.popup({ closeButton: false })
+          .setLatLng([lat, lng])
+          .setContent(
+            `<div style="font-family:system-ui;font-size:13px;min-width:210px">
+              <div style="font-weight:700;margin-bottom:6px">核实井位：${name}</div>
+              <div style="margin-bottom:8px">经度 <b>${lng}</b> · 纬度 <b>${lat}</b></div>
+              <div style="display:flex;gap:6px">
+                <button onclick="window.__pickConfirm && window.__pickConfirm(${lng}, ${lat})" style="flex:1;padding:5px 8px;font-size:12px;background:#059669;color:#fff;border:none;border-radius:4px;cursor:pointer">确认核实</button>
+                <button onclick="window.__pickCancel && window.__pickCancel()" style="flex:1;padding:5px 8px;font-size:12px;background:#e5e7eb;color:#374151;border:none;border-radius:4px;cursor:pointer">取消</button>
+              </div>
+            </div>`,
+          )
+          .openOn(map);
+        return;
       }
     });
 
@@ -309,6 +341,28 @@ const MapView: React.FC = () => {
     }, 1200);
     return () => window.clearTimeout(t);
   }, [mapReady, focusName, storeSources]);
+
+  // P8.13: 注册 Leaflet popup 中确认/取消按钮的全局回调
+  useEffect(() => {
+    const w = window as unknown as Record<string, unknown>;
+    w.__pickConfirm = (lng: number, lat: number) => {
+      const name = pickNameRef.current;
+      if (!name) return;
+      setCoord(name, { lng, lat, note: '地图选点核实', verified: true });
+      setPickState({ status: 'done', lng, lat });
+    };
+    w.__pickCancel = () => {
+      if (pickMarkerRef.current && mapInstanceRef.current) {
+        mapInstanceRef.current.removeLayer(pickMarkerRef.current);
+        pickMarkerRef.current = null;
+      }
+      setPickState((prev) => (prev && prev.status === 'picking' ? { status: 'picking' } : prev));
+    };
+    return () => {
+      delete w.__pickConfirm;
+      delete w.__pickCancel;
+    };
+  }, [setCoord]);
 
   // 归档水井图层：展示归档提取的精确井位
   useEffect(() => {
@@ -469,11 +523,11 @@ const MapView: React.FC = () => {
       tl.setUrl(
         'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=2&style=8&x={x}&y={y}&z={z}',
       );
-      (tl as unknown as { setMaxZoom(v: number): void }).setMaxZoom(18);
+      tl.options.maxZoom = 18;
     } else if (mode === 'satellite') {
       // 卫星影像（scale=2 高清，支持放大到 19 级）
       tl.setUrl('https://webst0{s}.is.autonavi.com/appmaptile?style=6&scale=2&x={x}&y={y}&z={z}');
-      (tl as unknown as { setMaxZoom(v: number): void }).setMaxZoom(19);
+      tl.options.maxZoom = 19;
       const anno = L.tileLayer(
         'https://webst0{s}.is.autonavi.com/appmaptile?style=8&scale=2&x={x}&y={y}&z={z}',
         {
@@ -486,7 +540,7 @@ const MapView: React.FC = () => {
     } else {
       // 天地图影像（高清国权底图）+ 影像注记
       tl.setUrl(tiandituUrl('img'));
-      (tl as unknown as { setMaxZoom(v: number): void }).setMaxZoom(TIANDITU_MAX_ZOOM);
+      tl.options.maxZoom = TIANDITU_MAX_ZOOM;
       const anno = L.tileLayer(tiandituUrl('cia'), {
         subdomains: TIANDITU_SUBDOMAINS,
         maxZoom: TIANDITU_MAX_ZOOM,
@@ -496,6 +550,17 @@ const MapView: React.FC = () => {
     }
     tl.redraw();
   }, []);
+
+  // P8.13: 选点模式 - 同步 pick 参数到 ref，进入选点时自动切天地图高清底图并显示面板
+  useEffect(() => {
+    pickNameRef.current = pickName;
+    if (pickName) {
+      setPickState({ status: 'picking' });
+      switchBaseLayer('tianditu');
+    } else {
+      setPickState(null);
+    }
+  }, [pickName, switchBaseLayer]);
 
   return (
     <div className="flex flex-col h-full">
@@ -598,6 +663,48 @@ const MapView: React.FC = () => {
             已核实井位{verifiedWells.length > 0 ? `(${verifiedWells.length})` : ''}{showVerifiedWells ? ' ✓' : ''}
           </button>
         </div>
+
+        {/* P8.13: 选点模式浮动面板 */}
+        {pickState && (
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[1100] max-w-[90%]">
+            {pickState.status === 'picking' ? (
+              <div className="bg-amber-50 border border-amber-300 text-amber-800 rounded-lg px-4 py-2.5 shadow-lg flex flex-wrap items-center gap-3">
+                <span className="text-sm">
+                  <b>选点中：</b>{pickName} —— 点击地图确定精确井位（建议放大到 15-17 级，已自动切换天地图影像）
+                </span>
+                <button
+                  onClick={() => {
+                    if (pickMarkerRef.current && mapInstanceRef.current) {
+                      mapInstanceRef.current.removeLayer(pickMarkerRef.current);
+                      pickMarkerRef.current = null;
+                    }
+                    setSearchParams((prev) => {
+                      const n = new URLSearchParams(prev);
+                      n.delete('pick');
+                      return n;
+                    }, { replace: true });
+                  }}
+                  className="px-2.5 py-1 rounded text-xs font-medium bg-amber-600 text-white hover:bg-amber-700"
+                >
+                  退出选点
+                </button>
+              </div>
+            ) : (
+              <div className="bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg px-4 py-2.5 shadow-lg flex flex-wrap items-center gap-3">
+                <span className="text-sm">
+                  <b>{pickName}</b> 已核实：经度 <b>{pickState.lng}</b> · 纬度 <b>{pickState.lat}</b>
+                  <span className="text-emerald-600 font-semibold"> ✓ 已存为绿色标记</span>
+                </span>
+                <a
+                  href="#/archive-sources"
+                  className="px-2.5 py-1 rounded text-xs font-medium bg-emerald-600 text-white hover:bg-emerald-700"
+                >
+                  返回归档页继续核实
+                </a>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* 悬浮提示 */}
         {hoveredSource && (

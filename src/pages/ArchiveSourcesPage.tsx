@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import * as XLSX from 'xlsx';
 import { ARCHIVE_SOURCES } from '@/data/archiveSources';
 import { useWaitCoordStore } from '@/data/waitCoordStore';
@@ -23,7 +23,9 @@ const ArchiveSourcesPage: React.FC = () => {
   const [kw, setKw] = useState('');
   const [waitFilter, setWaitFilter] = useState<'all' | 'verified' | 'unverified'>('all');
   const [drafts, setDrafts] = useState<Record<string, { lng: string; lat: string; note: string }>>({});
-  const { records, setCoord, clearCoord } = useWaitCoordStore();
+  const { records, setCoord, clearCoord, batchImport } = useWaitCoordStore();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [importMsg, setImportMsg] = useState<string | null>(null);
 
   const stats = useMemo(() => {
     const s: Record<string, number> = {};
@@ -87,6 +89,67 @@ const ArchiveSourcesPage: React.FC = () => {
     const lng = d.lng.trim() ? parseFloat(d.lng) : undefined;
     const lat = d.lat.trim() ? parseFloat(d.lat) : undefined;
     setCoord(r.name, { lng, lat, note: d.note, verified: true });
+  };
+
+  /** 下载批量导入模板（预填 52 条待补坐标名称） */
+  const downloadTemplate = () => {
+    const wait = ARCHIVE_SOURCES.filter((r) => r.recordStatus === '待补坐标');
+    const data = wait.map((r) => ({
+      水源地名称: r.name,
+      精确经度: '',
+      精确纬度: '',
+      备注: `建议坐标（${r.lng != null && r.lat != null ? r.lng.toFixed(4) + ', ' + r.lat.toFixed(4) : '待核实'}` + '）',
+    }));
+    const ws = XLSX.utils.json_to_sheet(data);
+    ws['!cols'] = [{ wch: 30 }, { wch: 12 }, { wch: 12 }, { wch: 24 }];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, '批量核实坐标');
+    XLSX.writeFile(wb, '水源地_批量核实坐标模板.xlsx');
+  };
+
+  /** 批量导入：读取 Excel → 匹配待补坐标档案 → 批量写入 */
+  const handleImportFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const wb = XLSX.read(ev.target?.result, { type: 'array' });
+        const sheet = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(sheet);
+        if (rows.length === 0) {
+          setImportMsg('文件中没有数据行');
+          return;
+        }
+        const items: { name: string; lng?: number | null; lat?: number | null; note?: string }[] = [];
+        const unmatched: string[] = [];
+        let skipped = 0;
+        rows.forEach((row) => {
+          const name = String(row['水源地名称'] ?? row['名称'] ?? '').trim();
+          const lng = parseFloat(String(row['精确经度'] ?? row['经度'] ?? ''));
+          const lat = parseFloat(String(row['精确纬度'] ?? row['纬度'] ?? ''));
+          const note = String(row['备注'] ?? '').trim();
+          if (!name) return;
+          // 仅匹配待补坐标档案
+          const inArchive = ARCHIVE_SOURCES.find((s) => s.name === name && s.recordStatus === '待补坐标');
+          if (!inArchive) {
+            unmatched.push(name);
+            return;
+          }
+          if (Number.isNaN(lng) || Number.isNaN(lat)) {
+            skipped++;
+            return;
+          }
+          items.push({ name, lng, lat, note });
+        });
+        if (items.length > 0) batchImport(items);
+        setImportMsg(
+          `导入完成：成功 ${items.length} 条，缺坐标跳过 ${skipped} 条，未匹配 ${unmatched.length} 条` +
+            (unmatched.length ? `（示例：${unmatched.slice(0, 5).join('、')}${unmatched.length > 5 ? '…' : ''}）` : ''),
+        );
+      } catch (e) {
+        setImportMsg(`导入失败：${e instanceof Error ? e.message : String(e)}`);
+      }
+    };
+    reader.readAsArrayBuffer(file);
   };
 
   /** 导出已核实坐标 */
@@ -165,6 +228,31 @@ const ArchiveSourcesPage: React.FC = () => {
                 className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm"
               />
               <button
+                onClick={downloadTemplate}
+                className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-blue-600 border border-blue-200 hover:bg-blue-50"
+                title="下载批量导入模板（已预填待补坐标名称）"
+              >
+                下载批量模板
+              </button>
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white hover:bg-indigo-700"
+                title="选择 Excel 批量导入核实坐标"
+              >
+                批量导入
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".xlsx,.xls"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) handleImportFile(f);
+                  e.target.value = '';
+                }}
+              />
+              <button
                 onClick={exportVerified}
                 className="ml-auto px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-600 text-white hover:bg-emerald-700"
                 title="导出已核实的坐标到 Excel"
@@ -237,7 +325,14 @@ const ArchiveSourcesPage: React.FC = () => {
                             )}
                           </td>
                           <td className="px-3 py-2">
-                            <div className="flex gap-1">
+                            <div className="flex flex-wrap gap-1">
+                              <a
+                                href={`#/map?pick=${encodeURIComponent(r.name)}`}
+                                title="在地图上点击确定精确井位坐标"
+                                className="px-2 py-1 rounded text-[11px] font-medium bg-amber-500 text-white hover:bg-amber-600"
+                              >
+                                地图选点
+                              </a>
                               <button
                                 onClick={() => saveCoord(r)}
                                 className="px-2 py-1 rounded text-[11px] font-medium bg-blue-600 text-white hover:bg-blue-700"
@@ -268,8 +363,13 @@ const ArchiveSourcesPage: React.FC = () => {
                 </table>
               </div>
             </div>
+            {importMsg && (
+              <div className="mt-3 px-3 py-2 rounded-lg text-xs bg-indigo-50 text-indigo-700 border border-indigo-100">
+                {importMsg}
+              </div>
+            )}
             <div className="mt-3 text-xs text-gray-400">
-              填写精确井位坐标后点「保存核实」即可标记已核实并持久化到本地；后续可导出已核实坐标接入地图图层。
+              填写精确井位坐标后点「保存核实」或点「地图选点」在地图上直接定位；也可用「下载批量模板」填好后「批量导入」一次性核实多条，导入后地图以绿色标记显示。
             </div>
           </div>
         ) : (

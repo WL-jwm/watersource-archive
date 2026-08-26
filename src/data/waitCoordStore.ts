@@ -47,11 +47,24 @@ function persist(map: WaitCoordMap) {
   }
 }
 
+export interface WaitCoordImportItem {
+  /** 水源地名称（需与归档档案名称一致） */
+  name: string;
+  /** 精确经度 */
+  lng?: number | null;
+  /** 精确纬度 */
+  lat?: number | null;
+  /** 备注（来源/说明） */
+  note?: string;
+}
+
 interface WaitCoordState {
   /** 已核实记录（key=水源地名称） */
   records: WaitCoordMap;
   /** 保存/更新某水源地的核实坐标 */
   setCoord: (name: string, data: { lng?: number | null; lat?: number | null; note?: string; verified?: boolean }) => void;
+  /** 批量导入（Excel 批量核实），带坐标的记录自动标记已核实 */
+  batchImport: (items: WaitCoordImportItem[]) => void;
   /** 清除某水源地的核实记录 */
   clearCoord: (name: string) => void;
   /** 全部清除 */
@@ -75,6 +88,26 @@ export const useWaitCoordStore = create<WaitCoordState>((set) => ({
       persist(next);
       return { records: next };
     }),
+  batchImport: (items) =>
+    set((state) => {
+      const next: WaitCoordMap = { ...state.records };
+      items.forEach((it) => {
+        if (!it.name) return;
+        const hasCoord = it.lng != null && it.lat != null && !Number.isNaN(it.lng) && !Number.isNaN(it.lat);
+        const prev = next[it.name] ?? {};
+        next[it.name] = {
+          ...prev,
+          name: it.name,
+          lng: hasCoord ? it.lng : prev.lng ?? null,
+          lat: hasCoord ? it.lat : prev.lat ?? null,
+          note: it.note || prev.note || '',
+          verified: hasCoord || (prev.verified ?? false),
+          updatedAt: new Date().toISOString(),
+        };
+      });
+      persist(next);
+      return { records: next };
+    }),
   clearCoord: (name) =>
     set((state) => {
       const next = { ...state.records };
@@ -82,8 +115,9 @@ export const useWaitCoordStore = create<WaitCoordState>((set) => ({
       persist(next);
       return { records: next };
     }),
-  resetAll: () => {
-    persist({});
-    return { records: {} };
-  },
+  resetAll: () =>
+    set(() => {
+      persist({});
+      return { records: {} };
+    }),
 }));
