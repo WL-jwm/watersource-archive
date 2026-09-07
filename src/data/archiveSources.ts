@@ -117,8 +117,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "待入库",
     "source": "收集报告库",
-    "lng": 114.876389,
-    "lat": 38.041667,
+    "lng": 114.87059,
+    "lat": 38.041161,
     "id": 7
   },
   {
@@ -132,8 +132,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "待核验(图件提取)",
     "source": "收集报告库",
-    "lng": 114.724769,
-    "lat": 37.956439,
+    "lng": 114.718805,
+    "lat": 37.955771,
     "id": 8
   },
   {
@@ -147,8 +147,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "待核验(图件提取)",
     "source": "收集报告库",
-    "lng": 116.068481,
-    "lat": 38.218456,
+    "lng": 116.062386,
+    "lat": 38.217635,
     "id": 9
   },
   {
@@ -387,8 +387,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.701021,
-    "lat": 39.998861,
+    "lng": 118.694999,
+    "lat": 39.997638,
     "id": 25
   },
   {
@@ -402,8 +402,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.692814,
-    "lat": 37.98752,
+    "lng": 114.686906,
+    "lat": 37.986907,
     "id": 26
   },
   {
@@ -417,8 +417,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.701021,
-    "lat": 39.998861,
+    "lng": 118.694999,
+    "lat": 39.997638,
     "id": 27
   },
   {
@@ -432,8 +432,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 119.027754,
-    "lat": 39.39635,
+    "lng": 119.021622,
+    "lat": 39.395113,
     "id": 28
   },
   {
@@ -447,8 +447,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 115.281818,
-    "lat": 36.548295,
+    "lng": 115.275886,
+    "lat": 36.548122,
     "id": 29
   },
   {
@@ -462,8 +462,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 116.457628,
-    "lat": 38.873185,
+    "lng": 116.451583,
+    "lat": 38.872234,
     "id": 30
   },
   {
@@ -477,8 +477,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.31467,
-    "lat": 40.141486,
+    "lng": 118.308412,
+    "lat": 40.140153,
     "id": 31
   },
   {
@@ -492,8 +492,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 117.965878,
-    "lat": 40.189119,
+    "lng": 117.959661,
+    "lat": 40.187959,
     "id": 32
   },
   {
@@ -507,8 +507,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.062258,
-    "lat": 38.065446,
+    "lng": 114.055753,
+    "lat": 38.064651,
     "id": 33
   },
   {
@@ -522,8 +522,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.693447,
-    "lat": 37.48288,
+    "lng": 114.687595,
+    "lat": 37.482246,
     "id": 34
   },
   {
@@ -537,8 +537,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.701021,
-    "lat": 39.998861,
+    "lng": 118.694999,
+    "lat": 39.997638,
     "id": 35
   },
   {
@@ -552,8 +552,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 116.838715,
-    "lat": 38.304676,
+    "lng": 116.832914,
+    "lat": 38.304107,
     "id": 36
   },
   {
@@ -567,8 +567,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 117.97378,
-    "lat": 40.1948,
+    "lng": 117.96754,
+    "lat": 40.193619,
     "id": 37
   },
   {
@@ -582,8 +582,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 117.738196,
-    "lat": 39.901827,
+    "lng": 117.731783,
+    "lat": 39.900584,
     "id": 38
   },
   {
@@ -597,8 +597,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.503023,
-    "lat": 36.855548,
+    "lng": 114.49711,
+    "lat": 36.855201,
     "id": 39
   },
   {
@@ -612,8 +612,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.70301,
-    "lat": 39.740963,
+    "lng": 118.697016,
+    "lat": 39.739753,
     "id": 40
   },
   {
@@ -627,8 +627,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.771631,
-    "lat": 39.977812,
+    "lng": 118.765546,
+    "lat": 39.976541,
     "id": 41
   },
   {
@@ -642,8 +642,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.670094,
-    "lat": 36.445331,
+    "lng": 114.664407,
+    "lat": 36.445339,
     "id": 42
   },
   {
@@ -657,8 +657,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.347112,
-    "lat": 39.420535,
+    "lng": 118.340881,
+    "lat": 39.419249,
     "id": 43
   },
   {
@@ -672,8 +672,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.701021,
-    "lat": 39.998861,
+    "lng": 118.694999,
+    "lat": 39.997638,
     "id": 44
   },
   {
@@ -687,8 +687,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 115.497487,
-    "lat": 39.350219,
+    "lng": 115.491208,
+    "lat": 39.349118,
     "id": 45
   },
   {
@@ -702,8 +702,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.939475,
-    "lat": 37.556019,
+    "lng": 114.933716,
+    "lat": 37.555464,
     "id": 46
   },
   {
@@ -717,8 +717,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.49742,
-    "lat": 37.060227,
+    "lng": 114.491462,
+    "lat": 37.059717,
     "id": 47
   },
   {
@@ -732,8 +732,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "有",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.57797,
-    "lat": 39.261822,
+    "lng": 118.572187,
+    "lat": 39.260895,
     "id": 48
   },
   {
@@ -747,8 +747,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.49742,
-    "lat": 37.060227,
+    "lng": 114.491462,
+    "lat": 37.059717,
     "id": 49
   },
   {
@@ -762,8 +762,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.770509,
-    "lat": 37.351232,
+    "lng": 114.764595,
+    "lat": 37.35058,
     "id": 50
   },
   {
@@ -777,8 +777,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.498651,
-    "lat": 37.444512,
+    "lng": 114.492654,
+    "lat": 37.443806,
     "id": 51
   },
   {
@@ -792,8 +792,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "有",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.173202,
-    "lat": 37.031021,
+    "lng": 114.166961,
+    "lat": 37.03046,
     "id": 52
   },
   {
@@ -807,8 +807,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.274911,
-    "lat": 40.946958,
+    "lng": 118.268596,
+    "lat": 40.945265,
     "id": 53
   },
   {
@@ -822,8 +822,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.701021,
-    "lat": 39.998861,
+    "lng": 118.694999,
+    "lat": 39.997638,
     "id": 54
   },
   {
@@ -837,8 +837,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.611659,
-    "lat": 37.615905,
+    "lng": 114.605931,
+    "lat": 37.615371,
     "id": 55
   },
   {
@@ -852,8 +852,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 116.838168,
-    "lat": 39.178298,
+    "lng": 116.832263,
+    "lat": 39.177388,
     "id": 56
   },
   {
@@ -867,8 +867,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.68363,
-    "lat": 39.520272,
+    "lng": 118.677708,
+    "lat": 39.519143,
     "id": 57
   },
   {
@@ -882,8 +882,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 115.044141,
-    "lat": 38.033937,
+    "lng": 115.037966,
+    "lat": 38.033153,
     "id": 58
   },
   {
@@ -897,8 +897,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.503023,
-    "lat": 36.855548,
+    "lng": 114.49711,
+    "lat": 36.855201,
     "id": 59
   },
   {
@@ -912,8 +912,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.203685,
-    "lat": 36.69759,
+    "lng": 114.197574,
+    "lat": 36.697317,
     "id": 60
   },
   {
@@ -927,8 +927,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.701021,
-    "lat": 39.998861,
+    "lng": 118.694999,
+    "lat": 39.997638,
     "id": 61
   },
   {
@@ -942,8 +942,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 115.251005,
-    "lat": 37.520891,
+    "lng": 115.244983,
+    "lat": 37.520172,
     "id": 62
   },
   {
@@ -957,8 +957,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 115.142766,
-    "lat": 37.074795,
+    "lng": 115.13662,
+    "lat": 37.074133,
     "id": 63
   },
   {
@@ -972,8 +972,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.514976,
-    "lat": 38.042007,
+    "lng": 114.508979,
+    "lat": 38.04137,
     "id": 64
   },
   {
@@ -987,8 +987,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.49742,
-    "lat": 37.060227,
+    "lng": 114.491462,
+    "lat": 37.059717,
     "id": 65
   },
   {
@@ -1002,8 +1002,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "有",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.505991,
-    "lat": 39.259014,
+    "lng": 118.499978,
+    "lat": 39.25792,
     "id": 66
   },
   {
@@ -1017,8 +1017,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.211701,
-    "lat": 39.623459,
+    "lng": 118.205492,
+    "lat": 39.622196,
     "id": 67
   },
   {
@@ -1032,8 +1032,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "有",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.304611,
-    "lat": 39.747954,
+    "lng": 118.298421,
+    "lat": 39.746662,
     "id": 68
   },
   {
@@ -1047,8 +1047,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "有",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.180149,
-    "lat": 39.63068,
+    "lng": 118.173852,
+    "lat": 39.629361,
     "id": 69
   },
   {
@@ -1062,8 +1062,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.180149,
-    "lat": 39.63068,
+    "lng": 118.173852,
+    "lat": 39.629361,
     "id": 70
   },
   {
@@ -1077,8 +1077,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.180149,
-    "lat": 39.63068,
+    "lng": 118.173852,
+    "lat": 39.629361,
     "id": 71
   },
   {
@@ -1092,8 +1092,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 115.490176,
-    "lat": 38.824853,
+    "lng": 115.483933,
+    "lat": 38.824033,
     "id": 72
   },
   {
@@ -1107,8 +1107,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 115.97444,
-    "lat": 39.485684,
+    "lng": 115.968465,
+    "lat": 39.484635,
     "id": 73
   },
   {
@@ -1122,8 +1122,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 115.464523,
-    "lat": 38.874476,
+    "lng": 115.458184,
+    "lat": 38.873561,
     "id": 74
   },
   {
@@ -1137,8 +1137,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "有",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.522133,
-    "lat": 38.740897,
+    "lng": 114.516083,
+    "lat": 38.740235,
     "id": 75
   },
   {
@@ -1152,8 +1152,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.86672,
-    "lat": 39.364176,
+    "lng": 118.860892,
+    "lat": 39.363172,
     "id": 76
   },
   {
@@ -1167,8 +1167,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.900618,
-    "lat": 39.409598,
+    "lng": 118.894821,
+    "lat": 39.408606,
     "id": 77
   },
   {
@@ -1182,8 +1182,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 115.084595,
-    "lat": 36.981218,
+    "lng": 115.078446,
+    "lat": 36.980601,
     "id": 78
   },
   {
@@ -1197,8 +1197,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.142138,
-    "lat": 39.484233,
+    "lng": 118.135755,
+    "lat": 39.482889,
     "id": 79
   },
   {
@@ -1212,8 +1212,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.514976,
-    "lat": 38.042007,
+    "lng": 114.508979,
+    "lat": 38.04137,
     "id": 80
   },
   {
@@ -1227,8 +1227,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 116.687528,
-    "lat": 38.906086,
+    "lng": 116.681694,
+    "lat": 38.905318,
     "id": 81
   },
   {
@@ -1242,8 +1242,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "有",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.53915,
-    "lat": 36.625849,
+    "lng": 114.533404,
+    "lat": 36.625756,
     "id": 82
   },
   {
@@ -1257,8 +1257,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 118.305727,
-    "lat": 40.162234,
+    "lng": 118.299482,
+    "lat": 40.160913,
     "id": 83
   },
   {
@@ -1272,8 +1272,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 114.470007,
-    "lat": 39.099262,
+    "lng": 114.463701,
+    "lat": 39.098247,
     "id": 84
   },
   {
@@ -1287,8 +1287,8 @@ export const ARCHIVE_SOURCES: ArchiveSource[] = [
     "platformPoint": "无",
     "dataStatus": "高德定位(行政中心近似)",
     "source": "空间档案资料包",
-    "lng": 117.95829,
-    "lat": 40.92794,
+    "lng": 117.951994,
+    "lat": 40.926407,
     "id": 85
   }
 ];

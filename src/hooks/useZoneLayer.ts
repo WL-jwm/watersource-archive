@@ -5,20 +5,22 @@
  * 负责在地图上绘制一级/二级/准保护区圆形、矩形、扇形
  */
 
-import { useEffect, useRef } from 'react';
+import { useEffect, type RefObject } from 'react';
 import L from 'leaflet';
 import type { WaterSourceRecord, ZoneCalcRecord } from '@/stores/waterSourceStore';
+import { wgs2gcj } from '@/utils/coordTransform';
 
 /**
  * 在地图上渲染保护区圈层
  */
 export function useZoneLayer(
-  mapInstanceRef: React.RefObject<L.Map | null>,
-  zoneLayerRef: React.RefObject<L.LayerGroup | null>,
+  mapInstanceRef: RefObject<L.Map | null>,
+  zoneLayerRef: RefObject<L.LayerGroup | null>,
   showZones: boolean,
   zoneResults: ZoneCalcRecord[],
   storeSources: WaterSourceRecord[],
   mapReady: boolean,
+  baseLayer: 'standard' | 'satellite' | 'tianditu',
 ) {
   useEffect(() => {
     if (!mapInstanceRef.current || !zoneLayerRef.current) return;
@@ -27,10 +29,12 @@ export function useZoneLayer(
 
     if (!showZones) return;
 
-    // 建立sourceId -> coordinates的映射
+    // 建立sourceId -> coordinates的映射（数据 WGS-84 → 按底图转为显示坐标）
+    const toDisp = (lng: number, lat: number): [number, number] =>
+      baseLayer === 'tianditu' ? [lng, lat] : wgs2gcj(lng, lat);
     const coordMap = new Map<string, [number, number]>();
     storeSources.forEach((s) => {
-      if (s.lng != null && s.lat != null) coordMap.set(s.id, [s.lng, s.lat]);
+      if (s.lng != null && s.lat != null) coordMap.set(s.id, toDisp(s.lng, s.lat));
     });
 
     // 辅助函数：将米转换为经纬度偏移（Haversine近似，适用于河北纬度38°）
@@ -43,7 +47,7 @@ export function useZoneLayer(
       if (!coords) {
         for (const s of storeSources) {
           if (s.name === zr.sourceName && s.lng != null && s.lat != null) {
-            coords = [s.lng, s.lat];
+            coords = toDisp(s.lng, s.lat);
             break;
           }
         }
@@ -177,5 +181,5 @@ export function useZoneLayer(
         }
       });
     });
-  }, [showZones, zoneResults, storeSources, mapReady, mapInstanceRef, zoneLayerRef]);
+  }, [showZones, zoneResults, storeSources, mapReady, baseLayer, mapInstanceRef, zoneLayerRef]);
 }

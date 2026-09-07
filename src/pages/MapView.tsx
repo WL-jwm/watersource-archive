@@ -28,6 +28,7 @@ import { ARCHIVE_GEO_BOUNDARIES } from '@/data/archiveGeoBoundaries';
 import { tiandituUrl, TIANDITU_SUBDOMAINS, TIANDITU_MAX_ZOOM } from '@/data/tiandituConfig';
 import { useWaitCoordStore } from '@/data/waitCoordStore';
 import { useMapExport } from '@/hooks/useMapExport';
+import { wgs2gcj, gcj2wgs } from '@/utils/coordTransform';
 
 // P7: Leaflet图标修复 — 使用本地资源替代CDN
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -76,7 +77,15 @@ const MapView: React.FC = () => {
   );
   const [legendCollapsed, setLegendCollapsed] = useState(true);
   const [baseLayer, setBaseLayer] = useState<'standard' | 'satellite' | 'tianditu'>('standard');
+  const baseLayerRef = useRef<'standard' | 'satellite' | 'tianditu'>('standard');
+  baseLayerRef.current = baseLayer;
   const satelliteLayersRef = useRef<L.Layer[]>([]);
+  // P8.14 坐标偏移治理：数据统一存 WGS-84；高德底图（GCJ-02 影像）渲染时转 GCJ-02，天地图（CGCS2000≈WGS-84）原样
+  const toDisplay = useCallback(
+    (lng: number, lat: number): [number, number] =>
+      baseLayer === 'tianditu' ? [lng, lat] : wgs2gcj(lng, lat),
+    [baseLayer],
+  );
   // 聚焦定位时跳过自动 fitBounds，避免覆盖定位视图
   const skipFitRef = useRef(false);
   const prevFilterKeyRef = useRef('all|all|all');
@@ -208,15 +217,21 @@ const MapView: React.FC = () => {
       }
       if (pickNameRef.current) {
         const name = pickNameRef.current;
-        const lng = Number(e.latlng.lng.toFixed(6));
-        const lat = Number(e.latlng.lat.toFixed(6));
+        // P8.14：点击坐标是显示系（高德=GCJ-02 / 天地图=WGS-84），统一转 WGS-84 存储
+        const [wlng, wlat] =
+          baseLayerRef.current === 'tianditu'
+            ? [e.latlng.lng, e.latlng.lat]
+            : gcj2wgs(e.latlng.lng, e.latlng.lat);
+        const lng = Number(wlng.toFixed(6));
+        const lat = Number(wlat.toFixed(6));
         if (pickMarkerRef.current) {
           map.removeLayer(pickMarkerRef.current);
         }
-        const m = L.marker([lat, lng]).addTo(map);
+        // 临时标记与弹窗放在点击位置（显示坐标系），内容显示 WGS-84 存储坐标
+        const m = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
         pickMarkerRef.current = m;
         L.popup({ closeButton: false })
-          .setLatLng([lat, lng])
+          .setLatLng([e.latlng.lat, e.latlng.lng])
           .setContent(
             `<div style="font-family:system-ui;font-size:13px;min-width:210px">
               <div style="font-weight:700;margin-bottom:6px">核实井位：${name}</div>
@@ -253,7 +268,8 @@ const MapView: React.FC = () => {
 
     filtered.forEach((s) => {
       const cfg = levelConfig[s.level] || levelConfig.township;
-      const marker = L.circleMarker([s.lat, s.lng], {
+      const [dlng, dlat] = toDisplay(s.lng!, s.lat!);
+      const marker = L.circleMarker([dlat, dlng], {
         radius: s.level === 'municipal' ? 8 : s.level === 'county' ? 6 : 4,
         fillColor: cfg.color,
         fillOpacity: 0.7,
@@ -292,13 +308,13 @@ const MapView: React.FC = () => {
         marker.openPopup();
       }
     });
-  }, [filtered, mapReady, focusName]);
+  }, [filtered, mapReady, focusName, baseLayer, toDisplay]);
 
   // N6: 保护区圈层渲染（提取为独立 Hook）
-  useZoneLayer(mapInstanceRef, zoneLayerRef, showZones, zoneResults, storeSources, mapReady);
+  useZoneLayer(mapInstanceRef, zoneLayerRef, showZones, zoneResults, storeSources, mapReady, baseLayer);
 
   // 实际保护区边界图层（KMZ 导入的真实范围）
-  useActualZoneLayer(mapInstanceRef, actualZoneLayerRef, showActualZones, selectedCity, mapReady);
+  useActualZoneLayer(mapInstanceRef, actualZoneLayerRef, showActualZones, selectedCity, mapReady, baseLayer);
 
   // 筛选联动居中：切换级别/类型/城市时，地图自动 fitBounds 到筛选结果范围
   useEffect(() => {
@@ -319,11 +335,16 @@ const MapView: React.FC = () => {
       return;
     }
     if (filtered.length === 0) return;
-    const bounds = L.latLngBounds(filtered.map((s) => [s.lat, s.lng] as [number, number]));
+    const bounds = L.latLngBounds(
+      filtered.map((s) => {
+        const [dlng, dlat] = toDisplay(s.lng!, s.lat!);
+        return [dlat, dlng] as [number, number];
+      }),
+    );
     if (bounds.isValid()) {
       mapInstanceRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 11, animate: true });
     }
-  }, [filter, typeFilter, selectedCity, filtered, mapReady]);
+  }, [filter, typeFilter, selectedCity, filtered, mapReady, baseLayer, toDisplay]);
 
   // 管理页跳转定位：根据 URL 的 focus 参数定位到指定水源地并放大
   useEffect(() => {
@@ -335,12 +356,13 @@ const MapView: React.FC = () => {
     setSelectedCity(target.cityName);
     setFilter('all');
     setTypeFilter('all');
-    mapInstanceRef.current?.setView([target.lat!, target.lng!], 12, { animate: true });
+    const [dlng, dlat] = toDisplay(target.lng!, target.lat!);
+    mapInstanceRef.current?.setView([dlat, dlng], 12, { animate: true });
     const t = window.setTimeout(() => {
       skipFitRef.current = false;
     }, 1200);
     return () => window.clearTimeout(t);
-  }, [mapReady, focusName, storeSources]);
+  }, [mapReady, focusName, storeSources, baseLayer, toDisplay]);
 
   // P8.13: 注册 Leaflet popup 中确认/取消按钮的全局回调
   useEffect(() => {
@@ -371,7 +393,8 @@ const MapView: React.FC = () => {
     lg.clearLayers();
     if (!showWells) return;
     ARCHIVE_WELLS.forEach((w) => {
-      const m = L.circleMarker([w.lat, w.lng], {
+      const [dlng, dlat] = toDisplay(w.lng, w.lat);
+      const m = L.circleMarker([dlat, dlng], {
         radius: 7,
         color: '#B45309',
         fillColor: '#B45309',
@@ -389,7 +412,7 @@ const MapView: React.FC = () => {
       );
       m.addTo(lg);
     });
-  }, [showWells, mapReady]);
+  }, [showWells, mapReady, baseLayer, toDisplay]);
 
   // 归档精确保护区边界图层：由拐点闭合的多边形
   useEffect(() => {
@@ -398,7 +421,11 @@ const MapView: React.FC = () => {
     lg.clearLayers();
     if (!showArchiveBounds) return;
     ARCHIVE_BOUNDARIES.forEach((b) => {
-      const poly = L.polygon(b.ring, {
+      const displayRing = b.ring.map(([lng, lat]) => {
+        const [dlng, dlat] = toDisplay(lng, lat);
+        return [dlat, dlng] as [number, number];
+      });
+      const poly = L.polygon(displayRing, {
         color: '#9333EA',
         fillColor: '#9333EA',
         fillOpacity: 0.12,
@@ -414,7 +441,7 @@ const MapView: React.FC = () => {
       );
       poly.addTo(lg);
     });
-  }, [showArchiveBounds, mapReady]);
+  }, [showArchiveBounds, mapReady, baseLayer, toDisplay]);
 
   // 资料包水源地点位图层（空间档案 63 个水源地定位）
   useEffect(() => {
@@ -424,7 +451,8 @@ const MapView: React.FC = () => {
     if (!showGeoWells) return;
     ARCHIVE_GEO_WELLS.forEach((w) => {
       if (w.lng == null || w.lat == null) return;
-      const m = L.circleMarker([w.lat, w.lng], {
+      const [dlng, dlat] = toDisplay(w.lng, w.lat);
+      const m = L.circleMarker([dlat, dlng], {
         radius: 5,
         color: '#0D9488',
         fillColor: '#0D9488',
@@ -441,7 +469,7 @@ const MapView: React.FC = () => {
       );
       m.addTo(lg);
     });
-  }, [showGeoWells, mapReady]);
+  }, [showGeoWells, mapReady, baseLayer, toDisplay]);
 
   // 资料包保护区面图层（空间档案 14 个已空间化边界）
   useEffect(() => {
@@ -450,7 +478,11 @@ const MapView: React.FC = () => {
     lg.clearLayers();
     if (!showGeoBounds) return;
     ARCHIVE_GEO_BOUNDARIES.forEach((b) => {
-      const poly = L.polygon(b.ring, {
+      const displayRing = b.ring.map(([lng, lat]) => {
+        const [dlng, dlat] = toDisplay(lng, lat);
+        return [dlat, dlng] as [number, number];
+      });
+      const poly = L.polygon(displayRing, {
         color: '#F97316',
         fillColor: '#F97316',
         fillOpacity: 0.1,
@@ -467,7 +499,7 @@ const MapView: React.FC = () => {
       );
       poly.addTo(lg);
     });
-  }, [showGeoBounds, mapReady]);
+  }, [showGeoBounds, mapReady, baseLayer, toDisplay]);
 
   // 已核实精确井位图层（归档页在线核实后实时上地图）
   useEffect(() => {
@@ -477,7 +509,8 @@ const MapView: React.FC = () => {
     if (!showVerifiedWells) return;
     verifiedWells.forEach((v) => {
       if (v.lng == null || v.lat == null) return;
-      const m = L.circleMarker([v.lat, v.lng], {
+      const [dlng, dlat] = toDisplay(v.lng, v.lat);
+      const m = L.circleMarker([dlat, dlng], {
         radius: 8,
         color: '#059669',
         fillColor: '#059669',
@@ -493,7 +526,7 @@ const MapView: React.FC = () => {
       );
       m.addTo(lg);
     });
-  }, [showVerifiedWells, verifiedWells, mapReady]);
+  }, [showVerifiedWells, verifiedWells, mapReady, baseLayer, toDisplay]);
 
   const handleToolChange = useCallback((tool: DrawTool) => {
     if (drawControllerRef.current) {

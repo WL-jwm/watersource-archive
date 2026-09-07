@@ -15,6 +15,7 @@ import L from 'leaflet';
 import { auditZoneStatusWithRules, type ZoneAuditStatus } from '../data/zoneAuditMeta';
 import { useZoneAuditStore } from '../data/zoneAuditStore';
 import { loadCityBoundaries } from '../data/zoneBoundarySource';
+import { wgs2gcj } from '../utils/coordTransform';
 
 /** 单个保护区边界要素 */
 export interface ZoneBoundary {
@@ -83,6 +84,7 @@ export function useActualZoneLayer(
   enabled: boolean,
   selectedCity: string,
   mapReady: boolean,
+  baseLayer: 'standard' | 'satellite' | 'tianditu',
 ) {
   const auditRules = useZoneAuditStore((s) => s.rules);
 
@@ -108,7 +110,11 @@ export function useActualZoneLayer(
           const baseStyle =
             b.kind === '井' ? KIND_STYLE['井'] : (LEVEL_STYLE[b.level] ?? DEFAULT_STYLE);
           const style = isAudit ? AUDIT_STYLE[audit] : baseStyle;
-          const latlngs = b.ring.map((p) => [p[1], p[0]] as [number, number]);
+          // P8.14：数据 WGS-84 → 按底图转显示坐标（高德 GCJ-02 / 天地图原样）
+          const latlngs = b.ring.map((p) => {
+            const [lng, lat] = baseLayer === 'tianditu' ? p : wgs2gcj(p[0], p[1]);
+            return [lat, lng] as [number, number];
+          });
           const poly = L.polygon(latlngs, {
             color: style.color,
             weight: isAudit ? 3 : 2,
@@ -138,5 +144,5 @@ export function useActualZoneLayer(
     return () => {
       cancelled = true;
     };
-  }, [enabled, selectedCity, mapReady, mapInstanceRef, layerRef, auditRules]);
+  }, [enabled, selectedCity, mapReady, baseLayer, mapInstanceRef, layerRef, auditRules]);
 }
